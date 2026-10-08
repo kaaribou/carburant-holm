@@ -19,7 +19,7 @@ Carburant HOLM est une intégration **Home Assistant** qui suit en continu les *
 - 🧩 **Plusieurs zones dans une même carte** : stations réunies, classement et meilleur prix calculés sur l'ensemble.
 - 🏆 **Le moins cher, tout de suite** : la meilleure station de la zone pour chaque carburant, son prix, sa distance, son écart à la moyenne et un bouton **Itinéraire**.
 - 📈 **La tendance** : historique sur 120 jours, évolution à 1 et 7 jours et courbe « meilleur prix / moyenne » dans la carte.
-- ⭐ **Vos stations** : prix, rang dans la zone, écart au meilleur prix et à la moyenne, et historique pour chacune de vos favorites, **même hors zone** : une recherche par commune ou code postal permet d'ajouter n'importe quelle station de France.
+- ⭐ **Vos stations** : prix, rang dans la zone, écart au meilleur prix et à la moyenne, et historique pour chacune (avec sa courbe dans la fiche de la station), favorites comprises **même hors zone** : une recherche par commune ou code postal permet d'ajouter n'importe quelle station de France.
 - 🧭 **Un clic, et on y va** :
   - **vue compacte** : un toucher sur une station ouvre **Google Maps en mode itinéraire** ;
   - **vue complète** : un toucher sur une station déplie **sa fiche détaillée** (adresse, prix de **tous** ses carburants, services, automate 24 h/24) avec les boutons **Google Maps** et **Waze** ;
@@ -37,7 +37,12 @@ Données officielles : flux instantané v2 du Ministère de l'Économie ([data.e
 |---|---|---|
 | ![Carte complète](docs/images/carte-complete.png) | ![Carte compacte](docs/images/carte-compacte.png) | ![Favorites](docs/images/carte-compacte-favorites.png) |
 
-### 🆕 Nouveautés de la 1.4.0
+### 🆕 Nouveautés de la 1.5.0
+
+- 📈 **Les valeurs sur la courbe** ([#9](https://github.com/kaaribou/carburant-holm/issues/9)) : prix le plus haut et le plus bas de la période sur l'axe, meilleur prix et moyenne du jour au bout des courbes, et le détail d'un jour (date, meilleur prix, moyenne) en passant la souris ou en touchant la courbe. Option `chart_values` pour revenir à la courbe seule.
+- 🏷️ **Une courbe par station** : dans la fiche dépliée d'une station, la courbe de son prix pour le carburant choisi, comparée à la moyenne de la zone, avec les mêmes valeurs. L'historique est maintenant enregistré pour toutes les stations de la zone (il se remplit à partir de la mise à jour ; celui des favorites existe déjà).
+
+### Nouveautés de la 1.4.0
 
 | | |
 |---|---|
@@ -75,7 +80,7 @@ Données officielles : flux instantané v2 du Ministère de l'Économie ([data.e
 | **Choisir sa zone simplement** | Tapez une **ville ou un code postal** et ajustez **le point et le rayon directement sur une carte**. Changez-les plus tard en deux clics dans *Configurer*. |
 | **Choisir ses stations sans chercher d'identifiant** | L'assistant **liste toutes les stations de la zone**, triées par distance, avec leur nom, leur ville et leurs prix du moment : on coche ses favorites. |
 | **Savoir où c'est le moins cher** | Un capteur **« Meilleur prix »** par carburant : station, enseigne, adresse, distance, date du prix, écart à la moyenne et **top 5**. |
-| **Suivre l'évolution** | **Historique 120 jours** (meilleur prix et moyenne de la zone, prix des favorites) et **tendance à 1 et 7 jours**, visibles dans la carte et utilisables dans vos automatisations. |
+| **Suivre l'évolution** | **Historique 120 jours** (meilleur prix et moyenne de la zone, prix de chaque station de la zone et de vos favorites) et **tendance à 1 et 7 jours**, visibles dans la carte et utilisables dans vos automatisations. |
 | **Ne pas se faire piéger par un vieux prix** | Les prix plus anciens que *N* jours (réglable) sont **ignorés** ; chaque prix affiche sa fraîcheur (● vert, orange ou gris, ou *J+n*). |
 | **Un bel affichage, sans configuration** | La carte **`holm-fuel-card`** est **fournie, servie et déclarée automatiquement** : rien à ajouter dans les ressources Lovelace. Elle se trouve dans le sélecteur de cartes sous **« HOLM Carburant »**. |
 | **Tout régler à la souris** | **Éditeur visuel complet** : zone, présentation (complète ou compacte), carburant par défaut, onglets affichés, nombre de stations, courbe, favorites… |
@@ -186,7 +191,7 @@ Ajoutez une carte → cherchez **« HOLM Carburant »**. Tout se règle dans l'�
 
 - **Onglets carburants** avec le meilleur prix de chacun ;
 - **Station la moins chère** : logo, nom, ville, distance, prix, ancienneté du prix, **tendance sur 7 jours**, **écart à la moyenne**, bouton **Itinéraire** ;
-- **Courbe** meilleur prix / moyenne de la zone (jusqu'à 45 jours) ;
+- **Courbe** meilleur prix / moyenne de la zone (jusqu'à 45 jours), avec les prix extrêmes, les valeurs du jour et le détail d'un jour au survol ou au toucher ;
 - **Classement** avec barre relative, écart au premier, fraîcheur du prix (● vert < 48 h, ● orange ≤ 3 j, ● gris au-delà), ruptures ;
 - **Vos favorites** épinglées (★) même hors du top, y compris les stations **hors zone** ;
 - **Tri au choix** (option *Tri des stations*) : classement puis favorites, ou une seule liste triée par prix, distance, mise à jour ou nom ;
@@ -212,6 +217,7 @@ Tableau façon « liste de stations » : logo · nom (ville, distance) · prix �
 | Onglets | `fuels` | tous | Liste des carburants proposés dans la carte. |
 | Lignes | `rows` | `6` | Nombre de stations du classement. |
 | Courbe | `show_chart` | `true` | Affiche la tendance (vue complète). |
+| Valeurs sur la courbe | `chart_values` | `true` | Prix extrêmes, valeurs du jour et détail d'un jour au survol. `false` : courbe seule. |
 | Favorites | `show_favorites` | `true` | Ajoute vos favorites hors du top. |
 | Uniquement favorites | `favorites_only` | `false` | Vue compacte limitée à vos favorites. |
 
@@ -325,7 +331,7 @@ La carte utilise la commande `carburant_holm/data`, disponible pour vos propres 
 { "type": "carburant_holm/data", "entry_id": "optionnel", "history_days": 60 }
 ```
 
-Réponse : `version` et `zones[]` avec pour chaque zone `entry_id`, `title`, `zone`, `center`, `radius`, `fuels`, `favorites`, `max_age_days`, `updated`, `stations[]` (id, nom, enseigne, logo, adresse, coordonnées, distance, carburants avec prix / date / rang / rupture, services, automate 24/24), `stats` (par carburant : meilleur, moyenne, max, classement, tendances), `history` (par carburant : `date`, `min`, `avg`) et `favorites_history`.
+Réponse : `version` et `zones[]` avec pour chaque zone `entry_id`, `title`, `zone`, `center`, `radius`, `fuels`, `favorites`, `max_age_days`, `updated`, `stations[]` (id, nom, enseigne, logo, adresse, coordonnées, distance, carburants avec prix / date / rang / rupture, services, automate 24/24), `stats` (par carburant : meilleur, moyenne, max, classement, tendances), `history` (par carburant : `date`, `min`, `avg`), `favorites_history` et `stations_history` (par station puis par carburant : `date`, `price`).
 
 ---
 
@@ -386,4 +392,6 @@ Carburant HOLM vous fait économiser quelques centimes à la pompe ? Vous pouvez
 
 Voir le [CHANGELOG](CHANGELOG.md).
 
-Fait partie de la collection **HOLM** : [Volets HOLM](https://github.com/kaaribou/volets-holm) · [Climat HOLM](https://github.com/kaaribou/climat-holm) · [HOLM Climate Card](https://github.com/kaaribou/climate-card-holm) · [HOLM Security Card](https://github.com/kaaribou/holm-security-card) · [HOLM Recordings Card](https://github.com/kaaribou/holm-recordings-card) · [HOLM Covers Card](https://github.com/kaaribou/holm-covers-card) · [HOLM Navbar Card](https://github.com/kaaribou/holm-navbar-card) · [HOLM Music Card](https://github.com/kaaribou/holm-music-card) · [HOLM Sentinel Card](https://github.com/kaaribou/holm-sentinel-card) · [HOLM Power Flow Card](https://github.com/kaaribou/holm-power-flow-card) · [HOLM Energy Cards](https://github.com/kaaribou/holm-energy-cards) · [HOLM Radiator Card](https://github.com/kaaribou/holm-radiator-card) · [HOLM Floor Card](https://github.com/kaaribou/holm-floor-card) · [HOLM Smoke Card](https://github.com/kaaribou/holm-smoke-card) · [HOLM BG Card](https://github.com/kaaribou/holm-bg-card).
+Fait partie de **HOLM — Home Orchestration & Living Management** : la gestion et l'orchestration intelligente de la maison.
+
+Les autres projets : [Volets HOLM](https://github.com/kaaribou/volets-holm) · [Climat HOLM](https://github.com/kaaribou/climat-holm) · [Commandes à la maison HOLM](https://github.com/kaaribou/commandes-holm) · [HOLM My Menu](https://github.com/kaaribou/holm-mymenu) · [HOLM LaMetric](https://github.com/kaaribou/lametric-holm) · [HOLM Navbar Card](https://github.com/kaaribou/holm-navbar-card) · [HOLM Climate Card](https://github.com/kaaribou/climate-card-holm) · [HOLM Music Card](https://github.com/kaaribou/holm-music-card) · [HOLM Sentinel Card](https://github.com/kaaribou/holm-sentinel-card) · [HOLM Security Card](https://github.com/kaaribou/holm-security-card) · [HOLM Recordings Card](https://github.com/kaaribou/holm-recordings-card) · [HOLM Covers Card](https://github.com/kaaribou/holm-covers-card) · [HOLM Power Flow Card](https://github.com/kaaribou/holm-power-flow-card) · [HOLM Energy Cards](https://github.com/kaaribou/holm-energy-cards) · [HOLM Radiator Card](https://github.com/kaaribou/holm-radiator-card) · [HOLM Floor Card](https://github.com/kaaribou/holm-floor-card) · [HOLM Smoke Card](https://github.com/kaaribou/holm-smoke-card) · [HOLM BG Card](https://github.com/kaaribou/holm-bg-card).

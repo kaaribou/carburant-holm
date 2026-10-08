@@ -200,7 +200,9 @@ class FuelCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 continue
             zone.setdefault(fuel, {})[day] = {"min": s["best_price"], "avg": s["average"]}
         st_hist = self.history.setdefault("stations", {})
-        for sid in self.favorites:
+        # prix de chaque station suivie : toutes celles de la zone (zone fixe) et les favorites
+        tracked = list(self.favorites) if self.mobile else list(stations)
+        for sid in tracked:
             st = stations.get(sid)
             if not st:
                 continue
@@ -212,6 +214,10 @@ class FuelCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         for series in list(zone.values()) + [v for s in st_hist.values() for v in s.values()]:
             for d in [d for d in series if d < cutoff]:
                 series.pop(d, None)
+        for sid in list(st_hist):   # stations disparues : on ne garde pas de séries vides
+            st_hist[sid] = {f: v for f, v in st_hist[sid].items() if v}
+            if not st_hist[sid]:
+                st_hist.pop(sid)
         self._store.async_delay_save(lambda: self.history, 30)
 
     def _trend(self, fuel: str, days: int) -> float | None:

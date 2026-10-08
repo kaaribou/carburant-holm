@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.0
+- **Valeurs sur la courbe de tendance** ([#9](https://github.com/kaaribou/carburant-holm/issues/9)) : prix le plus haut et le plus bas de la période sur l'axe (avec des lignes de repère), meilleur prix et moyenne du jour au bout des courbes, et bulle avec la date, le meilleur prix et la moyenne d'un jour en passant la souris ou en touchant la courbe.
+- **Courbe par station** : la fiche dépliée d'une station affiche la courbe de son prix pour le carburant choisi, avec la moyenne de la zone en pointillés pour comparer, les mêmes valeurs et le détail d'un jour au survol.
+- L'historique des prix est maintenant enregistré pour **toutes les stations de la zone** (avant : seulement les favorites). Il est fourni à la carte dans `stations_history`. Pour une zone mobile, seules les favorites restent suivies.
+- Nouvelle option de carte **Valeurs sur la courbe** (`chart_values`, activée par défaut) pour revenir à la courbe seule.
+
 ## 1.4.0
 - **Favorites hors zone** : dans l'étape des favorites, une recherche par commune ou code postal ajoute n'importe quelle station de France à la liste (marquée « hors zone ») ([#1](https://github.com/kaaribou/carburant-holm/issues/1)).
 - **Plusieurs zones dans une même carte** (`entry_ids`) : stations réunies, classement, meilleur prix et tendance calculés sur l'ensemble ; le bouton ↻ actualise toutes les zones ([#1](https://github.com/kaaribou/carburant-holm/issues/1)).

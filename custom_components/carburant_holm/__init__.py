@@ -140,5 +140,9 @@ def ws_data(hass: HomeAssistant, connection: websocket_api.ActiveConnection, msg
             "stats": data.get("stats") or {},
             "history": {f: coord.zone_history(f, days) for f in coord.fuels},
             "favorites_history": {sid: {f: coord.station_history(sid, f, days) for f in coord.fuels} for sid in coord.favorites},
+            "stations_history": {
+                sid: {f: coord.station_history(sid, f, days) for f in coord.fuels if coord.history["stations"].get(sid, {}).get(f)}
+                for sid in (data.get("stations") or {}) if coord.history.get("stations", {}).get(sid)
+            },
         })
     connection.send_result(msg["id"], {"version": VERSION, "zones": out})

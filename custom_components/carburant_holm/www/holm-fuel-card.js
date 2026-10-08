@@ -4,7 +4,7 @@
  * Données : websocket carburant_holm/data (aucune entité à configurer).
  */
 (() => {
-  const VERSION = "1.4.0";
+  const VERSION = "1.5.0";
   const FUEL_COLOR = { gazole: "245,158,11", e10: "34,197,94", sp98: "59,130,246", sp95: "6,182,212", e85: "132,204,22", gplc: "168,85,247" };
   const SERVICE_ICON = [
     [/lavage/i, "mdi:car-wash"], [/boutique|alimentaire/i, "mdi:basket"], [/gonflage/i, "mdi:tire"], [/toilette/i, "mdi:toilet"],
@@ -135,6 +135,7 @@
       });
       return { ...zs[0], zone: zs.map((z) => z.zone).join(" + "), multi: zs.length, mobile: zs.some((z) => z.mobile),
         fuels, stations: [...byId.values()], stats, history, favorites: [...new Set(zs.flatMap((z) => z.favorites))],
+        stations_history: Object.assign({}, ...zs.map((z) => z.favorites_history || {}), ...zs.map((z) => z.stations_history || {})),
         updated: zs.map((z) => z.updated).filter(Boolean).sort()[0] };
     }
     // ville, ou adresse + ville quand deux stations portent le même nom (ex. deux « Super U Poitiers »)
@@ -186,6 +187,7 @@
         root.innerHTML = `<style>${HolmFuelCard.css()}</style><ha-card><div class="empty"><ha-icon icon="mdi:gas-station-off"></ha-icon>${esc(this._error || "Chargement des prix…")}</div></ha-card>`;
         return;
       }
+      this._charts = {};
       if (this._config.layout === "compact") return this._renderCompact();
       const z = this._zone, fuel = this._fuel, cfg = this._config;
       const col = FUEL_COLOR[fuel] || "38,198,218";
@@ -253,6 +255,7 @@
       </ha-card>`;
       root.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () => { this._fuel = b.dataset.f; this._open = null; this._render(); }));
       root.querySelector(".ref").addEventListener("click", () => this._refresh());
+      this._bindChart(root);
       root.querySelectorAll(".row").forEach((r) => r.addEventListener("click", (e) => {
         if (e.target.closest("a")) return;
         const mode = this._click();
@@ -306,6 +309,7 @@
       root.querySelector(".cref").addEventListener("click", () => this._refresh());
       root.querySelectorAll(".cs").forEach((b) => b.addEventListener("click", () => { const k = b.dataset.s; this._sort = this._sortMode() === k ? "default" : k; this._render(); }));
       root.querySelectorAll(".cr.clk").forEach((r) => r.addEventListener("click", () => { this._open = this._open === r.dataset.id ? null : r.dataset.id; this._render(); }));
+      this._bindChart(root);
       root.querySelectorAll("img[data-fb]").forEach((img) => img.addEventListener("error", () => { img.replaceWith(Object.assign(document.createElement("span"), { className: "ini", textContent: img.dataset.fb })); }));
     }
     _logo(s) {
@@ -336,7 +340,12 @@
           return `<span class="sv"><ha-icon icon="${ic}"></ha-icon>${esc(x)}</span>`;
         }).join("");
         const links = this._click() === "none" ? "" : `<div class="acts"><a href="${this._maps(s)}" target="_blank" rel="noopener"><ha-icon icon="mdi:google-maps"></ha-icon>Google Maps</a>${s.latitude != null ? `<a href="https://waze.com/ul?ll=${s.latitude},${s.longitude}&navigate=yes" target="_blank" rel="noopener"><ha-icon icon="mdi:waze"></ha-icon>Waze</a>` : ""}</div>`;
+        const fuel = this._fuel, sh = ((this._zone.stations_history || this._zone.favorites_history || {})[s.id] || {})[fuel] || [];
+        const zavg = Object.fromEntries((this._zone.history[fuel] || []).map((d) => [d.date, d.avg]));
+        const shist = sh.map((d) => ({ date: d.date, min: d.price, avg: zavg[d.date] ?? null }));
+        const schart = this._config.show_chart === false || this._zone.mobile && !this._zone.favorites.includes(s.id) ? "" : `<div class="stc">${this._chart(shist, FUEL_COLOR[fuel] || "38,198,218", "st-" + s.id, "cette station")}</div>`;
         return `
+          ${schart}
           <div class="addr"><ha-icon icon="mdi:map-marker-outline"></ha-icon>${esc(s.address)}, ${esc(s.postal_code || "")} ${esc(s.city)}</div>
           <div class="fcs">${others}</div>
           ${s.automate_24_24 ? `<div class="sv24"><ha-icon icon="mdi:hours-24"></ha-icon>Automate 24 h/24</div>` : ""}
@@ -355,22 +364,81 @@
         ${det}
       </div>`;
     }
-    _chart(h, col) {
-      if (!h || h.length < 2) return `<div class="chart nodata"><ha-icon icon="mdi:chart-line"></ha-icon>L'historique se construit jour après jour (tendance dès demain).</div>`;
-      const W = 320, H = 70, P = 4;
+    _chart(h, col, key = "zone", main = "meilleur") {
+      if (!h || h.length < 2) return `<div class="chart nodata"><ha-icon icon="mdi:chart-line"></ha-icon>${key === "zone" ? "L'historique se construit jour après jour (tendance dès demain)." : "L'historique de cette station se construit jour après jour."}</div>`;
+      const W = 320, H = 70, P = 4, B = 12;
       const vals = h.flatMap((d) => [d.min, d.avg]).filter((v) => v != null);
-      let lo = Math.min(...vals), hi = Math.max(...vals);
+      const vmin = Math.min(...vals), vmax = Math.max(...vals);
+      let lo = vmin, hi = vmax;
       if (hi - lo < 0.02) { lo -= 0.01; hi += 0.01; }
-      const X = (i) => P + (i / (h.length - 1)) * (W - 2 * P), Y = (v) => P + (1 - (v - lo) / (hi - lo)) * (H - 2 * P - 12);
-      const line = (k) => h.map((d, i) => `${i ? "L" : "M"}${X(i).toFixed(1)},${Y(d[k]).toFixed(1)}`).join(" ");
-      const area = `${line("min")} L${X(h.length - 1)},${H - 12} L${X(0)},${H - 12} Z`;
+      const X = (i) => P + (i / (h.length - 1)) * (W - 2 * P), Y = (v) => P + (1 - (v - lo) / (hi - lo)) * (H - 2 * P - B);
+      const line = (k) => h.filter((d) => d[k] != null).map((d, i) => `${i ? "L" : "M"}${X(h.indexOf(d)).toFixed(1)},${Y(d[k]).toFixed(1)}`).join(" ");
+      const area = `${line("min")} L${X(h.length - 1)},${H - B} L${X(0)},${H - B} Z`;
       const d0 = new Date(h[0].date), d1 = new Date(h[h.length - 1].date);
       const f = (d) => d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
-      return `<div class="chart"><svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
+      const vals_on = this._config.chart_values !== false;
+      (this._charts ||= {})[key] = { h, main };
+      const svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
         <defs><linearGradient id="fg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="rgb(${col})" stop-opacity=".35"/><stop offset="1" stop-color="rgb(${col})" stop-opacity="0"/></linearGradient></defs>
+        ${vals_on ? `<path d="M0,${Y(vmax).toFixed(1)} H${W} M0,${Y(vmin).toFixed(1)} H${W}" class="grid"/>` : ""}
         <path d="${area}" fill="url(#fg)"/><path d="${line("avg")}" class="avg"/><path d="${line("min")}" class="min"/>
-        <circle cx="${X(h.length - 1)}" cy="${Y(h[h.length - 1].min)}" r="3" class="pt"/></svg>
-        <div class="leg"><span>${f(d0)}</span><span><i class="lm"></i>meilleur <i class="la"></i>moyenne</span><span>${f(d1)}</span></div></div>`;
+        <circle cx="${X(h.length - 1)}" cy="${Y(h[h.length - 1].min)}" r="3" class="pt"/></svg>`;
+      const leg = `<div class="leg"><span>${f(d0)}</span><span><i class="lm"></i>${main} <i class="la"></i>moyenne</span><span>${f(d1)}</span></div>`;
+      if (!vals_on) return `<div class="chart">${svg}${leg}</div>`;
+      // valeurs : prix extrêmes sur l'axe, valeurs du jour au bout des courbes, bulle au survol
+      const pct = (v) => (Y(v) / H) * 100;
+      const last = h[h.length - 1];
+      let yMin = pct(last.min), yAvg = last.avg != null ? pct(last.avg) : null;
+      if (yAvg != null && Math.abs(yMin - yAvg) < 20) {   // étiquettes trop proches : on les écarte
+        const mid = (yMin + yAvg) / 2, up = last.avg >= last.min;
+        yAvg = mid + (up ? -10 : 10); yMin = mid + (up ? 10 : -10);
+      }
+      const p3 = (v) => v.toFixed(3).replace(".", ",");
+      return `<div class="chart cv">
+        <div class="plot">
+          <span class="yl" style="top:${pct(vmax)}%">${p3(vmax)}</span>
+          ${vmax - vmin >= 0.0005 ? `<span class="yl" style="top:${pct(vmin)}%">${p3(vmin)}</span>` : ""}
+          <div class="area" data-k="${esc(key)}">${svg}<div class="hov"><i class="vl"></i><i class="hd hm"></i><i class="hd ha"></i><div class="tip"></div></div></div>
+          <span class="ev m" style="top:${Math.max(4, Math.min(84, yMin))}%">${p3(last.min)}</span>
+          ${yAvg != null ? `<span class="ev a" style="top:${Math.max(4, Math.min(84, yAvg))}%">${p3(last.avg)}</span>` : ""}
+        </div>${leg}</div>`;
+    }
+    _bindChart(root) {
+      root.querySelectorAll(".chart.cv .area").forEach((area) => {
+        const c = (this._charts || {})[area.dataset.k];
+        if (c) this._bindArea(area, c.h, c.main);
+      });
+    }
+    _bindArea(area, h, main) {
+      const hov = area.querySelector(".hov"), tip = hov.querySelector(".tip");
+      const W = 320, P = 4;
+      const show = (e) => {
+        const r = area.getBoundingClientRect();
+        const fx = Math.max(0, Math.min(1, ((e.clientX - r.left) / r.width * W - P) / (W - 2 * P)));
+        const i = Math.round(fx * (h.length - 1)), d = h[i];
+        const x = ((P + (i / (h.length - 1)) * (W - 2 * P)) / W) * 100;
+        const vals = h.flatMap((q) => [q.min, q.avg]).filter((v) => v != null);
+        let lo = Math.min(...vals), hi = Math.max(...vals);
+        if (hi - lo < 0.02) { lo -= 0.01; hi += 0.01; }
+        const yp = (v) => ((4 + (1 - (v - lo) / (hi - lo)) * (70 - 8 - 12)) / 70) * 100;
+        hov.style.display = "block";
+        hov.querySelector(".vl").style.left = `${x}%`;
+        const hm = hov.querySelector(".hm"), ha = hov.querySelector(".ha");
+        hm.style.cssText = `left:${x}%;top:${yp(d.min)}%`;
+        ha.style.cssText = d.avg != null ? `left:${x}%;top:${yp(d.avg)}%` : "display:none";
+        let day = new Date(d.date).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });
+        day = day.charAt(0).toUpperCase() + day.slice(1);
+        const p3 = (v) => (v == null ? "–" : `${v.toFixed(3).replace(".", ",")} €`);
+        tip.innerHTML = `<b>${day}</b><span><i class="lm"></i>${main} ${p3(d.min)}</span><span><i class="la"></i>moyenne ${p3(d.avg)}</span>`;
+        tip.style.left = x > 55 ? "auto" : `calc(${x}% + 10px)`;
+        tip.style.right = x > 55 ? `calc(${100 - x}% + 10px)` : "auto";
+      };
+      const hide = () => { hov.style.display = "none"; };
+      area.addEventListener("pointermove", show);
+      area.addEventListener("pointerdown", show);
+      area.addEventListener("pointerleave", hide);
+      area.addEventListener("pointercancel", hide);
+      area.addEventListener("click", (e) => e.stopPropagation());   // ne replie pas la fiche de la station
     }
 
     static css() {
@@ -430,6 +498,26 @@
       .chart.nodata { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--tx2); padding: 8px 10px; border-radius: 12px; background: rgba(var(--ink),.04); }
       .leg { display: flex; justify-content: space-between; font-size: 10px; color: var(--tx2); }
       .leg i { display: inline-block; width: 12px; height: 3px; border-radius: 2px; vertical-align: middle; margin: 0 3px 0 8px; }
+      .chart.cv .plot { position: relative; padding: 0 46px 0 40px; }
+      .chart.cv .area { position: relative; touch-action: pan-y; cursor: crosshair; }
+      .chart .grid { fill: none; stroke: rgba(var(--ink),.14); stroke-width: 1; stroke-dasharray: 2 3; vector-effect: non-scaling-stroke; }
+      .yl, .ev { position: absolute; transform: translateY(-50%); font-size: 10px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1; white-space: nowrap; }
+      .yl { left: 0; width: 36px; text-align: right; color: var(--tx2); }
+      .ev { right: 0; padding: 2px 4px; border-radius: 6px; }
+      .ev.m { color: #fff; background: rgba(var(--c), .55); box-shadow: inset 0 0 0 1px rgba(var(--c), .8); }
+      .ev.a { color: var(--tx2); background: rgba(var(--ink),.08); }
+      .hov { display: none; position: absolute; inset: 0; pointer-events: none; }
+      .hov .vl { position: absolute; top: 0; bottom: 12px; width: 1px; background: rgba(var(--ink),.35); }
+      .hov .hd { position: absolute; width: 8px; height: 8px; border-radius: 50%; transform: translate(-50%, -50%); }
+      .hov .hm { background: rgb(var(--c)); box-shadow: 0 0 0 2px #fff; }
+      .hov .ha { background: rgba(var(--ink),.7); box-shadow: 0 0 0 2px rgba(0,0,0,.4); }
+      .tip { position: absolute; top: -6px; display: flex; flex-direction: column; gap: 2px; padding: 6px 8px; border-radius: 10px; background: rgba(15,23,32,.92); color: #fff; font-size: 11px; white-space: nowrap; box-shadow: 0 6px 18px rgba(0,0,0,.35); z-index: 2; }
+      .tip b { font-size: 11px; }
+      .tip i { display: inline-block; width: 10px; height: 3px; border-radius: 2px; vertical-align: middle; margin-right: 5px; }
+      .tip .la { background: repeating-linear-gradient(90deg, rgba(255,255,255,.7) 0 3px, transparent 3px 5px); }
+      .chart.cv .leg { padding: 0 46px 0 40px; }
+      .stc { margin: 2px 0 8px; padding: 6px 4px 4px; border-radius: 12px; background: rgba(var(--ink),.04); cursor: default; }
+      .stc .chart { padding-top: 4px; }
       .lm { background: rgb(var(--c)); } .la { background: repeating-linear-gradient(90deg, rgba(var(--ink),.5) 0 3px, transparent 3px 5px); }
 
       .sec { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 800; color: var(--tx2); text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; }
@@ -546,13 +634,13 @@
         { name: "fuels", selector: { select: { multiple: true, mode: "list", options: fuels } } },
         { name: "sort", selector: { select: { mode: "dropdown", options: [{ value: "default", label: "Classement, puis mes favorites (par défaut)" }, { value: "price", label: "Prix le plus bas d'abord (tout mélangé)" }, { value: "distance", label: "Plus proche d'abord" }, { value: "updated", label: "Mise à jour la plus récente d'abord" }, { value: "name", label: "Nom (A → Z)" }] } } },
         { name: "station_click", selector: { select: { mode: "dropdown", options: [{ value: "details", label: "Afficher le détail de la station" }, { value: "maps", label: "Ouvrir l'itinéraire (Google Maps)" }, { value: "none", label: "Rien (lecture seule, aucun lien)" }] } } },
-        { type: "grid", name: "", schema: [{ name: "show_chart", selector: { boolean: {} } }, { name: "show_favorites", selector: { boolean: {} } }, { name: "favorites_only", selector: { boolean: {} } }] },
+        { type: "grid", name: "", schema: [{ name: "show_chart", selector: { boolean: {} } }, { name: "chart_values", selector: { boolean: {} } }, { name: "show_favorites", selector: { boolean: {} } }, { name: "favorites_only", selector: { boolean: {} } }] },
       ];
-      const L = { sort: "Tri des stations", entry_ids: "Zones (une ou plusieurs, réunies dans la carte)", station_click: "Clic sur une station", entry_id: "Zone", title: "Titre (optionnel)", fuel: "Carburant affiché par défaut", rows: "Stations dans le classement", fuels: "Onglets carburants (vide = tous)", show_chart: "Courbe de tendance", show_favorites: "Afficher mes favorites", layout: "Présentation", theme: "Apparence", favorites_only: "Compacte : uniquement mes favorites" };
+      const L = { sort: "Tri des stations", entry_ids: "Zones (une ou plusieurs, réunies dans la carte)", station_click: "Clic sur une station", entry_id: "Zone", title: "Titre (optionnel)", fuel: "Carburant affiché par défaut", rows: "Stations dans le classement", fuels: "Onglets carburants (vide = tous)", show_chart: "Courbe de tendance", chart_values: "Valeurs sur la courbe", show_favorites: "Afficher mes favorites", layout: "Présentation", theme: "Apparence", favorites_only: "Compacte : uniquement mes favorites" };
       f.computeLabel = (s) => L[s.name] || s.name;
       const cfg0 = { ...this._config };
       if (!cfg0.entry_ids && cfg0.entry_id) cfg0.entry_ids = [cfg0.entry_id];
-      f.data = { layout: "full", theme: "auto", rows: 6, show_chart: true, show_favorites: true, station_click: cfg0.layout === "compact" ? "maps" : "details", ...cfg0 };
+      f.data = { layout: "full", theme: "auto", rows: 6, show_chart: true, chart_values: true, show_favorites: true, station_click: cfg0.layout === "compact" ? "maps" : "details", ...cfg0 };
       f.addEventListener("value-changed", (e) => {
         this._config = { ...e.detail.value };
         delete this._config.entry_id;
