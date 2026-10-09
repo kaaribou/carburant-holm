@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.5.1
+- **iPhone / iPad : la page ne remonte plus toute seule.** Changer de carburant ou déplier une station faisait parfois remonter la page d'un coup sur iOS (Safari et application Home Assistant). La carte garde maintenant sa hauteur pendant qu'elle se redessine, et la position de défilement est conservée.
+
 ## 1.5.0
 - **Valeurs sur la courbe de tendance** ([#9](https://github.com/kaaribou/carburant-holm/issues/9)) : prix le plus haut et le plus bas de la période sur l'axe (avec des lignes de repère), meilleur prix et moyenne du jour au bout des courbes, et bulle avec la date, le meilleur prix et la moyenne d'un jour en passant la souris ou en touchant la courbe.
 - **Courbe par station** : la fiche dépliée d'une station affiche la courbe de son prix pour le carburant choisi, avec la moyenne de la zone en pointillés pour comparer, les mêmes valeurs et le détail d'un jour au survol.

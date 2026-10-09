@@ -4,7 +4,7 @@
  * Données : websocket carburant_holm/data (aucune entité à configurer).
  */
 (() => {
-  const VERSION = "1.5.0";
+  const VERSION = "1.5.1";
   const FUEL_COLOR = { gazole: "245,158,11", e10: "34,197,94", sp98: "59,130,246", sp95: "6,182,212", e85: "132,204,22", gplc: "168,85,247" };
   const SERVICE_ICON = [
     [/lavage/i, "mdi:car-wash"], [/boutique|alimentaire/i, "mdi:basket"], [/gonflage/i, "mdi:tire"], [/toilette/i, "mdi:toilet"],
@@ -32,6 +32,26 @@
     if (!iso) return "";
     const m = Math.round((Date.now() - new Date(iso)) / 60000);
     return m < 1 ? "à l'instant" : m < 60 ? `il y a ${m} min` : `il y a ${Math.round(m / 60)} h`;
+  };
+  // Garde la position de défilement pendant un nouveau rendu complet de la carte.
+  // Sur iOS (WebKit, sans « scroll anchoring »), remplacer le contenu de la carte la fait rétrécir un instant :
+  // la page, plus courte, remonte d'un coup. On fige la hauteur de la carte et on remet le défilement en place.
+  const keepScroll = (host, fn) => {
+    const saved = [];
+    let n = host;
+    while (n) {
+      n = n.assignedSlot || n.parentNode || n.host;
+      if (n && n.nodeType === 1 && n.scrollHeight > n.clientHeight) saved.push([n, n.scrollTop]);
+    }
+    const se = document.scrollingElement;
+    if (se) saved.push([se, se.scrollTop]);
+    const h = host.offsetHeight;
+    if (h) host.style.minHeight = `${h}px`;
+    try { fn(); } finally {
+      const restore = () => saved.forEach(([el, t]) => { if (Math.abs(el.scrollTop - t) > 1) el.scrollTop = t; });
+      restore();
+      requestAnimationFrame(() => { restore(); host.style.minHeight = ""; requestAnimationFrame(restore); });
+    }
   };
   const initials = (s) => (s || "?").split(/\s+/).map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
@@ -180,6 +200,9 @@
     }
 
     _render() {
+      keepScroll(this, () => this._renderNow());
+    }
+    _renderNow() {
       const root = this.shadowRoot;
       this._tone();
       if (!root) return;
