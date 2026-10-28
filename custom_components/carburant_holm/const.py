@@ -4,7 +4,7 @@ from __future__ import annotations
 from typing import Final
 
 DOMAIN: Final = "carburant_holm"
-VERSION: Final = "1.5.1"
+VERSION: Final = "1.5.2"
 
 API_URL: Final = (
     "https://data.economie.gouv.fr/api/explore/v2.1/catalog/datasets/"

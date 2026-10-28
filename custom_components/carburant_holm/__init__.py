@@ -1,6 +1,7 @@
 """Carburant HOLM : prix des carburants autour de chez vous (données data.economie.gouv.fr)."""
 from __future__ import annotations
 
+import asyncio
 import hashlib
 import logging
 from pathlib import Path
@@ -22,6 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = [Platform.SENSOR, Platform.BUTTON]
 _CARD_KEY = f"{DOMAIN}_card"
 _WS_KEY = f"{DOMAIN}_ws"
+_CARD_LOCK = f"{DOMAIN}_card_lock"
 
 FuelConfigEntry = ConfigEntry
 
@@ -66,10 +68,24 @@ def _card_digest() -> str:
 
 
 async def _register_card(hass: HomeAssistant, _now=None) -> None:
+    # Une seule déclaration à la fois : avec plusieurs zones, toutes démarrent en même temps et
+    # déclaraient le fichier de la carte en double (« method GET is already registered », #11),
+    # voire créaient deux fois la ressource Lovelace.
+    lock = hass.data.setdefault(_CARD_LOCK, asyncio.Lock())
+    async with lock:
+        await _register_card_locked(hass)
+
+
+async def _register_card_locked(hass: HomeAssistant) -> None:
     if not hass.data.get(_CARD_KEY):
-        await hass.http.async_register_static_paths(
-            [StaticPathConfig(CARD_URL_PATH, str(Path(__file__).parent / "www" / CARD_FILENAME), cache_headers=True)]
-        )
+        try:
+            await hass.http.async_register_static_paths(
+                [StaticPathConfig(CARD_URL_PATH, str(Path(__file__).parent / "www" / CARD_FILENAME), cache_headers=True)]
+            )
+        except RuntimeError as err:
+            if "already registered" not in str(err):
+                raise
+            _LOGGER.debug("Fichier de la carte déjà déclaré : %s", CARD_URL_PATH)
         hass.data[_CARD_KEY] = True
     lovelace = hass.data.get("lovelace")
     resources = getattr(lovelace, "resources", None)
@@ -84,7 +100,8 @@ async def _register_card(hass: HomeAssistant, _now=None) -> None:
     digest = await hass.async_add_executor_job(_card_digest)
     url = f"{CARD_URL_PATH}?v={VERSION}-{digest}"
     if not hasattr(resources, "async_create_item"):
-        add_extra_js_url(hass, url)
+        add_extra_js_url(hass, url)   # tableaux de bord en mode YAML
+        _LOGGER.info("Carte holm-fuel-card chargée sans ressource Lovelace (mode YAML) : %s", url)
         return
     try:
         if not getattr(resources, "loaded", False):
@@ -92,8 +109,12 @@ async def _register_card(hass: HomeAssistant, _now=None) -> None:
         existing = next((i for i in resources.async_items() if str(i.get("url", "")).split("?", 1)[0] == CARD_URL_PATH), None)
         if existing is None:
             await resources.async_create_item({"res_type": "module", "url": url})
+            _LOGGER.info("Carte holm-fuel-card ajoutée aux ressources Lovelace : %s", url)
         elif existing.get("url") != url:
             await resources.async_update_item(existing["id"], {"url": url})
+            _LOGGER.info("Ressource Lovelace de la carte holm-fuel-card mise à jour : %s", url)
+        else:
+            _LOGGER.debug("Ressource Lovelace de la carte holm-fuel-card à jour : %s", url)
     except Exception:  # noqa: BLE001
         _LOGGER.warning("Impossible d'enregistrer la ressource Lovelace, repli sur add_extra_js_url", exc_info=True)
         add_extra_js_url(hass, url)

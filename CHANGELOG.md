@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2
+- **Correction** ([#11](https://github.com/kaaribou/carburant-holm/issues/11)) : avec plusieurs zones, l'erreur `Added route will never be executed, method GET is already registered` n'apparaît plus dans les journaux au démarrage. La carte est déclarée une seule fois pour toutes les zones (et sa ressource Lovelace n'est plus créée deux fois).
+- Le journal indique l'adresse de la carte quand sa ressource Lovelace est créée ou mise à jour, pour faciliter le diagnostic si la carte n'apparaît pas.
+
 ## 1.5.1
 - **iPhone / iPad : la page ne remonte plus toute seule.** Changer de carburant ou déplier une station faisait parfois remonter la page d'un coup sur iOS (Safari et application Home Assistant). La carte garde maintenant sa hauteur pendant qu'elle se redessine, et la position de défilement est conservée.
 

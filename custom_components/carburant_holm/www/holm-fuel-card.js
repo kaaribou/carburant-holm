@@ -4,7 +4,7 @@
  * Données : websocket carburant_holm/data (aucune entité à configurer).
  */
 (() => {
-  const VERSION = "1.5.1";
+  const VERSION = "1.5.2";
   const FUEL_COLOR = { gazole: "245,158,11", e10: "34,197,94", sp98: "59,130,246", sp95: "6,182,212", e85: "132,204,22", gplc: "168,85,247" };
   const SERVICE_ICON = [
     [/lavage/i, "mdi:car-wash"], [/boutique|alimentaire/i, "mdi:basket"], [/gonflage/i, "mdi:tire"], [/toilette/i, "mdi:toilet"],
