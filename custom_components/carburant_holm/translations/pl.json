@@ -1,0 +1,127 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Carburant HOLM",
+        "description": "Tworzy strefę monitorowania cen. Zostaw miejscowość pustą, aby wyśrodkować strefę na domu, wpisz miejscowość / kod pocztowy, aby wyśrodkować ją gdzie indziej (praca, drugi dom…), lub wybierz osobę dla strefy, która podąża za nią wszędzie.",
+        "data": {
+          "zone_name": "Nazwa strefy (np. Dom, Praca)",
+          "city": "Miejscowość lub kod pocztowy (opcjonalnie)",
+          "tracker": "Lub śledź osobę / telefon (strefa ruchoma)"
+        },
+        "data_description": {
+          "tracker": "Strefa ruchoma: stacje są wyszukiwane wokół pozycji tej osoby (aplikacja towarzysząca) i odświeżane, gdy się przemieszcza. Zostaw puste dla strefy stałej."
+        }
+      },
+      "commune": {
+        "title": "Która miejscowość?",
+        "description": "Pasuje kilka miejscowości, wybierz właściwą.",
+        "data": {
+          "commune": "Miejscowość"
+        }
+      },
+      "zone": {
+        "title": "Strefa „{zone}”",
+        "description": "Przesuń punkt na mapie i dopasuj okrąg: porównywane są wszystkie stacje w tym promieniu. Następnie wybierz paliwa do śledzenia.",
+        "data": {
+          "location": "Środek i promień strefy",
+          "fuels": "Śledzone paliwa",
+          "max_age_days": "Pomiń ceny starsze niż",
+          "scan_interval": "Odświeżaj co"
+        }
+      },
+      "favorites": {
+        "title": "Ulubione stacje",
+        "description": "Znaleziono {count} stacji w promieniu {radius} km. Przypnij swoje stałe stacje: dostaną własne czujniki (cena, pozycja, różnica do najlepszej ceny) i historię.\n\n**Stacja poza strefą?** Wpisz miejscowość lub kod pocztowy w wyszukiwarce i zatwierdź.\n\n{info}",
+        "data": {
+          "favorites": "Ulubione stacje",
+          "search": "Szukaj stacji poza strefą (miejscowość lub kod pocztowy)",
+          "add": "Wyniki wyszukiwania (zaznacz, aby dodać do ulubionych)"
+        },
+        "data_description": {
+          "search": "Zostaw puste, aby zakończyć; zaznaczone stacje z wyników zostaną dodane."
+        }
+      },
+      "zone_mobile": {
+        "title": "Strefa ruchoma „{zone}”",
+        "description": "Stacje będą wyszukiwane wokół {tracker}, gdziekolwiek jest. Wybierz promień i paliwa do śledzenia.",
+        "data": {
+          "radius_km": "Promień wokół pozycji",
+          "fuels": "Śledzone paliwa",
+          "max_age_days": "Pomiń ceny starsze niż",
+          "scan_interval": "Odświeżaj co"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nie można połączyć się z usługą (spróbuj za chwilę).",
+      "city_not_found": "Nie znaleziono miejscowości.",
+      "radius_range": "Promień musi wynosić od 1 do 50 km.",
+      "no_fuel": "Wybierz co najmniej jedno paliwo.",
+      "no_station": "Nie znaleziono stacji dla tego wyszukiwania.",
+      "tracker_unknown": "Nie znaleziono encji."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Edytuj strefę",
+        "description": "Zmień nazwę strefy, wpisz miejscowość, aby ją wyśrodkować, lub wybierz osobę, aby zrobić z niej strefę ruchomą (puste = strefa stała).",
+        "data": {
+          "zone_name": "Nazwa strefy",
+          "city": "Wyśrodkuj na miejscowości (opcjonalnie)",
+          "tracker": "Lub śledź osobę / telefon (strefa ruchoma)"
+        },
+        "data_description": {
+          "tracker": "Strefa ruchoma: stacje są wyszukiwane wokół pozycji tej osoby (aplikacja towarzysząca) i odświeżane, gdy się przemieszcza. Zostaw puste dla strefy stałej."
+        }
+      },
+      "commune": {
+        "title": "Która miejscowość?",
+        "data": {
+          "commune": "Miejscowość"
+        }
+      },
+      "zone": {
+        "title": "Strefa „{zone}”",
+        "description": "Dopasuj punkt i okrąg na mapie, a potem śledzone paliwa.",
+        "data": {
+          "location": "Środek i promień strefy",
+          "fuels": "Śledzone paliwa",
+          "max_age_days": "Pomiń ceny starsze niż",
+          "scan_interval": "Odświeżaj co"
+        }
+      },
+      "favorites": {
+        "title": "Ulubione stacje",
+        "description": "{count} stacji w promieniu {radius} km. Aby dodać stację spoza strefy, wpisz miejscowość lub kod pocztowy i zatwierdź.\n\n{info}",
+        "data": {
+          "favorites": "Ulubione stacje",
+          "search": "Szukaj stacji poza strefą (miejscowość lub kod pocztowy)",
+          "add": "Wyniki wyszukiwania (zaznacz, aby dodać do ulubionych)"
+        },
+        "data_description": {
+          "search": "Zostaw puste, aby zakończyć; zaznaczone stacje z wyników zostaną dodane."
+        }
+      },
+      "zone_mobile": {
+        "title": "Strefa ruchoma „{zone}”",
+        "description": "Stacje będą wyszukiwane wokół {tracker}, gdziekolwiek jest. Wybierz promień i paliwa do śledzenia.",
+        "data": {
+          "radius_km": "Promień wokół pozycji",
+          "fuels": "Śledzone paliwa",
+          "max_age_days": "Pomiń ceny starsze niż",
+          "scan_interval": "Odświeżaj co"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Nie można połączyć się z usługą (spróbuj za chwilę).",
+      "city_not_found": "Nie znaleziono miejscowości.",
+      "radius_range": "Promień musi wynosić od 1 do 50 km.",
+      "no_fuel": "Wybierz co najmniej jedno paliwo.",
+      "no_station": "Nie znaleziono stacji dla tego wyszukiwania.",
+      "tracker_unknown": "Nie znaleziono encji."
+    }
+  }
+}

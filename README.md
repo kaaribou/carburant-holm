@@ -4,6 +4,8 @@
 ![Version](https://img.shields.io/github/v/release/kaaribou/carburant-holm)
 ![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2025.1%2B-03a9f4)
 
+🇫🇷 Français · [🇬🇧 English](README.en.md)
+
 **Où faire le plein au meilleur prix, près de chez vous, en un coup d'œil ?**
 
 Carburant HOLM est une intégration **Home Assistant** qui suit en continu les **prix des carburants en France** autour de chez vous, ou autour de n'importe quelle ville. Elle trouve **la station la moins chère de votre zone**, suit la **tendance des prix**, garde un œil sur **vos stations favorites** et fournit **une carte Lovelace moderne**, prête à l'emploi.
@@ -37,7 +39,12 @@ Données officielles : flux instantané v2 du Ministère de l'Économie ([data.e
 |---|---|---|
 | ![Carte complète](docs/images/carte-complete.png) | ![Carte compacte](docs/images/carte-compacte.png) | ![Favorites](docs/images/carte-compacte-favorites.png) |
 
-### 🆕 Nouveautés de la 1.5.0
+### 🆕 Nouveautés de la 1.6.0
+
+- 🌍 **8 langues** : l'intégration (configuration, options, entités, actions) est traduite en français, anglais, allemand, espagnol, italien, néerlandais, portugais et polonais, selon la langue de Home Assistant. La carte **HOLM Carburant** aussi, éditeur compris ; son option `language` permet d'imposer une langue.
+- 🇬🇧 README en anglais.
+
+### Nouveautés de la 1.5.0
 
 - 📈 **Les valeurs sur la courbe** ([#9](https://github.com/kaaribou/carburant-holm/issues/9)) : prix le plus haut et le plus bas de la période sur l'axe, meilleur prix et moyenne du jour au bout des courbes, et le détail d'un jour (date, meilleur prix, moyenne) en passant la souris ou en touchant la courbe. Option `chart_values` pour revenir à la courbe seule.
 - 🏷️ **Une courbe par station** : dans la fiche dépliée d'une station, la courbe de son prix pour le carburant choisi, comparée à la moyenne de la zone, avec les mêmes valeurs. L'historique est maintenant enregistré pour toutes les stations de la zone (il se remplit à partir de la mise à jour ; celui des favorites existe déjà).
@@ -207,6 +214,7 @@ Tableau façon « liste de stations » : logo · nom (ville, distance) · prix �
 
 | Option | YAML | Défaut | Description |
 |---|---|---|---|
+| Langue | `language` | celle du profil | `fr`, `en`, `de`, `es`, `it`, `nl`, `pt`, `pl`. |
 | Zones | `entry_ids` | première zone | Une ou plusieurs zones ; plusieurs zones sont réunies dans la même carte (classement et meilleur prix sur l'ensemble). L'ancien `entry_id` reste accepté. |
 | Tri des stations | `sort` | `default` | `default` (classement puis favorites), `price` (prix le plus bas d'abord, favorites et hors zone compris), `distance`, `updated` (mise à jour la plus récente) ou `name`. En vue compacte, un clic sur les en-têtes *Station* / *Prix* / *MàJ* trie aussi à la volée. |
 | Clic sur une station | `station_click` | `details` (complète) / `maps` (compacte) | `details` (fiche détaillée), `maps` (itinéraire Google Maps) ou `none` (lecture seule, aucun lien). |

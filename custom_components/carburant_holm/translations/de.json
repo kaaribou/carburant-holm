@@ -1,0 +1,127 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Carburant HOLM",
+        "description": "Erstellt eine Preisüberwachungszone. Lassen Sie den Ort leer, um die Zone auf Ihr Zuhause zu zentrieren, geben Sie einen Ort / eine Postleitzahl ein, um sie woanders zu zentrieren (Arbeit, Zweitwohnung…), oder wählen Sie eine Person für eine Zone, die ihr überallhin folgt.",
+        "data": {
+          "zone_name": "Name der Zone (z. B. Zuhause, Arbeit)",
+          "city": "Ort oder Postleitzahl (optional)",
+          "tracker": "Oder einer Person / einem Telefon folgen (mobile Zone)"
+        },
+        "data_description": {
+          "tracker": "Mobile Zone: Tankstellen werden rund um die Position dieser Person (Companion-App) gesucht und neu geladen, wenn sie sich bewegt. Für eine feste Zone leer lassen."
+        }
+      },
+      "commune": {
+        "title": "Welcher Ort?",
+        "description": "Mehrere Orte passen, wählen Sie den richtigen.",
+        "data": {
+          "commune": "Ort"
+        }
+      },
+      "zone": {
+        "title": "Zone „{zone}“",
+        "description": "Verschieben Sie den Punkt auf der Karte und passen Sie den Kreis an: Alle Tankstellen in diesem Radius werden verglichen. Wählen Sie dann die zu verfolgenden Kraftstoffe.",
+        "data": {
+          "location": "Mittelpunkt und Radius der Zone",
+          "fuels": "Verfolgte Kraftstoffe",
+          "max_age_days": "Preise ignorieren, die älter sind als",
+          "scan_interval": "Aktualisierung alle"
+        }
+      },
+      "favorites": {
+        "title": "Lieblingstankstellen",
+        "description": "{count} Tankstellen im Umkreis von {radius} km gefunden. Heften Sie Ihre üblichen Tankstellen an: Sie erhalten eigene Sensoren (Preis, Rang, Abstand zum besten Preis) und einen Verlauf.\n\n**Tankstelle außerhalb der Zone?** Geben Sie einen Ort oder eine Postleitzahl in die Suche ein und bestätigen Sie.\n\n{info}",
+        "data": {
+          "favorites": "Lieblingstankstellen",
+          "search": "Tankstelle außerhalb der Zone suchen (Ort oder Postleitzahl)",
+          "add": "Suchergebnisse (ankreuzen, um zu Favoriten hinzuzufügen)"
+        },
+        "data_description": {
+          "search": "Leer lassen zum Abschließen; die in den Ergebnissen angekreuzten Tankstellen werden hinzugefügt."
+        }
+      },
+      "zone_mobile": {
+        "title": "Mobile Zone „{zone}“",
+        "description": "Tankstellen werden rund um {tracker} gesucht, wo auch immer es ist. Wählen Sie den Radius und die zu verfolgenden Kraftstoffe.",
+        "data": {
+          "radius_km": "Radius um die Position",
+          "fuels": "Verfolgte Kraftstoffe",
+          "max_age_days": "Preise ignorieren, die älter sind als",
+          "scan_interval": "Aktualisierung alle"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Dienst nicht erreichbar (gleich erneut versuchen).",
+      "city_not_found": "Kein Ort gefunden.",
+      "radius_range": "Der Radius muss zwischen 1 und 50 km liegen.",
+      "no_fuel": "Wählen Sie mindestens einen Kraftstoff.",
+      "no_station": "Keine Tankstelle für diese Suche gefunden.",
+      "tracker_unknown": "Entität nicht gefunden."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Zone bearbeiten",
+        "description": "Benennen Sie die Zone um, geben Sie einen Ort ein, um sie neu zu zentrieren, oder wählen Sie eine Person, um sie zur mobilen Zone zu machen (leer = feste Zone).",
+        "data": {
+          "zone_name": "Name der Zone",
+          "city": "Auf einen Ort zentrieren (optional)",
+          "tracker": "Oder einer Person / einem Telefon folgen (mobile Zone)"
+        },
+        "data_description": {
+          "tracker": "Mobile Zone: Tankstellen werden rund um die Position dieser Person (Companion-App) gesucht und neu geladen, wenn sie sich bewegt. Für eine feste Zone leer lassen."
+        }
+      },
+      "commune": {
+        "title": "Welcher Ort?",
+        "data": {
+          "commune": "Ort"
+        }
+      },
+      "zone": {
+        "title": "Zone „{zone}“",
+        "description": "Passen Sie Punkt und Kreis auf der Karte an, dann die verfolgten Kraftstoffe.",
+        "data": {
+          "location": "Mittelpunkt und Radius der Zone",
+          "fuels": "Verfolgte Kraftstoffe",
+          "max_age_days": "Preise ignorieren, die älter sind als",
+          "scan_interval": "Aktualisierung alle"
+        }
+      },
+      "favorites": {
+        "title": "Lieblingstankstellen",
+        "description": "{count} Tankstellen im Umkreis von {radius} km. Um eine Tankstelle außerhalb der Zone hinzuzufügen, geben Sie einen Ort oder eine Postleitzahl ein und bestätigen Sie.\n\n{info}",
+        "data": {
+          "favorites": "Lieblingstankstellen",
+          "search": "Tankstelle außerhalb der Zone suchen (Ort oder Postleitzahl)",
+          "add": "Suchergebnisse (ankreuzen, um zu Favoriten hinzuzufügen)"
+        },
+        "data_description": {
+          "search": "Leer lassen zum Abschließen; die in den Ergebnissen angekreuzten Tankstellen werden hinzugefügt."
+        }
+      },
+      "zone_mobile": {
+        "title": "Mobile Zone „{zone}“",
+        "description": "Tankstellen werden rund um {tracker} gesucht, wo auch immer es ist. Wählen Sie den Radius und die zu verfolgenden Kraftstoffe.",
+        "data": {
+          "radius_km": "Radius um die Position",
+          "fuels": "Verfolgte Kraftstoffe",
+          "max_age_days": "Preise ignorieren, die älter sind als",
+          "scan_interval": "Aktualisierung alle"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Dienst nicht erreichbar (gleich erneut versuchen).",
+      "city_not_found": "Kein Ort gefunden.",
+      "radius_range": "Der Radius muss zwischen 1 und 50 km liegen.",
+      "no_fuel": "Wählen Sie mindestens einen Kraftstoff.",
+      "no_station": "Keine Tankstelle für diese Suche gefunden.",
+      "tracker_unknown": "Entität nicht gefunden."
+    }
+  }
+}

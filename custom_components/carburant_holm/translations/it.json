@@ -1,0 +1,127 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Carburant HOLM",
+        "description": "Crea una zona di monitoraggio dei prezzi. Lascia vuota la città per centrare la zona sulla casa, scrivi una città / un CAP per centrarla altrove (lavoro, seconda casa…), oppure scegli una persona per una zona che la segue ovunque.",
+        "data": {
+          "zone_name": "Nome della zona (es. Casa, Lavoro)",
+          "city": "Città o CAP (facoltativo)",
+          "tracker": "Oppure segui una persona / un telefono (zona mobile)"
+        },
+        "data_description": {
+          "tracker": "Zona mobile: i distributori vengono cercati intorno alla posizione di questa persona (app companion) e ricaricati quando si sposta. Lascia vuoto per una zona fissa."
+        }
+      },
+      "commune": {
+        "title": "Quale comune?",
+        "description": "Più comuni corrispondono, scegli quello giusto.",
+        "data": {
+          "commune": "Comune"
+        }
+      },
+      "zone": {
+        "title": "Zona «{zone}»",
+        "description": "Sposta il punto sulla mappa e regola il cerchio: vengono confrontati tutti i distributori in quel raggio. Poi scegli i carburanti da seguire.",
+        "data": {
+          "location": "Centro e raggio della zona",
+          "fuels": "Carburanti seguiti",
+          "max_age_days": "Ignora i prezzi più vecchi di",
+          "scan_interval": "Aggiorna ogni"
+        }
+      },
+      "favorites": {
+        "title": "Distributori preferiti",
+        "description": "{count} distributori trovati in un raggio di {radius} km. Fissa i tuoi distributori abituali: avranno sensori propri (prezzo, posizione, scarto dal prezzo migliore) e uno storico.\n\n**Distributore fuori zona?** Scrivi un comune o un CAP nella ricerca e conferma.\n\n{info}",
+        "data": {
+          "favorites": "Distributori preferiti",
+          "search": "Cerca un distributore fuori zona (comune o CAP)",
+          "add": "Risultati della ricerca (spunta per aggiungere ai preferiti)"
+        },
+        "data_description": {
+          "search": "Lascia vuoto per finire; i distributori spuntati nei risultati vengono aggiunti."
+        }
+      },
+      "zone_mobile": {
+        "title": "Zona mobile «{zone}»",
+        "description": "I distributori verranno cercati intorno a {tracker}, ovunque sia. Scegli il raggio e i carburanti da seguire.",
+        "data": {
+          "radius_km": "Raggio intorno alla posizione",
+          "fuels": "Carburanti seguiti",
+          "max_age_days": "Ignora i prezzi più vecchi di",
+          "scan_interval": "Aggiorna ogni"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossibile raggiungere il servizio (riprova tra un momento).",
+      "city_not_found": "Nessun comune trovato.",
+      "radius_range": "Il raggio deve essere tra 1 e 50 km.",
+      "no_fuel": "Scegli almeno un carburante.",
+      "no_station": "Nessun distributore trovato per questa ricerca.",
+      "tracker_unknown": "Entità non trovata."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Modifica la zona",
+        "description": "Rinomina la zona, scrivi una città per ricentrarla o scegli una persona per farne una zona mobile (vuoto = zona fissa).",
+        "data": {
+          "zone_name": "Nome della zona",
+          "city": "Ricentra su una città (facoltativo)",
+          "tracker": "Oppure segui una persona / un telefono (zona mobile)"
+        },
+        "data_description": {
+          "tracker": "Zona mobile: i distributori vengono cercati intorno alla posizione di questa persona (app companion) e ricaricati quando si sposta. Lascia vuoto per una zona fissa."
+        }
+      },
+      "commune": {
+        "title": "Quale comune?",
+        "data": {
+          "commune": "Comune"
+        }
+      },
+      "zone": {
+        "title": "Zona «{zone}»",
+        "description": "Regola il punto e il cerchio sulla mappa, poi i carburanti seguiti.",
+        "data": {
+          "location": "Centro e raggio della zona",
+          "fuels": "Carburanti seguiti",
+          "max_age_days": "Ignora i prezzi più vecchi di",
+          "scan_interval": "Aggiorna ogni"
+        }
+      },
+      "favorites": {
+        "title": "Distributori preferiti",
+        "description": "{count} distributori in un raggio di {radius} km. Per aggiungere un distributore fuori zona, scrivi un comune o un CAP e conferma.\n\n{info}",
+        "data": {
+          "favorites": "Distributori preferiti",
+          "search": "Cerca un distributore fuori zona (comune o CAP)",
+          "add": "Risultati della ricerca (spunta per aggiungere ai preferiti)"
+        },
+        "data_description": {
+          "search": "Lascia vuoto per finire; i distributori spuntati nei risultati vengono aggiunti."
+        }
+      },
+      "zone_mobile": {
+        "title": "Zona mobile «{zone}»",
+        "description": "I distributori verranno cercati intorno a {tracker}, ovunque sia. Scegli il raggio e i carburanti da seguire.",
+        "data": {
+          "radius_km": "Raggio intorno alla posizione",
+          "fuels": "Carburanti seguiti",
+          "max_age_days": "Ignora i prezzi più vecchi di",
+          "scan_interval": "Aggiorna ogni"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossibile raggiungere il servizio (riprova tra un momento).",
+      "city_not_found": "Nessun comune trovato.",
+      "radius_range": "Il raggio deve essere tra 1 e 50 km.",
+      "no_fuel": "Scegli almeno un carburante.",
+      "no_station": "Nessun distributore trovato per questa ricerca.",
+      "tracker_unknown": "Entità non trovata."
+    }
+  }
+}

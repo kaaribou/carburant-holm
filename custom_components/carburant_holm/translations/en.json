@@ -3,125 +3,125 @@
     "step": {
       "user": {
         "title": "Carburant HOLM",
-        "description": "Crée une zone de surveillance des prix. Laisse la ville vide pour centrer la zone sur la maison, tape une ville / un code postal pour la centrer ailleurs (travail, résidence secondaire…), ou choisis une personne pour une zone qui la suit partout.",
+        "description": "Create a price watch zone. Leave the town empty to centre the zone on your home, type a town / postcode to centre it elsewhere (work, second home…), or choose a person for a zone that follows them everywhere.",
         "data": {
-          "zone_name": "Nom de la zone (ex. Maison, Travail)",
-          "city": "Ville ou code postal (optionnel)",
-          "tracker": "Ou suivre une personne / un téléphone (zone mobile)"
+          "zone_name": "Zone name (e.g. Home, Work)",
+          "city": "Town or postcode (optional)",
+          "tracker": "Or follow a person / a phone (mobile zone)"
         },
         "data_description": {
-          "tracker": "Zone mobile : les stations sont recherchées autour de la position de cette personne (application compagnon) et rechargées quand elle se déplace. Laisse vide pour une zone fixe."
+          "tracker": "Mobile zone: stations are searched around this person's position (companion app) and reloaded when they move. Leave empty for a fixed zone."
         }
       },
       "commune": {
-        "title": "Quelle commune ?",
-        "description": "Plusieurs communes correspondent, choisis la bonne.",
+        "title": "Which town?",
+        "description": "Several towns match, choose the right one.",
         "data": {
-          "commune": "Commune"
+          "commune": "Town"
         }
       },
       "zone": {
-        "title": "Zone « {zone} »",
-        "description": "Déplace le point sur la carte et ajuste le cercle : toutes les stations dans ce rayon sont comparées. Choisis ensuite les carburants à suivre.",
+        "title": "Zone “{zone}”",
+        "description": "Move the point on the map and adjust the circle: all stations within this radius are compared. Then choose the fuels to track.",
         "data": {
-          "location": "Centre et rayon de la zone",
-          "fuels": "Carburants suivis",
-          "max_age_days": "Ignorer les prix plus vieux que",
-          "scan_interval": "Actualisation toutes les"
+          "location": "Zone centre and radius",
+          "fuels": "Tracked fuels",
+          "max_age_days": "Ignore prices older than",
+          "scan_interval": "Refresh every"
         }
       },
       "favorites": {
-        "title": "Stations favorites",
-        "description": "{count} stations trouvées dans un rayon de {radius} km. Épingle tes stations habituelles : elles auront leurs propres capteurs (prix, rang, écart au meilleur prix) et un historique.\n\n**Station hors zone ?** Tape une commune ou un code postal dans la recherche puis valide.\n\n{info}",
+        "title": "Favourite stations",
+        "description": "{count} stations found within {radius} km. Pin your usual stations: they will get their own sensors (price, rank, gap to the best price) and a history.\n\n**Station outside the zone?** Type a town or postcode in the search box, then submit.\n\n{info}",
         "data": {
-          "favorites": "Stations favorites",
-          "search": "Rechercher une station hors zone (commune ou code postal)",
-          "add": "Résultats de la recherche (coche pour ajouter aux favorites)"
+          "favorites": "Favourite stations",
+          "search": "Search a station outside the zone (town or postcode)",
+          "add": "Search results (tick to add to favourites)"
         },
         "data_description": {
-          "search": "Laisse vide pour terminer ; les stations cochées dans les résultats sont ajoutées."
+          "search": "Leave empty to finish; stations ticked in the results are added."
         }
       },
       "zone_mobile": {
-        "title": "Zone mobile « {zone} »",
-        "description": "Les stations seront cherchées autour de {tracker}, où qu'il soit. Choisis le rayon et les carburants à suivre.",
+        "title": "Mobile zone “{zone}”",
+        "description": "Stations will be searched around {tracker}, wherever it is. Choose the radius and the fuels to track.",
         "data": {
-          "radius_km": "Rayon autour de la position",
-          "fuels": "Carburants suivis",
-          "max_age_days": "Ignorer les prix plus vieux que",
-          "scan_interval": "Actualisation toutes les"
+          "radius_km": "Radius around the position",
+          "fuels": "Tracked fuels",
+          "max_age_days": "Ignore prices older than",
+          "scan_interval": "Refresh every"
         }
       }
     },
     "error": {
-      "cannot_connect": "Impossible de joindre le service (réessaie dans un instant).",
-      "city_not_found": "Aucune commune trouvée.",
-      "radius_range": "Le rayon doit être compris entre 1 et 50 km.",
-      "no_fuel": "Choisis au moins un carburant.",
-      "no_station": "Aucune station trouvée pour cette recherche.",
-      "tracker_unknown": "Entité introuvable."
+      "cannot_connect": "Can't reach the service (try again in a moment).",
+      "city_not_found": "No town found.",
+      "radius_range": "The radius must be between 1 and 50 km.",
+      "no_fuel": "Choose at least one fuel.",
+      "no_station": "No station found for this search.",
+      "tracker_unknown": "Entity not found."
     }
   },
   "options": {
     "step": {
       "init": {
-        "title": "Modifier la zone",
-        "description": "Renomme la zone, tape une ville pour la recentrer, ou choisis une personne pour en faire une zone mobile (vide = zone fixe).",
+        "title": "Edit the zone",
+        "description": "Rename the zone, type a town to re-centre it, or choose a person to make it a mobile zone (empty = fixed zone).",
         "data": {
-          "zone_name": "Nom de la zone",
-          "city": "Recentrer sur une ville (optionnel)",
-          "tracker": "Ou suivre une personne / un téléphone (zone mobile)"
+          "zone_name": "Zone name",
+          "city": "Re-centre on a town (optional)",
+          "tracker": "Or follow a person / a phone (mobile zone)"
         },
         "data_description": {
-          "tracker": "Zone mobile : les stations sont recherchées autour de la position de cette personne (application compagnon) et rechargées quand elle se déplace. Laisse vide pour une zone fixe."
+          "tracker": "Mobile zone: stations are searched around this person's position (companion app) and reloaded when they move. Leave empty for a fixed zone."
         }
       },
       "commune": {
-        "title": "Quelle commune ?",
+        "title": "Which town?",
         "data": {
-          "commune": "Commune"
+          "commune": "Town"
         }
       },
       "zone": {
-        "title": "Zone « {zone} »",
-        "description": "Ajuste le point et le cercle sur la carte, puis les carburants suivis.",
+        "title": "Zone “{zone}”",
+        "description": "Adjust the point and circle on the map, then the tracked fuels.",
         "data": {
-          "location": "Centre et rayon de la zone",
-          "fuels": "Carburants suivis",
-          "max_age_days": "Ignorer les prix plus vieux que",
-          "scan_interval": "Actualisation toutes les"
+          "location": "Zone centre and radius",
+          "fuels": "Tracked fuels",
+          "max_age_days": "Ignore prices older than",
+          "scan_interval": "Refresh every"
         }
       },
       "favorites": {
-        "title": "Stations favorites",
-        "description": "{count} stations dans un rayon de {radius} km. Pour ajouter une station hors zone, tape une commune ou un code postal puis valide.\n\n{info}",
+        "title": "Favourite stations",
+        "description": "{count} stations within {radius} km. To add a station outside the zone, type a town or postcode, then submit.\n\n{info}",
         "data": {
-          "favorites": "Stations favorites",
-          "search": "Rechercher une station hors zone (commune ou code postal)",
-          "add": "Résultats de la recherche (coche pour ajouter aux favorites)"
+          "favorites": "Favourite stations",
+          "search": "Search a station outside the zone (town or postcode)",
+          "add": "Search results (tick to add to favourites)"
         },
         "data_description": {
-          "search": "Laisse vide pour terminer ; les stations cochées dans les résultats sont ajoutées."
+          "search": "Leave empty to finish; stations ticked in the results are added."
         }
       },
       "zone_mobile": {
-        "title": "Zone mobile « {zone} »",
-        "description": "Les stations seront cherchées autour de {tracker}, où qu'il soit. Choisis le rayon et les carburants à suivre.",
+        "title": "Mobile zone “{zone}”",
+        "description": "Stations will be searched around {tracker}, wherever it is. Choose the radius and the fuels to track.",
         "data": {
-          "radius_km": "Rayon autour de la position",
-          "fuels": "Carburants suivis",
-          "max_age_days": "Ignorer les prix plus vieux que",
-          "scan_interval": "Actualisation toutes les"
+          "radius_km": "Radius around the position",
+          "fuels": "Tracked fuels",
+          "max_age_days": "Ignore prices older than",
+          "scan_interval": "Refresh every"
         }
       }
     },
     "error": {
-      "cannot_connect": "Impossible de joindre le service (réessaie dans un instant).",
-      "city_not_found": "Aucune commune trouvée.",
-      "radius_range": "Le rayon doit être compris entre 1 et 50 km.",
-      "no_fuel": "Choisis au moins un carburant.",
-      "no_station": "Aucune station trouvée pour cette recherche.",
-      "tracker_unknown": "Entité introuvable."
+      "cannot_connect": "Can't reach the service (try again in a moment).",
+      "city_not_found": "No town found.",
+      "radius_range": "The radius must be between 1 and 50 km.",
+      "no_fuel": "Choose at least one fuel.",
+      "no_station": "No station found for this search.",
+      "tracker_unknown": "Entity not found."
     }
   }
 }

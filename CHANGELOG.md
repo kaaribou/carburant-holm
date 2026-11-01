@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.6.0
+- **8 langues** : traductions allemand, espagnol, italien, néerlandais, portugais et polonais ajoutées (configuration, options, entités, actions), en plus du français et de l'anglais. Carte HOLM Carburant traduite elle aussi (éditeur compris), avec une nouvelle option `language` ; elle suit sinon la langue du profil Home Assistant (anglais si la langue n'est pas traduite).
+- README en anglais (`README.en.md`).
+
 ## 1.5.2
 - **Correction** ([#11](https://github.com/kaaribou/carburant-holm/issues/11)) : avec plusieurs zones, l'erreur `Added route will never be executed, method GET is already registered` n'apparaît plus dans les journaux au démarrage. La carte est déclarée une seule fois pour toutes les zones (et sa ressource Lovelace n'est plus créée deux fois).
 - Le journal indique l'adresse de la carte quand sa ressource Lovelace est créée ou mise à jour, pour faciliter le diagnostic si la carte n'apparaît pas.

@@ -1,0 +1,127 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Carburant HOLM",
+        "description": "Maakt een prijsbewakingszone aan. Laat de plaats leeg om de zone op je huis te centreren, typ een plaats / postcode om haar elders te centreren (werk, tweede woning…), of kies een persoon voor een zone die hem overal volgt.",
+        "data": {
+          "zone_name": "Naam van de zone (bv. Thuis, Werk)",
+          "city": "Plaats of postcode (optioneel)",
+          "tracker": "Of een persoon / telefoon volgen (mobiele zone)"
+        },
+        "data_description": {
+          "tracker": "Mobiele zone: tankstations worden gezocht rond de positie van deze persoon (companion-app) en opnieuw geladen wanneer die zich verplaatst. Laat leeg voor een vaste zone."
+        }
+      },
+      "commune": {
+        "title": "Welke plaats?",
+        "description": "Meerdere plaatsen komen overeen, kies de juiste.",
+        "data": {
+          "commune": "Plaats"
+        }
+      },
+      "zone": {
+        "title": "Zone ‘{zone}’",
+        "description": "Verplaats het punt op de kaart en pas de cirkel aan: alle tankstations binnen deze straal worden vergeleken. Kies daarna de te volgen brandstoffen.",
+        "data": {
+          "location": "Middelpunt en straal van de zone",
+          "fuels": "Gevolgde brandstoffen",
+          "max_age_days": "Prijzen negeren ouder dan",
+          "scan_interval": "Vernieuwen elke"
+        }
+      },
+      "favorites": {
+        "title": "Favoriete tankstations",
+        "description": "{count} tankstations gevonden binnen {radius} km. Zet je vaste tankstations vast: ze krijgen eigen sensoren (prijs, rang, verschil met de beste prijs) en een geschiedenis.\n\n**Tankstation buiten de zone?** Typ een plaats of postcode in de zoekbalk en bevestig.\n\n{info}",
+        "data": {
+          "favorites": "Favoriete tankstations",
+          "search": "Een tankstation buiten de zone zoeken (plaats of postcode)",
+          "add": "Zoekresultaten (vink aan om aan favorieten toe te voegen)"
+        },
+        "data_description": {
+          "search": "Laat leeg om af te ronden; de aangevinkte tankstations in de resultaten worden toegevoegd."
+        }
+      },
+      "zone_mobile": {
+        "title": "Mobiele zone ‘{zone}’",
+        "description": "Tankstations worden gezocht rond {tracker}, waar die ook is. Kies de straal en de te volgen brandstoffen.",
+        "data": {
+          "radius_km": "Straal rond de positie",
+          "fuels": "Gevolgde brandstoffen",
+          "max_age_days": "Prijzen negeren ouder dan",
+          "scan_interval": "Vernieuwen elke"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Dienst niet bereikbaar (probeer het zo opnieuw).",
+      "city_not_found": "Geen plaats gevonden.",
+      "radius_range": "De straal moet tussen 1 en 50 km liggen.",
+      "no_fuel": "Kies minstens één brandstof.",
+      "no_station": "Geen tankstation gevonden voor deze zoekopdracht.",
+      "tracker_unknown": "Entiteit niet gevonden."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Zone bewerken",
+        "description": "Hernoem de zone, typ een plaats om haar opnieuw te centreren, of kies een persoon om er een mobiele zone van te maken (leeg = vaste zone).",
+        "data": {
+          "zone_name": "Naam van de zone",
+          "city": "Centreren op een plaats (optioneel)",
+          "tracker": "Of een persoon / telefoon volgen (mobiele zone)"
+        },
+        "data_description": {
+          "tracker": "Mobiele zone: tankstations worden gezocht rond de positie van deze persoon (companion-app) en opnieuw geladen wanneer die zich verplaatst. Laat leeg voor een vaste zone."
+        }
+      },
+      "commune": {
+        "title": "Welke plaats?",
+        "data": {
+          "commune": "Plaats"
+        }
+      },
+      "zone": {
+        "title": "Zone ‘{zone}’",
+        "description": "Pas het punt en de cirkel op de kaart aan, en daarna de gevolgde brandstoffen.",
+        "data": {
+          "location": "Middelpunt en straal van de zone",
+          "fuels": "Gevolgde brandstoffen",
+          "max_age_days": "Prijzen negeren ouder dan",
+          "scan_interval": "Vernieuwen elke"
+        }
+      },
+      "favorites": {
+        "title": "Favoriete tankstations",
+        "description": "{count} tankstations binnen {radius} km. Typ een plaats of postcode en bevestig om een tankstation buiten de zone toe te voegen.\n\n{info}",
+        "data": {
+          "favorites": "Favoriete tankstations",
+          "search": "Een tankstation buiten de zone zoeken (plaats of postcode)",
+          "add": "Zoekresultaten (vink aan om aan favorieten toe te voegen)"
+        },
+        "data_description": {
+          "search": "Laat leeg om af te ronden; de aangevinkte tankstations in de resultaten worden toegevoegd."
+        }
+      },
+      "zone_mobile": {
+        "title": "Mobiele zone ‘{zone}’",
+        "description": "Tankstations worden gezocht rond {tracker}, waar die ook is. Kies de straal en de te volgen brandstoffen.",
+        "data": {
+          "radius_km": "Straal rond de positie",
+          "fuels": "Gevolgde brandstoffen",
+          "max_age_days": "Prijzen negeren ouder dan",
+          "scan_interval": "Vernieuwen elke"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Dienst niet bereikbaar (probeer het zo opnieuw).",
+      "city_not_found": "Geen plaats gevonden.",
+      "radius_range": "De straal moet tussen 1 en 50 km liggen.",
+      "no_fuel": "Kies minstens één brandstof.",
+      "no_station": "Geen tankstation gevonden voor deze zoekopdracht.",
+      "tracker_unknown": "Entiteit niet gevonden."
+    }
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Carburant HOLM",
+        "description": "Crea una zona de vigilancia de precios. Deja la ciudad vacía para centrar la zona en casa, escribe una ciudad / código postal para centrarla en otro lugar (trabajo, segunda residencia…), o elige una persona para una zona que la siga a todas partes.",
+        "data": {
+          "zone_name": "Nombre de la zona (p. ej. Casa, Trabajo)",
+          "city": "Ciudad o código postal (opcional)",
+          "tracker": "O seguir a una persona / un teléfono (zona móvil)"
+        },
+        "data_description": {
+          "tracker": "Zona móvil: las estaciones se buscan alrededor de la posición de esta persona (aplicación compañera) y se recargan cuando se desplaza. Déjalo vacío para una zona fija."
+        }
+      },
+      "commune": {
+        "title": "¿Qué municipio?",
+        "description": "Varios municipios coinciden, elige el correcto.",
+        "data": {
+          "commune": "Municipio"
+        }
+      },
+      "zone": {
+        "title": "Zona «{zone}»",
+        "description": "Mueve el punto en el mapa y ajusta el círculo: se comparan todas las estaciones dentro de ese radio. Después elige los carburantes a seguir.",
+        "data": {
+          "location": "Centro y radio de la zona",
+          "fuels": "Carburantes seguidos",
+          "max_age_days": "Ignorar precios con más de",
+          "scan_interval": "Actualizar cada"
+        }
+      },
+      "favorites": {
+        "title": "Estaciones favoritas",
+        "description": "{count} estaciones encontradas en un radio de {radius} km. Fija tus estaciones habituales: tendrán sus propios sensores (precio, posición, diferencia con el mejor precio) y un historial.\n\n**¿Estación fuera de la zona?** Escribe un municipio o código postal en la búsqueda y valida.\n\n{info}",
+        "data": {
+          "favorites": "Estaciones favoritas",
+          "search": "Buscar una estación fuera de la zona (municipio o código postal)",
+          "add": "Resultados de la búsqueda (marca para añadir a favoritas)"
+        },
+        "data_description": {
+          "search": "Déjalo vacío para terminar; se añaden las estaciones marcadas en los resultados."
+        }
+      },
+      "zone_mobile": {
+        "title": "Zona móvil «{zone}»",
+        "description": "Las estaciones se buscarán alrededor de {tracker}, esté donde esté. Elige el radio y los carburantes a seguir.",
+        "data": {
+          "radius_km": "Radio alrededor de la posición",
+          "fuels": "Carburantes seguidos",
+          "max_age_days": "Ignorar precios con más de",
+          "scan_interval": "Actualizar cada"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se puede contactar con el servicio (inténtalo en un momento).",
+      "city_not_found": "No se encontró ningún municipio.",
+      "radius_range": "El radio debe estar entre 1 y 50 km.",
+      "no_fuel": "Elige al menos un carburante.",
+      "no_station": "No se encontró ninguna estación para esta búsqueda.",
+      "tracker_unknown": "Entidad no encontrada."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Editar la zona",
+        "description": "Cambia el nombre de la zona, escribe una ciudad para recentrarla o elige una persona para convertirla en zona móvil (vacío = zona fija).",
+        "data": {
+          "zone_name": "Nombre de la zona",
+          "city": "Recentrar en una ciudad (opcional)",
+          "tracker": "O seguir a una persona / un teléfono (zona móvil)"
+        },
+        "data_description": {
+          "tracker": "Zona móvil: las estaciones se buscan alrededor de la posición de esta persona (aplicación compañera) y se recargan cuando se desplaza. Déjalo vacío para una zona fija."
+        }
+      },
+      "commune": {
+        "title": "¿Qué municipio?",
+        "data": {
+          "commune": "Municipio"
+        }
+      },
+      "zone": {
+        "title": "Zona «{zone}»",
+        "description": "Ajusta el punto y el círculo en el mapa y luego los carburantes seguidos.",
+        "data": {
+          "location": "Centro y radio de la zona",
+          "fuels": "Carburantes seguidos",
+          "max_age_days": "Ignorar precios con más de",
+          "scan_interval": "Actualizar cada"
+        }
+      },
+      "favorites": {
+        "title": "Estaciones favoritas",
+        "description": "{count} estaciones en un radio de {radius} km. Para añadir una estación fuera de la zona, escribe un municipio o código postal y valida.\n\n{info}",
+        "data": {
+          "favorites": "Estaciones favoritas",
+          "search": "Buscar una estación fuera de la zona (municipio o código postal)",
+          "add": "Resultados de la búsqueda (marca para añadir a favoritas)"
+        },
+        "data_description": {
+          "search": "Déjalo vacío para terminar; se añaden las estaciones marcadas en los resultados."
+        }
+      },
+      "zone_mobile": {
+        "title": "Zona móvil «{zone}»",
+        "description": "Las estaciones se buscarán alrededor de {tracker}, esté donde esté. Elige el radio y los carburantes a seguir.",
+        "data": {
+          "radius_km": "Radio alrededor de la posición",
+          "fuels": "Carburantes seguidos",
+          "max_age_days": "Ignorar precios con más de",
+          "scan_interval": "Actualizar cada"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se puede contactar con el servicio (inténtalo en un momento).",
+      "city_not_found": "No se encontró ningún municipio.",
+      "radius_range": "El radio debe estar entre 1 y 50 km.",
+      "no_fuel": "Elige al menos un carburante.",
+      "no_station": "No se encontró ninguna estación para esta búsqueda.",
+      "tracker_unknown": "Entidad no encontrada."
+    }
+  }
+}

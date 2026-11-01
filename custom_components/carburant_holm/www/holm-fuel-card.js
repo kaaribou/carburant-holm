@@ -4,7 +4,127 @@
  * Données : websocket carburant_holm/data (aucune entité à configurer).
  */
 (() => {
-  const VERSION = "1.5.2";
+  // ---- HOLM i18n : textes écrits en français, traduits à l'affichage (en, de, es, it, nl, pt, pl) ----
+  // Langue : option `language` de la carte, sinon celle du profil Home Assistant ; anglais si la langue n'est pas traduite.
+  const HOLM_LANGS = ["en", "de", "es", "it", "nl", "pt", "pl"];
+  const LANG_NAMES = { fr: "Français", en: "English", de: "Deutsch", es: "Español", it: "Italiano", nl: "Nederlands", pt: "Português", pl: "Polski" };
+  const LOCALES = { fr: "fr-FR", en: "en-GB", de: "de-DE", es: "es-ES", it: "it-IT", nl: "nl-NL", pt: "pt-PT", pl: "pl-PL" };
+  const I18N = {
+    "Automatique (profil)": ["Automatic (profile)", "Automatisch (Profil)", "Automático (perfil)", "Automatica (profilo)", "Automatisch (profiel)", "Automático (perfil)", "Automatycznie (profil)"],
+    "Langue": ["Language", "Sprache", "Idioma", "Lingua", "Taal", "Idioma", "Język"],
+    "Titre": ["Title", "Titel", "Título", "Titolo", "Titel", "Título", "Tytuł"],
+    "Titre (optionnel)": ["Title (optional)", "Titel (optional)", "Título (opcional)", "Titolo (facoltativo)", "Titel (optioneel)", "Título (opcional)", "Tytuł (opcjonalnie)"],
+    "Nom": ["Name", "Name", "Nombre", "Nome", "Naam", "Nome", "Nazwa"],
+    "Nom affiché": ["Display name", "Anzeigename", "Nombre mostrado", "Nome visualizzato", "Weergavenaam", "Nome apresentado", "Wyświetlana nazwa"],
+    "Icône": ["Icon", "Symbol", "Icono", "Icona", "Pictogram", "Ícone", "Ikona"],
+    "Couleur": ["Colour", "Farbe", "Color", "Colore", "Kleur", "Cor", "Kolor"],
+    "Couleurs": ["Colours", "Farben", "Colores", "Colori", "Kleuren", "Cores", "Kolory"],
+    "Entité": ["Entity", "Entität", "Entidad", "Entità", "Entiteit", "Entidade", "Encja"],
+    "Entités": ["Entities", "Entitäten", "Entidades", "Entità", "Entiteiten", "Entidades", "Encje"],
+    "Chargement…": ["Loading…", "Wird geladen…", "Cargando…", "Caricamento…", "Laden…", "A carregar…", "Ładowanie…"],
+    "Erreur": ["Error", "Fehler", "Error", "Errore", "Fout", "Erro", "Błąd"],
+    "Fermer": ["Close", "Schließen", "Cerrar", "Chiudi", "Sluiten", "Fechar", "Zamknij"],
+    "Annuler": ["Cancel", "Abbrechen", "Cancelar", "Annulla", "Annuleren", "Cancelar", "Anuluj"],
+    "Enregistrer": ["Save", "Speichern", "Guardar", "Salva", "Opslaan", "Guardar", "Zapisz"],
+    "Supprimer": ["Delete", "Löschen", "Eliminar", "Elimina", "Verwijderen", "Eliminar", "Usuń"],
+    "Ajouter": ["Add", "Hinzufügen", "Añadir", "Aggiungi", "Toevoegen", "Adicionar", "Dodaj"],
+    "Monter": ["Move up", "Nach oben", "Subir", "Sposta su", "Omhoog", "Mover para cima", "W górę"],
+    "Descendre": ["Move down", "Nach unten", "Bajar", "Sposta giù", "Omlaag", "Mover para baixo", "W dół"],
+    "Afficher le cadre de la carte": ["Show the card frame", "Kartenrahmen anzeigen", "Mostrar el marco de la tarjeta", "Mostra la cornice della scheda", "Kaartkader tonen", "Mostrar a moldura do cartão", "Pokaż ramkę karty"],
+    "Indisponible": ["Unavailable", "Nicht verfügbar", "No disponible", "Non disponibile", "Niet beschikbaar", "Indisponível", "Niedostępne"],
+    "Aujourd'hui": ["Today", "Heute", "Hoy", "Oggi", "Vandaag", "Hoje", "Dziś"],
+    "Hier": ["Yesterday", "Gestern", "Ayer", "Ieri", "Gisteren", "Ontem", "Wczoraj"],
+    "Demain": ["Tomorrow", "Morgen", "Mañana", "Domani", "Morgen", "Amanhã", "Jutro"],
+    "Batterie": ["Battery", "Batterie", "Batería", "Batteria", "Batterij", "Bateria", "Bateria"],
+    "Aucune donnée sur cette période.": ["No data for this period.", "Keine Daten für diesen Zeitraum.", "No hay datos en este periodo.", "Nessun dato per questo periodo.", "Geen gegevens voor deze periode.", "Sem dados neste período.", "Brak danych w tym okresie."],
+    "à l'instant": ["just now", "gerade eben", "ahora mismo", "proprio ora", "zojuist", "agora mesmo", "przed chwilą"],
+    "il y a {n} min": ["{n} min ago", "vor {n} Min.", "hace {n} min", "{n} min fa", "{n} min geleden", "há {n} min", "{n} min temu"],
+    "il y a {n} h": ["{n} h ago", "vor {n} Std.", "hace {n} h", "{n} h fa", "{n} u geleden", "há {n} h", "{n} godz. temu"],
+    "il y a {n} j": ["{n} d ago", "vor {n} T.", "hace {n} d", "{n} g fa", "{n} d geleden", "há {n} d", "{n} dni temu"],
+    "aujourd'hui {t}": ["today {t}", "heute {t}", "hoy {t}", "oggi {t}", "vandaag {t}", "hoje {t}", "dziś {t}"],
+    "hier": ["yesterday", "gestern", "ayer", "ieri", "gisteren", "ontem", "wczoraj"],
+    "hier {t}": ["yesterday {t}", "gestern {t}", "ayer {t}", "ieri {t}", "gisteren {t}", "ontem {t}", "wczoraj {t}"],
+    "Aucune zone configurée : ajoute l'intégration Carburant HOLM.": ["No zone set up: add the Carburant HOLM integration.", "Keine Zone eingerichtet: Fügen Sie die Integration Carburant HOLM hinzu.", "Ninguna zona configurada: añade la integración Carburant HOLM.", "Nessuna zona configurata: aggiungi l'integrazione Carburant HOLM.", "Geen zone ingesteld: voeg de integratie Carburant HOLM toe.", "Nenhuma zona configurada: adicione a integração Carburant HOLM.", "Brak skonfigurowanej strefy: dodaj integrację Carburant HOLM."],
+    "Intégration Carburant HOLM introuvable ou indisponible.": ["Carburant HOLM integration not found or unavailable.", "Integration Carburant HOLM nicht gefunden oder nicht verfügbar.", "Integración Carburant HOLM no encontrada o no disponible.", "Integrazione Carburant HOLM non trovata o non disponibile.", "Integratie Carburant HOLM niet gevonden of niet beschikbaar.", "Integração Carburant HOLM não encontrada ou indisponível.", "Integracja Carburant HOLM nie znaleziona lub niedostępna."],
+    "Chargement des prix…": ["Loading prices…", "Preise werden geladen…", "Cargando precios…", "Caricamento dei prezzi…", "Prijzen laden…", "A carregar os preços…", "Ładowanie cen…"],
+    "Aucun prix récent pour ce carburant dans la zone.": ["No recent price for this fuel in the zone.", "Kein aktueller Preis für diesen Kraftstoff in der Zone.", "Ningún precio reciente para este carburante en la zona.", "Nessun prezzo recente per questo carburante nella zona.", "Geen recente prijs voor deze brandstof in de zone.", "Nenhum preço recente para este combustível na zona.", "Brak aktualnej ceny tego paliwa w strefie."],
+    "Moins cher à proximité": ["Cheapest nearby", "Am günstigsten in der Nähe", "Más barato cerca", "Più economico nei dintorni", "Goedkoopst in de buurt", "Mais barato por perto", "Najtaniej w pobliżu"],
+    "Moins cher de vos zones": ["Cheapest of your zones", "Am günstigsten in Ihren Zonen", "Más barato de tus zonas", "Più economico delle tue zone", "Goedkoopst van je zones", "Mais barato das suas zonas", "Najtaniej w Twoich strefach"],
+    "Moins cher de la zone": ["Cheapest in the zone", "Am günstigsten in der Zone", "Más barato de la zona", "Più economico della zona", "Goedkoopst in de zone", "Mais barato da zona", "Najtaniej w strefie"],
+    "{c} / 7 j": ["{c} / 7 d", "{c} / 7 T", "{c} / 7 d", "{c} / 7 g", "{c} / 7 d", "{c} / 7 d", "{c} / 7 d"],
+    "{c} vs moy.": ["{c} vs avg", "{c} vs. Ø", "{c} vs media", "{c} vs media", "{c} vs gem.", "{c} vs média", "{c} vs śr."],
+    "Itinéraire": ["Directions", "Route", "Ruta", "Percorso", "Route", "Itinerário", "Trasa"],
+    "Tes stations": ["Your stations", "Ihre Tankstellen", "Tus estaciones", "I tuoi distributori", "Je tankstations", "Os seus postos", "Twoje stacje"],
+    "Carburant {z}": ["Fuel {z}", "Kraftstoff {z}", "Carburante {z}", "Carburante {z}", "Brandstof {z}", "Combustível {z}", "Paliwo {z}"],
+    "autour de {n}": ["around {n}", "rund um {n}", "alrededor de {n}", "intorno a {n}", "rond {n}", "à volta de {n}", "wokół {n}"],
+    "{n} stations": ["{n} stations", "{n} Tankstellen", "{n} estaciones", "{n} distributori", "{n} tankstations", "{n} postos", "{n} stacji"],
+    "{n} zones": ["{n} zones", "{n} Zonen", "{n} zonas", "{n} zone", "{n} zones", "{n} zonas", "{n} stref"],
+    "Actualiser": ["Refresh", "Aktualisieren", "Actualizar", "Aggiorna", "Vernieuwen", "Atualizar", "Odśwież"],
+    "Stations · {s}": ["Stations · {s}", "Tankstellen · {s}", "Estaciones · {s}", "Distributori · {s}", "Tankstations · {s}", "Postos · {s}", "Stacje · {s}"],
+    "par prix": ["by price", "nach Preis", "por precio", "per prezzo", "op prijs", "por preço", "wg ceny"],
+    "par distance": ["by distance", "nach Entfernung", "por distancia", "per distanza", "op afstand", "por distância", "wg odległości"],
+    "par mise à jour": ["by update", "nach Aktualisierung", "por actualización", "per aggiornamento", "op update", "por atualização", "wg aktualizacji"],
+    "par nom": ["by name", "nach Name", "por nombre", "per nome", "op naam", "por nome", "wg nazwy"],
+    "Classement": ["Ranking", "Rangliste", "Clasificación", "Classifica", "Ranglijst", "Classificação", "Ranking"],
+    "Aucune station.": ["No stations.", "Keine Tankstelle.", "Ninguna estación.", "Nessun distributore.", "Geen tankstations.", "Nenhum posto.", "Brak stacji."],
+    " · hors zone": [" · outside zone", " · außerhalb der Zone", " · fuera de zona", " · fuori zona", " · buiten zone", " · fora da zona", " · poza strefą"],
+    "Rupture": ["Out of stock", "Ausverkauft", "Agotado", "Esaurito", "Uitverkocht", "Esgotado", "Brak"],
+    "rupture": ["out of stock", "ausverkauft", "agotado", "esaurito", "uitverkocht", "esgotado", "brak"],
+    "J+": ["D+", "T+", "D+", "G+", "D+", "D+", "D+"],
+    "Stations {z}": ["Stations {z}", "Tankstellen {z}", "Estaciones {z}", "Distributori {z}", "Tankstations {z}", "Postos {z}", "Stacje {z}"],
+    "Station": ["Station", "Tankstelle", "Estación", "Distributore", "Tankstation", "Posto", "Stacja"],
+    "Prix": ["Price", "Preis", "Precio", "Prezzo", "Prijs", "Preço", "Cena"],
+    "MàJ": ["Upd.", "Akt.", "Act.", "Agg.", "Bijg.", "Atual.", "Akt."],
+    "Trier": ["Sort", "Sortieren", "Ordenar", "Ordina", "Sorteren", "Ordenar", "Sortuj"],
+    "cette station": ["this station", "diese Tankstelle", "esta estación", "questo distributore", "dit tankstation", "este posto", "ta stacja"],
+    "meilleur": ["best", "bester", "mejor", "migliore", "beste", "melhor", "najlepsza"],
+    "moyenne": ["average", "Durchschnitt", "media", "media", "gemiddeld", "média", "średnia"],
+    "Automate 24 h/24": ["24/7 pay at pump", "24-h-Automat", "Autoservicio 24 h", "Self 24 h/24", "24/7 betaalautomaat", "Automático 24 h", "Automat 24 h/dobę"],
+    "L'historique se construit jour après jour (tendance dès demain).": ["The history builds up day by day (trend from tomorrow).", "Der Verlauf baut sich Tag für Tag auf (Trend ab morgen).", "El historial se construye día a día (tendencia a partir de mañana).", "Lo storico si costruisce giorno dopo giorno (tendenza da domani).", "De geschiedenis bouwt zich dag na dag op (trend vanaf morgen).", "O histórico constrói-se dia após dia (tendência a partir de amanhã).", "Historia buduje się dzień po dniu (trend od jutra)."],
+    "L'historique de cette station se construit jour après jour.": ["This station's history builds up day by day.", "Der Verlauf dieser Tankstelle baut sich Tag für Tag auf.", "El historial de esta estación se construye día a día.", "Lo storico di questo distributore si costruisce giorno dopo giorno.", "De geschiedenis van dit tankstation bouwt zich dag na dag op.", "O histórico deste posto constrói-se dia após dia.", "Historia tej stacji buduje się dzień po dniu."],
+    " (mobile)": [" (mobile)", " (mobil)", " (móvil)", " (mobile)", " (mobiel)", " (móvel)", " (ruchoma)"],
+    "Complète (meilleur prix, tendance, classement)": ["Full (best price, trend, ranking)", "Vollständig (bester Preis, Trend, Rangliste)", "Completa (mejor precio, tendencia, clasificación)", "Completa (miglior prezzo, tendenza, classifica)", "Volledig (beste prijs, trend, ranglijst)", "Completa (melhor preço, tendência, classificação)", "Pełna (najlepsza cena, trend, ranking)"],
+    "Compacte (tableau des stations)": ["Compact (station table)", "Kompakt (Tankstellentabelle)", "Compacta (tabla de estaciones)", "Compatta (tabella dei distributori)", "Compact (tabel met tankstations)", "Compacta (tabela de postos)", "Kompaktowa (tabela stacji)"],
+    "Automatique (suit le mode clair / sombre)": ["Automatic (follows light / dark mode)", "Automatisch (folgt hellem / dunklem Modus)", "Automático (sigue el modo claro / oscuro)", "Automatico (segue la modalità chiara / scura)", "Automatisch (volgt lichte / donkere modus)", "Automático (segue o modo claro / escuro)", "Automatycznie (zgodnie z trybem jasnym / ciemnym)"],
+    "Sombre": ["Dark", "Dunkel", "Oscuro", "Scuro", "Donker", "Escuro", "Ciemny"],
+    "Clair": ["Light", "Hell", "Claro", "Chiaro", "Licht", "Claro", "Jasny"],
+    "Couleurs de mon thème Home Assistant": ["My Home Assistant theme colours", "Farben meines Home-Assistant-Themes", "Colores de mi tema de Home Assistant", "Colori del mio tema Home Assistant", "Kleuren van mijn Home Assistant-thema", "Cores do meu tema do Home Assistant", "Kolory mojego motywu Home Assistant"],
+    "Classement, puis mes favorites (par défaut)": ["Ranking, then my favourites (default)", "Rangliste, dann meine Favoriten (Standard)", "Clasificación y luego mis favoritas (predeterminado)", "Classifica, poi i miei preferiti (predefinito)", "Ranglijst, daarna mijn favorieten (standaard)", "Classificação, depois os meus favoritos (padrão)", "Ranking, potem moje ulubione (domyślnie)"],
+    "Prix le plus bas d'abord (tout mélangé)": ["Lowest price first (all mixed)", "Niedrigster Preis zuerst (alles gemischt)", "Precio más bajo primero (todo mezclado)", "Prezzo più basso prima (tutto insieme)", "Laagste prijs eerst (alles door elkaar)", "Preço mais baixo primeiro (tudo misturado)", "Najniższa cena najpierw (wszystko razem)"],
+    "Plus proche d'abord": ["Nearest first", "Nächste zuerst", "Más cercana primero", "Più vicino prima", "Dichtstbijzijnde eerst", "Mais próximo primeiro", "Najbliższe najpierw"],
+    "Mise à jour la plus récente d'abord": ["Most recently updated first", "Zuletzt aktualisiert zuerst", "Actualización más reciente primero", "Aggiornamento più recente prima", "Meest recent bijgewerkt eerst", "Atualização mais recente primeiro", "Ostatnio aktualizowane najpierw"],
+    "Nom (A → Z)": ["Name (A → Z)", "Name (A → Z)", "Nombre (A → Z)", "Nome (A → Z)", "Naam (A → Z)", "Nome (A → Z)", "Nazwa (A → Z)"],
+    "Afficher le détail de la station": ["Show the station details", "Details der Tankstelle anzeigen", "Mostrar el detalle de la estación", "Mostra il dettaglio del distributore", "Details van het tankstation tonen", "Mostrar o detalhe do posto", "Pokaż szczegóły stacji"],
+    "Ouvrir l'itinéraire (Google Maps)": ["Open directions (Google Maps)", "Route öffnen (Google Maps)", "Abrir la ruta (Google Maps)", "Apri il percorso (Google Maps)", "Route openen (Google Maps)", "Abrir o itinerário (Google Maps)", "Otwórz trasę (Google Maps)"],
+    "Rien (lecture seule, aucun lien)": ["Nothing (read-only, no link)", "Nichts (nur lesen, kein Link)", "Nada (solo lectura, sin enlace)", "Niente (sola lettura, nessun link)", "Niets (alleen lezen, geen link)", "Nada (só leitura, sem ligação)", "Nic (tylko odczyt, bez linku)"],
+    "Tri des stations": ["Station sort", "Sortierung der Tankstellen", "Orden de las estaciones", "Ordinamento dei distributori", "Sortering van tankstations", "Ordenação dos postos", "Sortowanie stacji"],
+    "Zones (une ou plusieurs, réunies dans la carte)": ["Zones (one or more, combined in the card)", "Zonen (eine oder mehrere, in der Karte zusammengefasst)", "Zonas (una o varias, reunidas en la tarjeta)", "Zone (una o più, riunite nella scheda)", "Zones (één of meer, samen in de kaart)", "Zonas (uma ou várias, reunidas no cartão)", "Strefy (jedna lub kilka, połączone w karcie)"],
+    "Clic sur une station": ["Tap on a station", "Tippen auf eine Tankstelle", "Clic en una estación", "Clic su un distributore", "Tik op een tankstation", "Clique num posto", "Kliknięcie stacji"],
+    "Zone": ["Zone", "Zone", "Zona", "Zona", "Zone", "Zona", "Strefa"],
+    "Carburant affiché par défaut": ["Fuel shown by default", "Standardmäßig angezeigter Kraftstoff", "Carburante mostrado por defecto", "Carburante mostrato per impostazione predefinita", "Standaard getoonde brandstof", "Combustível mostrado por defeito", "Domyślnie wyświetlane paliwo"],
+    "Stations dans le classement": ["Stations in the ranking", "Tankstellen in der Rangliste", "Estaciones en la clasificación", "Distributori in classifica", "Tankstations in de ranglijst", "Postos na classificação", "Stacje w rankingu"],
+    "Onglets carburants (vide = tous)": ["Fuel tabs (empty = all)", "Kraftstoff-Reiter (leer = alle)", "Pestañas de carburantes (vacío = todos)", "Schede carburanti (vuoto = tutti)", "Brandstoftabbladen (leeg = alle)", "Separadores de combustíveis (vazio = todos)", "Karty paliw (puste = wszystkie)"],
+    "Courbe de tendance": ["Trend curve", "Trendkurve", "Curva de tendencia", "Curva di tendenza", "Trendcurve", "Curva de tendência", "Krzywa trendu"],
+    "Valeurs sur la courbe": ["Values on the curve", "Werte auf der Kurve", "Valores en la curva", "Valori sulla curva", "Waarden op de curve", "Valores na curva", "Wartości na krzywej"],
+    "Afficher mes favorites": ["Show my favourites", "Meine Favoriten anzeigen", "Mostrar mis favoritas", "Mostra i miei preferiti", "Mijn favorieten tonen", "Mostrar os meus favoritos", "Pokaż moje ulubione"],
+    "Présentation": ["Layout", "Darstellung", "Presentación", "Presentazione", "Weergave", "Apresentação", "Układ"],
+    "Apparence": ["Appearance", "Darstellung", "Apariencia", "Aspetto", "Weergave", "Aparência", "Wygląd"],
+    "Compacte : uniquement mes favorites": ["Compact: my favourites only", "Kompakt: nur meine Favoriten", "Compacta: solo mis favoritas", "Compatta: solo i miei preferiti", "Compact: alleen mijn favorieten", "Compacta: só os meus favoritos", "Kompaktowa: tylko moje ulubione"],
+    "HOLM Carburant": ["HOLM Fuel", "HOLM Kraftstoff", "HOLM Carburante", "HOLM Carburante", "HOLM Brandstof", "HOLM Combustível", "HOLM Paliwo"],
+    "Prix des carburants autour de chez vous : meilleur prix, tendance, classement et favorites.": ["Fuel prices around you: best price, trend, ranking and favourites.", "Kraftstoffpreise in Ihrer Nähe: bester Preis, Trend, Rangliste und Favoriten.", "Precios de carburantes cerca de ti: mejor precio, tendencia, clasificación y favoritas.", "Prezzi dei carburanti vicino a te: miglior prezzo, tendenza, classifica e preferiti.", "Brandstofprijzen bij jou in de buurt: beste prijs, trend, ranglijst en favorieten.", "Preços dos combustíveis perto de si: melhor preço, tendência, classificação e favoritos.", "Ceny paliw w okolicy: najlepsza cena, trend, ranking i ulubione."]
+  };
+  let LANG = "fr", NUMLOC = "fr-FR";
+  const langOf = (hass, c) => { const l = String((c && c.language) || (hass && ((hass.locale && hass.locale.language) || hass.language)) || navigator.language || "en").toLowerCase().split(/[-_]/)[0]; return l === "fr" || HOLM_LANGS.includes(l) ? l : "en"; };
+  const setLang = (hass, c) => { LANG = langOf(hass, c); const p = hass && hass.locale && hass.locale.language; NUMLOC = !(c && c.language) && p && p.toLowerCase().startsWith(LANG) ? p : LOCALES[LANG]; return LANG; };
+  const _ = (s, v) => { let o = LANG === "fr" ? s : ((I18N[s] && I18N[s][HOLM_LANGS.indexOf(LANG)]) || s); if (v) for (const k in v) o = o.split("{" + k + "}").join(v[k]); return o; };
+  // champ « Langue » pour les éditeurs visuels (ha-form)
+  const langField = () => ({ name: "language", selector: { select: { mode: "dropdown", options: [{ value: "", label: _("Automatique (profil)") }, ...Object.entries(LANG_NAMES).map(([value, label]) => ({ value, label }))] } } });
+  // traduit les titres de sections et les libellés d'options d'un schéma ha-form (écrits en français)
+  const locSchema = (sc) => (sc || []).map((x) => { const o = { ...x }; if (o.title) o.title = _(o.title); if (o.schema) o.schema = locSchema(o.schema);
+    if (o.selector && o.selector.select && o.name !== "language") o.selector = { ...o.selector, select: { ...o.selector.select, options: (o.selector.select.options || []).map((op) => (typeof op === "string" ? op : { ...op, label: _(op.label) })) } };
+    if (o.name === "language" && o.selector && o.selector.select) o.selector = { ...o.selector, select: { ...o.selector.select, options: o.selector.select.options.map((op) => (op.value ? op : { ...op, label: _("Automatique (profil)") })) } };
+    return o; });
+  const VERSION = "1.6.0";
   const FUEL_COLOR = { gazole: "245,158,11", e10: "34,197,94", sp98: "59,130,246", sp95: "6,182,212", e85: "132,204,22", gplc: "168,85,247" };
   const SERVICE_ICON = [
     [/lavage/i, "mdi:car-wash"], [/boutique|alimentaire/i, "mdi:basket"], [/gonflage/i, "mdi:tire"], [/toilette/i, "mdi:toilet"],
@@ -22,16 +142,16 @@
   const age = (iso, short) => {
     if (!iso) return { txt: "", cls: "old" };
     const t = new Date(iso), h = (Date.now() - t) / 3600000;
-    const hm = t.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
-    if (h < 24 && new Date().toDateString() === t.toDateString()) return { txt: short ? hm : `aujourd'hui ${hm}`, cls: "fresh" };
-    if (h < 48) return { txt: short ? "hier" : `hier ${hm}`, cls: "fresh" };
+    const hm = t.toLocaleTimeString(NUMLOC, { hour: "2-digit", minute: "2-digit" });
+    if (h < 24 && new Date().toDateString() === t.toDateString()) return { txt: short ? hm : _("aujourd'hui {t}", { t: hm }), cls: "fresh" };
+    if (h < 48) return { txt: short ? _("hier") : _("hier {t}", { t: hm }), cls: "fresh" };
     const d = Math.floor(h / 24);
-    return { txt: `il y a ${d} j`, cls: d <= 3 ? "mid" : "old" };
+    return { txt: _("il y a {n} j", { n: d }), cls: d <= 3 ? "mid" : "old" };
   };
   const ago = (iso) => {
     if (!iso) return "";
     const m = Math.round((Date.now() - new Date(iso)) / 60000);
-    return m < 1 ? "à l'instant" : m < 60 ? `il y a ${m} min` : `il y a ${Math.round(m / 60)} h`;
+    return m < 1 ? _("à l'instant") : m < 60 ? _("il y a {n} min", { n: m }) : _("il y a {n} h", { n: Math.round(m / 60) });
   };
   // Garde la position de défilement pendant un nouveau rendu complet de la carte.
   // Sur iOS (WebKit, sans « scroll anchoring »), remplacer le contenu de la carte la fait rétrécir un instant :
@@ -78,6 +198,7 @@
     set hass(hass) {
       const first = !this._hass;
       this._hass = hass;
+      { const _l = setLang(hass, this._config); if (this._lang && _l !== this._lang) this._render(); this._lang = _l; }
       this._tone();
       if (first) this._load();
       else if (this._btn && hass.states[this._btn] && this._btnTs !== hass.states[this._btn].last_changed) {
@@ -104,7 +225,7 @@
         if (!picked.length) picked = [zones.find((z) => this._config.zone && z.zone === this._config.zone) || zones[0]].filter(Boolean);
         this._zones = picked;
         this._zone = picked.length > 1 ? HolmFuelCard.merge(picked) : picked[0] || null;
-        this._error = zones.length ? null : "Aucune zone configurée : ajoute l'intégration Carburant HOLM.";
+        this._error = zones.length ? null : _("Aucune zone configurée : ajoute l'intégration Carburant HOLM.");
         if (this._zone) {
           const allowed = this._config.fuels && this._config.fuels.length ? this._zone.fuels.filter((f) => this._config.fuels.includes(f.key)) : this._zone.fuels;
           this._fuels = allowed.length ? allowed : this._zone.fuels;
@@ -120,7 +241,7 @@
           if (this._btn && this._hass.states[this._btn]) this._btnTs = this._hass.states[this._btn].last_changed;
         }
       } catch (e) {
-        this._error = "Intégration Carburant HOLM introuvable ou indisponible.";
+        this._error = _("Intégration Carburant HOLM introuvable ou indisponible.");
       }
       this._loading = false;
       this._render();
@@ -170,7 +291,7 @@
       const T = (x) => { const u = x.fuels[fuel]?.updated; return u ? -new Date(u).getTime() : Infinity; };
       const D = (x) => (x.distance == null ? Infinity : x.distance);
       const key = { price: (x) => [P(x), D(x)], distance: (x) => [D(x), P(x)], updated: (x) => [T(x), P(x)] }[mode];
-      if (mode === "name") return [...list].sort((a, b) => a.name.localeCompare(b.name, "fr") || P(a) - P(b));
+      if (mode === "name") return [...list].sort((a, b) => a.name.localeCompare(b.name, LANG) || P(a) - P(b));
       if (!key) return list;
       return [...list].sort((a, b) => { const ka = key(a), kb = key(b); return ka[0] - kb[0] || ka[1] - kb[1]; });
     }
@@ -203,11 +324,12 @@
       keepScroll(this, () => this._renderNow());
     }
     _renderNow() {
+      setLang(this._hass, this._config);
       const root = this.shadowRoot;
       this._tone();
       if (!root) return;
       if (!this._zone) {
-        root.innerHTML = `<style>${HolmFuelCard.css()}</style><ha-card><div class="empty"><ha-icon icon="mdi:gas-station-off"></ha-icon>${esc(this._error || "Chargement des prix…")}</div></ha-card>`;
+        root.innerHTML = `<style>${HolmFuelCard.css()}</style><ha-card><div class="empty"><ha-icon icon="mdi:gas-station-off"></ha-icon>${esc(this._error || _("Chargement des prix…"))}</div></ha-card>`;
         return;
       }
       this._charts = {};
@@ -227,7 +349,7 @@
         return `<button class="tab${f.key === fuel ? " on" : ""}" data-f="${f.key}" style="--c:${FUEL_COLOR[f.key] || "38,198,218"}"><span>${esc(f.label)}</span><b>${s.best_price != null ? s.best_price.toFixed(3).replace(".", ",") : "–"}</b></button>`;
       }).join("");
 
-      let hero = `<div class="hero none">Aucun prix récent pour ce carburant dans la zone.</div>`;
+      let hero = `<div class="hero none">${_("Aucun prix récent pour ce carburant dans la zone.")}</div>`;
       if (best) {
         const f = best.fuels[fuel] || {};
         const a = age(f.updated);
@@ -235,16 +357,16 @@
         hero = `<div class="hero">
           <div class="logo big">${this._logo(best)}</div>
           <div class="hi">
-            <div class="crown"><ha-icon icon="mdi:trophy"></ha-icon>${z.mobile ? "Moins cher à proximité" : z.multi ? "Moins cher de vos zones" : "Moins cher de la zone"}</div>
+            <div class="crown"><ha-icon icon="mdi:trophy"></ha-icon>${z.mobile ? _("Moins cher à proximité") : z.multi ? _("Moins cher de vos zones") : _("Moins cher de la zone")}</div>
             <div class="hn">${esc(best.name)}</div>
             <div class="hs">${esc(this._where(best))}${best.distance != null ? ` · ${km(best.distance)}` : ""}</div>
           </div>
           <div class="price">${priceHTML(f.price)}</div>
           <div class="hb">
             <span class="chip"><i class="dot ${a.cls}"></i>${esc(a.txt)}</span>
-            ${t7 != null ? `<span class="chip ${t7 < 0 ? "down" : t7 > 0 ? "up" : ""}"><ha-icon icon="${t7 < 0 ? "mdi:trending-down" : t7 > 0 ? "mdi:trending-up" : "mdi:trending-neutral"}"></ha-icon>${cts(t7)} / 7 j</span>` : ""}
-            ${dAvg != null && st.count > 1 ? `<span class="chip down">${cts(dAvg)} vs moy.</span>` : ""}
-            ${this._click() === "none" ? "" : `<a class="go" href="${this._maps(best)}" target="_blank" rel="noopener"><ha-icon icon="mdi:directions"></ha-icon>Itinéraire</a>`}
+            ${t7 != null ? `<span class="chip ${t7 < 0 ? "down" : t7 > 0 ? "up" : ""}"><ha-icon icon="${t7 < 0 ? "mdi:trending-down" : t7 > 0 ? "mdi:trending-up" : "mdi:trending-neutral"}"></ha-icon>${_("{c} / 7 j", { c: cts(t7) })}</span>` : ""}
+            ${dAvg != null && st.count > 1 ? `<span class="chip down">${_("{c} vs moy.", { c: cts(dAvg) })}</span>` : ""}
+            ${this._click() === "none" ? "" : `<a class="go" href="${this._maps(best)}" target="_blank" rel="noopener"><ha-icon icon="mdi:directions"></ha-icon>${_("Itinéraire")}</a>`}
           </div>
         </div>`;
       }
@@ -255,8 +377,8 @@
       const list = merged
         ? this._sorted(rows.concat(favs), fuel, sm).map((s) => this._row(s, fuel, (s.fuels[fuel] || {}).rank, lo, hi)).join("")
         : rows.map((s, i) => this._row(s, fuel, i + 1, lo, hi)).join("");
-      const favHTML = !merged && favs.length ? `<div class="sec"><ha-icon icon="mdi:star"></ha-icon>Tes stations</div>${favs.map((s) => this._row(s, fuel, (s.fuels[fuel] || {}).rank, lo, hi)).join("")}` : "";
-      const title = cfg.title || `Carburant ${z.zone}`;
+      const favHTML = !merged && favs.length ? `<div class="sec"><ha-icon icon="mdi:star"></ha-icon>${_("Tes stations")}</div>${favs.map((s) => this._row(s, fuel, (s.fuels[fuel] || {}).rank, lo, hi)).join("")}` : "";
+      const title = cfg.title || _("Carburant {z}", { z: z.zone });
 
       root.innerHTML = `<style>${HolmFuelCard.css()}</style>
       <ha-card style="--c:${col}">
@@ -265,14 +387,14 @@
           <div class="head">
             <div class="hic"><ha-icon icon="mdi:gas-station"></ha-icon></div>
             <div class="ht"><div class="title">${esc(title)}</div>
-              <div class="sub">${z.mobile ? `<ha-icon class="mob" icon="mdi:crosshairs-gps"></ha-icon>${z.tracker_name && !String(z.zone).includes(z.tracker_name) ? `autour de ${esc(z.tracker_name)} · ` : ""}` : ""}${st.count || 0} stations · ${z.multi ? `${z.multi} zones` : `${String(z.radius).replace(".", ",")} km`} · ${ago(z.updated)}</div></div>
-            <button class="ref" title="Actualiser"><ha-icon icon="mdi:refresh"></ha-icon></button>
+              <div class="sub">${z.mobile ? `<ha-icon class="mob" icon="mdi:crosshairs-gps"></ha-icon>${z.tracker_name && !String(z.zone).includes(z.tracker_name) ? `${_("autour de {n}", { n: esc(z.tracker_name) })} · ` : ""}` : ""}${_("{n} stations", { n: st.count || 0 })} · ${z.multi ? _("{n} zones", { n: z.multi }) : `${String(z.radius).replace(".", ",")} km`} · ${ago(z.updated)}</div></div>
+            <button class="ref" title="${_("Actualiser")}"><ha-icon icon="mdi:refresh"></ha-icon></button>
           </div>
           <div class="tabs">${tabs}</div>
           ${hero}
           ${chart}
-          <div class="sec"><ha-icon icon="mdi:format-list-numbered"></ha-icon>${merged ? `Stations · ${{ price: "prix", distance: "distance", updated: "mise à jour", name: "nom" }[sm]}` : "Classement"}<span>${lo != null ? `${lo.toFixed(3).replace(".", ",")} → ${hi.toFixed(3).replace(".", ",")} €` : ""}</span></div>
-          <div class="list">${list || `<div class="none">Aucune station.</div>`}</div>
+          <div class="sec"><ha-icon icon="mdi:format-list-numbered"></ha-icon>${merged ? _("Stations · {s}", { s: { price: _("par prix"), distance: _("par distance"), updated: _("par mise à jour"), name: _("par nom") }[sm] }) : _("Classement")}<span>${lo != null ? `${lo.toFixed(3).replace(".", ",")} → ${hi.toFixed(3).replace(".", ",")} €` : ""}</span></div>
+          <div class="list">${list || `<div class="none">${_("Aucune station.")}</div>`}</div>
           ${favHTML}
         </div>
       </ha-card>`;
@@ -316,16 +438,16 @@
         const tag = mode === "maps" ? `a class="cr" href="${this._maps(x)}" target="_blank" rel="noopener"` : `div class="cr${mode === "details" ? " clk" : " ro"}${open ? " open" : ""}" data-id="${esc(x.id)}"`;
         return `<${tag}>
           <span class="clogo">${this._logo(x)}</span>
-          <span class="cn"><b>${esc(x.name)}${fav ? `<ha-icon class="star" icon="mdi:star"></ha-icon>` : ""}</b><small>${esc(this._where(x))}${x.distance != null ? ` · ${km(x.distance)}` : ""}${x.in_zone === false ? " · hors zone" : ""}</small></span>
-          <span class="cpz">${f.price != null ? `<i class="cdot ${cheap ? "g" : dear ? "r" : ""}"></i>${f.price.toFixed(3).replace(".", ",")} €` : `<span class="rupt">Rupture</span>`}</span>
-          <span class="cj ${d == null ? "" : d <= 1 ? "ok" : d <= 3 ? "mid" : "old"}">${d == null ? "–" : "J+" + d}</span>
+          <span class="cn"><b>${esc(x.name)}${fav ? `<ha-icon class="star" icon="mdi:star"></ha-icon>` : ""}</b><small>${esc(this._where(x))}${x.distance != null ? ` · ${km(x.distance)}` : ""}${x.in_zone === false ? _(" · hors zone") : ""}</small></span>
+          <span class="cpz">${f.price != null ? `<i class="cdot ${cheap ? "g" : dear ? "r" : ""}"></i>${f.price.toFixed(3).replace(".", ",")} €` : `<span class="rupt">${_("Rupture")}</span>`}</span>
+          <span class="cj ${d == null ? "" : d <= 1 ? "ok" : d <= 3 ? "mid" : "old"}">${d == null ? "–" : _("J+") + d}</span>
         </${mode === "maps" ? "a" : "div"}>${open ? `<div class="cdet">${this._detail(x)}</div>` : ""}`;
       }).join("");
       root.innerHTML = `<style>${HolmFuelCard.css()}</style>
       <ha-card class="compact" style="--c:${col}">
         <div class="wrap cw">
-          <div class="chead"><ha-icon icon="${z.mobile ? "mdi:crosshairs-gps" : "mdi:gas-station"}"></ha-icon><span class="ct">${esc(cfg.title || `Stations ${z.zone}`)}</span>${pills}<button class="ref cref" title="Actualiser"><ha-icon icon="mdi:refresh"></ha-icon></button></div>
-          <div class="ctab"><div class="cth">${[["", ""], ["distance", "Station"], ["price", "Prix"], ["updated", "MàJ"]].map(([k, l]) => k ? `<button class="cs${sm === k ? " on" : ""}" data-s="${k}" title="Trier">${l}${sm === k ? " ▾" : ""}</button>` : "<span></span>").join("")}</div>${rows || `<div class="none">Aucune station.</div>`}</div>
+          <div class="chead"><ha-icon icon="${z.mobile ? "mdi:crosshairs-gps" : "mdi:gas-station"}"></ha-icon><span class="ct">${esc(cfg.title || _("Stations {z}", { z: z.zone }))}</span>${pills}<button class="ref cref" title="${_("Actualiser")}"><ha-icon icon="mdi:refresh"></ha-icon></button></div>
+          <div class="ctab"><div class="cth">${[["", ""], ["distance", _("Station")], ["price", _("Prix")], ["updated", _("MàJ")]].map(([k, l]) => k ? `<button class="cs${sm === k ? " on" : ""}" data-s="${k}" title="${_("Trier")}">${_(l)}${sm === k ? " ▾" : ""}</button>` : "<span></span>").join("")}</div>${rows || `<div class="none">${_("Aucune station.")}</div>`}</div>
         </div>
       </ha-card>`;
       root.querySelectorAll(".cp").forEach((b) => b.addEventListener("click", () => { this._fuel = b.dataset.f; this._render(); }));
@@ -356,7 +478,7 @@
         const others = this._zone.fuels.map((x) => {
           const g = s.fuels[x.key];
           if (!g) return "";
-          return `<span class="fc" style="--c:${FUEL_COLOR[x.key]}"><b>${esc(x.label)}</b>${g.price != null ? g.price.toFixed(3).replace(".", ",") + " €" : `<em>rupture</em>`}</span>`;
+          return `<span class="fc" style="--c:${FUEL_COLOR[x.key]}"><b>${esc(x.label)}</b>${g.price != null ? g.price.toFixed(3).replace(".", ",") + " €" : `<em>${_("rupture")}</em>`}</span>`;
         }).join("");
         const serv = (s.services || []).slice(0, 10).map((x) => {
           const ic = (SERVICE_ICON.find(([re]) => re.test(x)) || [0, "mdi:check-circle-outline"])[1];
@@ -366,12 +488,12 @@
         const fuel = this._fuel, sh = ((this._zone.stations_history || this._zone.favorites_history || {})[s.id] || {})[fuel] || [];
         const zavg = Object.fromEntries((this._zone.history[fuel] || []).map((d) => [d.date, d.avg]));
         const shist = sh.map((d) => ({ date: d.date, min: d.price, avg: zavg[d.date] ?? null }));
-        const schart = this._config.show_chart === false || this._zone.mobile && !this._zone.favorites.includes(s.id) ? "" : `<div class="stc">${this._chart(shist, FUEL_COLOR[fuel] || "38,198,218", "st-" + s.id, "cette station")}</div>`;
+        const schart = this._config.show_chart === false || this._zone.mobile && !this._zone.favorites.includes(s.id) ? "" : `<div class="stc">${this._chart(shist, FUEL_COLOR[fuel] || "38,198,218", "st-" + s.id, _("cette station"))}</div>`;
         return `
           ${schart}
           <div class="addr"><ha-icon icon="mdi:map-marker-outline"></ha-icon>${esc(s.address)}, ${esc(s.postal_code || "")} ${esc(s.city)}</div>
           <div class="fcs">${others}</div>
-          ${s.automate_24_24 ? `<div class="sv24"><ha-icon icon="mdi:hours-24"></ha-icon>Automate 24 h/24</div>` : ""}
+          ${s.automate_24_24 ? `<div class="sv24"><ha-icon icon="mdi:hours-24"></ha-icon>${_("Automate 24 h/24")}</div>` : ""}
           ${serv ? `<div class="svs">${serv}</div>` : ""}
           ${links}`;
       }
@@ -381,14 +503,14 @@
         <div class="rk">${rank || "–"}</div>
         <div class="logo">${this._logo(s)}</div>
         <div class="ri"><div class="rn">${esc(s.name)}${fav ? `<ha-icon class="star" icon="mdi:star"></ha-icon>` : ""}</div>
-          <div class="rs">${esc(this._where(s))}${s.distance != null ? ` · ${km(s.distance)}` : ""}${s.in_zone === false ? " · hors zone" : ""} · <i class="dot ${a.cls}"></i>${esc(a.txt)}</div>
+          <div class="rs">${esc(this._where(s))}${s.distance != null ? ` · ${km(s.distance)}` : ""}${s.in_zone === false ? _(" · hors zone") : ""} · <i class="dot ${a.cls}"></i>${esc(a.txt)}</div>
           <div class="bar"><i style="width:${pct}%"></i></div></div>
-        <div class="rp">${f.price != null ? priceHTML(f.price) : `<span class="rupt">Rupture</span>`}${f.price != null && lo != null && rank !== 1 ? `<em>${cts(f.price - lo)}</em>` : ""}</div>
+        <div class="rp">${f.price != null ? priceHTML(f.price) : `<span class="rupt">${_("Rupture")}</span>`}${f.price != null && lo != null && rank !== 1 ? `<em>${cts(f.price - lo)}</em>` : ""}</div>
         ${det}
       </div>`;
     }
-    _chart(h, col, key = "zone", main = "meilleur") {
-      if (!h || h.length < 2) return `<div class="chart nodata"><ha-icon icon="mdi:chart-line"></ha-icon>${key === "zone" ? "L'historique se construit jour après jour (tendance dès demain)." : "L'historique de cette station se construit jour après jour."}</div>`;
+    _chart(h, col, key = "zone", main = _("meilleur")) {
+      if (!h || h.length < 2) return `<div class="chart nodata"><ha-icon icon="mdi:chart-line"></ha-icon>${key === "zone" ? _("L'historique se construit jour après jour (tendance dès demain).") : _("L'historique de cette station se construit jour après jour.")}</div>`;
       const W = 320, H = 70, P = 4, B = 12;
       const vals = h.flatMap((d) => [d.min, d.avg]).filter((v) => v != null);
       const vmin = Math.min(...vals), vmax = Math.max(...vals);
@@ -398,7 +520,7 @@
       const line = (k) => h.filter((d) => d[k] != null).map((d, i) => `${i ? "L" : "M"}${X(h.indexOf(d)).toFixed(1)},${Y(d[k]).toFixed(1)}`).join(" ");
       const area = `${line("min")} L${X(h.length - 1)},${H - B} L${X(0)},${H - B} Z`;
       const d0 = new Date(h[0].date), d1 = new Date(h[h.length - 1].date);
-      const f = (d) => d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+      const f = (d) => d.toLocaleDateString(NUMLOC, { day: "numeric", month: "short" });
       const vals_on = this._config.chart_values !== false;
       (this._charts ||= {})[key] = { h, main };
       const svg = `<svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none">
@@ -406,7 +528,7 @@
         ${vals_on ? `<path d="M0,${Y(vmax).toFixed(1)} H${W} M0,${Y(vmin).toFixed(1)} H${W}" class="grid"/>` : ""}
         <path d="${area}" fill="url(#fg)"/><path d="${line("avg")}" class="avg"/><path d="${line("min")}" class="min"/>
         <circle cx="${X(h.length - 1)}" cy="${Y(h[h.length - 1].min)}" r="3" class="pt"/></svg>`;
-      const leg = `<div class="leg"><span>${f(d0)}</span><span><i class="lm"></i>${main} <i class="la"></i>moyenne</span><span>${f(d1)}</span></div>`;
+      const leg = `<div class="leg"><span>${f(d0)}</span><span><i class="lm"></i>${_(main)} <i class="la"></i>${_("moyenne")}</span><span>${f(d1)}</span></div>`;
       if (!vals_on) return `<div class="chart">${svg}${leg}</div>`;
       // valeurs : prix extrêmes sur l'axe, valeurs du jour au bout des courbes, bulle au survol
       const pct = (v) => (Y(v) / H) * 100;
@@ -449,10 +571,10 @@
         const hm = hov.querySelector(".hm"), ha = hov.querySelector(".ha");
         hm.style.cssText = `left:${x}%;top:${yp(d.min)}%`;
         ha.style.cssText = d.avg != null ? `left:${x}%;top:${yp(d.avg)}%` : "display:none";
-        let day = new Date(d.date).toLocaleDateString("fr-FR", { weekday: "short", day: "numeric", month: "short" });
+        let day = new Date(d.date).toLocaleDateString(NUMLOC, { weekday: "short", day: "numeric", month: "short" });
         day = day.charAt(0).toUpperCase() + day.slice(1);
         const p3 = (v) => (v == null ? "–" : `${v.toFixed(3).replace(".", ",")} €`);
-        tip.innerHTML = `<b>${day}</b><span><i class="lm"></i>${main} ${p3(d.min)}</span><span><i class="la"></i>moyenne ${p3(d.avg)}</span>`;
+        tip.innerHTML = `<b>${day}</b><span><i class="lm"></i>${_(main)} ${p3(d.min)}</span><span><i class="la"></i>${_("moyenne")} ${p3(d.avg)}</span>`;
         tip.style.left = x > 55 ? "auto" : `calc(${x}% + 10px)`;
         tip.style.right = x > 55 ? `calc(${100 - x}% + 10px)` : "auto";
       };
@@ -635,7 +757,8 @@
     }
     set hass(hass) {
       this._hass = hass;
-      if (!this._form) this._build();
+      const _l = setLang(hass, this._config); if (this._form && _l !== this._lang) { this._form.remove(); this._form = null; } this._lang = _l;
+      if (!this._form) { if (!this._building) { this._building = true; this._build().finally(() => (this._building = false)); } }
       else this._form.hass = hass;
     }
     async _build() {
@@ -645,28 +768,30 @@
       zones.forEach((z) => z.fuels.forEach((f) => { if (!fuels.some((x) => x.value === f.key)) fuels.push({ value: f.key, label: f.label }); }));
       const f = document.createElement("ha-form");
       f.hass = this._hass;
-      f.schema = [
-        { name: "entry_ids", selector: { select: { multiple: true, mode: "list", options: zones.map((z) => ({ value: z.entry_id, label: z.title + (z.mobile ? " (mobile)" : "") })) } } },
-        { name: "layout", selector: { select: { mode: "list", options: [{ value: "full", label: "Complète (meilleur prix, tendance, classement)" }, { value: "compact", label: "Compacte (tableau des stations)" }] } } },
+      f.schema = locSchema([
+        langField(),
+        { name: "entry_ids", selector: { select: { multiple: true, mode: "list", options: zones.map((z) => ({ value: z.entry_id, label: z.title + (z.mobile ? _(" (mobile)") : "") })) } } },
+        { name: "layout", selector: { select: { mode: "list", options: [{ value: "full", label: _("Complète (meilleur prix, tendance, classement)") }, { value: "compact", label: _("Compacte (tableau des stations)") }] } } },
         { name: "title", selector: { text: {} } },
-        { name: "theme", selector: { select: { mode: "dropdown", options: [{ value: "auto", label: "Automatique (suit le mode clair / sombre)" }, { value: "dark", label: "Sombre" }, { value: "light", label: "Clair" }, { value: "theme", label: "Couleurs de mon thème Home Assistant" }] } } },
+        { name: "theme", selector: { select: { mode: "dropdown", options: [{ value: "auto", label: _("Automatique (suit le mode clair / sombre)") }, { value: "dark", label: _("Sombre") }, { value: "light", label: _("Clair") }, { value: "theme", label: _("Couleurs de mon thème Home Assistant") }] } } },
         { type: "grid", name: "", schema: [
           { name: "fuel", selector: { select: { mode: "dropdown", options: fuels } } },
           { name: "rows", selector: { number: { min: 3, max: 20, mode: "box" } } },
         ] },
         { name: "fuels", selector: { select: { multiple: true, mode: "list", options: fuels } } },
-        { name: "sort", selector: { select: { mode: "dropdown", options: [{ value: "default", label: "Classement, puis mes favorites (par défaut)" }, { value: "price", label: "Prix le plus bas d'abord (tout mélangé)" }, { value: "distance", label: "Plus proche d'abord" }, { value: "updated", label: "Mise à jour la plus récente d'abord" }, { value: "name", label: "Nom (A → Z)" }] } } },
-        { name: "station_click", selector: { select: { mode: "dropdown", options: [{ value: "details", label: "Afficher le détail de la station" }, { value: "maps", label: "Ouvrir l'itinéraire (Google Maps)" }, { value: "none", label: "Rien (lecture seule, aucun lien)" }] } } },
+        { name: "sort", selector: { select: { mode: "dropdown", options: [{ value: "default", label: _("Classement, puis mes favorites (par défaut)") }, { value: "price", label: _("Prix le plus bas d'abord (tout mélangé)") }, { value: "distance", label: _("Plus proche d'abord") }, { value: "updated", label: _("Mise à jour la plus récente d'abord") }, { value: "name", label: _("Nom (A → Z)") }] } } },
+        { name: "station_click", selector: { select: { mode: "dropdown", options: [{ value: "details", label: _("Afficher le détail de la station") }, { value: "maps", label: _("Ouvrir l'itinéraire (Google Maps)") }, { value: "none", label: _("Rien (lecture seule, aucun lien)") }] } } },
         { type: "grid", name: "", schema: [{ name: "show_chart", selector: { boolean: {} } }, { name: "chart_values", selector: { boolean: {} } }, { name: "show_favorites", selector: { boolean: {} } }, { name: "favorites_only", selector: { boolean: {} } }] },
-      ];
-      const L = { sort: "Tri des stations", entry_ids: "Zones (une ou plusieurs, réunies dans la carte)", station_click: "Clic sur une station", entry_id: "Zone", title: "Titre (optionnel)", fuel: "Carburant affiché par défaut", rows: "Stations dans le classement", fuels: "Onglets carburants (vide = tous)", show_chart: "Courbe de tendance", chart_values: "Valeurs sur la courbe", show_favorites: "Afficher mes favorites", layout: "Présentation", theme: "Apparence", favorites_only: "Compacte : uniquement mes favorites" };
-      f.computeLabel = (s) => L[s.name] || s.name;
+      ]);
+      const L = { language: _("Langue"), sort: _("Tri des stations"), entry_ids: _("Zones (une ou plusieurs, réunies dans la carte)"), station_click: _("Clic sur une station"), entry_id: _("Zone"), title: _("Titre (optionnel)"), fuel: _("Carburant affiché par défaut"), rows: _("Stations dans le classement"), fuels: _("Onglets carburants (vide = tous)"), show_chart: _("Courbe de tendance"), chart_values: _("Valeurs sur la courbe"), show_favorites: _("Afficher mes favorites"), layout: _("Présentation"), theme: _("Apparence"), favorites_only: _("Compacte : uniquement mes favorites") };
+      f.computeLabel = (s) => (L[s.name] ? _(L[s.name]) : s.name);
       const cfg0 = { ...this._config };
       if (!cfg0.entry_ids && cfg0.entry_id) cfg0.entry_ids = [cfg0.entry_id];
       f.data = { layout: "full", theme: "auto", rows: 6, show_chart: true, chart_values: true, show_favorites: true, station_click: cfg0.layout === "compact" ? "maps" : "details", ...cfg0 };
       f.addEventListener("value-changed", (e) => {
         this._config = { ...e.detail.value };
         delete this._config.entry_id;
+        if (!this._config.language) delete this._config.language;
         if (!this._config.entry_ids || !this._config.entry_ids.length) delete this._config.entry_ids;
         this.dispatchEvent(new CustomEvent("config-changed", { detail: { config: JSON.parse(JSON.stringify(this._config)) }, bubbles: true, composed: true }));
       });
@@ -679,7 +804,8 @@
   if (!customElements.get("holm-fuel-card-editor")) customElements.define("holm-fuel-card-editor", HolmFuelCardEditor);
   window.customCards = window.customCards || [];
   if (!window.customCards.some((c) => c.type === "holm-fuel-card")) {
-    window.customCards.push({ type: "holm-fuel-card", name: "HOLM Carburant", description: "Prix des carburants autour de chez vous : meilleur prix, tendance, classement et favorites.", preview: false });
+    setLang(document.querySelector("home-assistant")?.hass);
+    window.customCards.push({ type: "holm-fuel-card", name: _("HOLM Carburant"), description: _("Prix des carburants autour de chez vous : meilleur prix, tendance, classement et favorites."), preview: false });
   }
   console.info(`%c HOLM-FUEL %c ${VERSION} `, "background:#f59e0b;color:#fff;border-radius:3px 0 0 3px", "background:#123;color:#fff;border-radius:0 3px 3px 0");
 })();
