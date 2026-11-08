@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.6.1
+- **« Couleurs de mon thème » suit vraiment le thème** ([#12](https://github.com/kaaribou/carburant-holm/issues/12)) : fond, flou (`ha-card-backdrop-filter`), bordure et ombre des cartes du thème, et non plus seulement la couleur de fond. Un thème transparent / « verre » rend la carte translucide.
+- **card_mod sur le fond** : en Automatique, Sombre et Couleurs de mon thème, un style card_mod (ou un thème card-mod) sur `ha-card` passe devant celui de la carte, sans `!important` (règles de fond placées dans une couche CSS `@layer`).
+- **Nouvelle apparence « Verre »** (`theme: glass`) : fond sombre translucide et flou de l'arrière-plan, couleurs de la carte conservées. Traduite dans les 8 langues.
+- Variables CSS `--holm-fuel-background`, `--holm-fuel-backdrop-filter`, `--holm-fuel-border`, `--holm-fuel-box-shadow` pour ajuster le fond quelle que soit l'apparence.
+- Les apparences Automatique, Sombre et Clair sont inchangées sans thème card-mod.
+
 ## 1.6.0
 - **8 langues** : traductions allemand, espagnol, italien, néerlandais, portugais et polonais ajoutées (configuration, options, entités, actions), en plus du français et de l'anglais. Carte HOLM Carburant traduite elle aussi (éditeur compris), avec une nouvelle option `language` ; elle suit sinon la langue du profil Home Assistant (anglais si la langue n'est pas traduite).
 - README en anglais (`README.en.md`).

@@ -88,6 +88,7 @@
     "Automatique (suit le mode clair / sombre)": ["Automatic (follows light / dark mode)", "Automatisch (folgt hellem / dunklem Modus)", "Automático (sigue el modo claro / oscuro)", "Automatico (segue la modalità chiara / scura)", "Automatisch (volgt lichte / donkere modus)", "Automático (segue o modo claro / escuro)", "Automatycznie (zgodnie z trybem jasnym / ciemnym)"],
     "Sombre": ["Dark", "Dunkel", "Oscuro", "Scuro", "Donker", "Escuro", "Ciemny"],
     "Clair": ["Light", "Hell", "Claro", "Chiaro", "Licht", "Claro", "Jasny"],
+    "Verre (fond transparent et flou)": ["Glass (transparent, blurred background)", "Glas (transparenter, unscharfer Hintergrund)", "Vidrio (fondo transparente y desenfocado)", "Vetro (sfondo trasparente e sfocato)", "Glas (transparante, vervaagde achtergrond)", "Vidro (fundo transparente e desfocado)", "Szkło (przezroczyste, rozmyte tło)"],
     "Couleurs de mon thème Home Assistant": ["My Home Assistant theme colours", "Farben meines Home-Assistant-Themes", "Colores de mi tema de Home Assistant", "Colori del mio tema Home Assistant", "Kleuren van mijn Home Assistant-thema", "Cores do meu tema do Home Assistant", "Kolory mojego motywu Home Assistant"],
     "Classement, puis mes favorites (par défaut)": ["Ranking, then my favourites (default)", "Rangliste, dann meine Favoriten (Standard)", "Clasificación y luego mis favoritas (predeterminado)", "Classifica, poi i miei preferiti (predefinito)", "Ranglijst, daarna mijn favorieten (standaard)", "Classificação, depois os meus favoritos (padrão)", "Ranking, potem moje ulubione (domyślnie)"],
     "Prix le plus bas d'abord (tout mélangé)": ["Lowest price first (all mixed)", "Niedrigster Preis zuerst (alles gemischt)", "Precio más bajo primero (todo mezclado)", "Prezzo più basso prima (tutto insieme)", "Laagste prijs eerst (alles door elkaar)", "Preço mais baixo primeiro (tudo misturado)", "Najniższa cena najpierw (wszystko razem)"],
@@ -124,7 +125,7 @@
     if (o.selector && o.selector.select && o.name !== "language") o.selector = { ...o.selector, select: { ...o.selector.select, options: (o.selector.select.options || []).map((op) => (typeof op === "string" ? op : { ...op, label: _(op.label) })) } };
     if (o.name === "language" && o.selector && o.selector.select) o.selector = { ...o.selector, select: { ...o.selector.select, options: o.selector.select.options.map((op) => (op.value ? op : { ...op, label: _("Automatique (profil)") })) } };
     return o; });
-  const VERSION = "1.6.0";
+  const VERSION = "1.6.1";
   const FUEL_COLOR = { gazole: "245,158,11", e10: "34,197,94", sp98: "59,130,246", sp95: "6,182,212", e85: "132,204,22", gplc: "168,85,247" };
   const SERVICE_ICON = [
     [/lavage/i, "mdi:car-wash"], [/boutique|alimentaire/i, "mdi:basket"], [/gonflage/i, "mdi:tire"], [/toilette/i, "mdi:toilet"],
@@ -591,8 +592,35 @@
       :host { display: block; }
       ha-card { display: block; position: relative; overflow: hidden; container-type: inline-size; --c: 38,198,218;
         --ink: 255,255,255; --tx: #e6f2f5; --tx2: rgba(220,235,240,.62); --hi: #fff;
-        border-radius: var(--ha-card-border-radius, 20px); background: linear-gradient(160deg, rgba(20,28,38,.92), rgba(10,15,22,.96));
-        border: 1px solid rgba(var(--c), .2); box-shadow: 0 8px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(var(--ink),.04); color: var(--tx); }
+        border-radius: var(--ha-card-border-radius, 20px); color: var(--tx); }
+      /* ---------- surface de la carte : fond, flou, bordure, ombre ----------
+         Sombre, Automatique et Couleurs de mon thème sont dans une couche (@layer) : un style card_mod (ou celui d'un thème
+         card-mod) sur ha-card passe toujours devant, sans !important. Clair et Verre, choisis exprès, gardent leur fond. Variables possibles : --holm-fuel-background, --holm-fuel-backdrop-filter, --holm-fuel-border, --holm-fuel-box-shadow */
+      @layer holm-surface {
+        ha-card {
+          background: var(--holm-fuel-background, linear-gradient(160deg, rgba(20,28,38,.92), rgba(10,15,22,.96)));
+          -webkit-backdrop-filter: var(--holm-fuel-backdrop-filter, none); backdrop-filter: var(--holm-fuel-backdrop-filter, none);
+          border: var(--holm-fuel-border, 1px solid rgba(var(--c), .2));
+          box-shadow: var(--holm-fuel-box-shadow, 0 8px 26px rgba(0,0,0,.35), inset 0 1px 0 rgba(var(--ink),.04)); }
+        /* couleurs de mon thème : fond, flou, bordure et ombre des cartes du thème (thèmes « verre » compris) */
+        :host([data-tone="theme"]) ha-card {
+          background: var(--holm-fuel-background, var(--ha-card-background, var(--card-background-color)));
+          -webkit-backdrop-filter: var(--holm-fuel-backdrop-filter, var(--ha-card-backdrop-filter, none)); backdrop-filter: var(--holm-fuel-backdrop-filter, var(--ha-card-backdrop-filter, none));
+          border: var(--holm-fuel-border, var(--ha-card-border-width, 1px) solid var(--ha-card-border-color, var(--divider-color, rgba(127,127,127,.2))));
+          box-shadow: var(--holm-fuel-box-shadow, var(--ha-card-box-shadow, none)); }
+
+      }
+      /* choix explicites : clair et verre gardent leur fond, même avec un thème card-mod */
+      :host([data-tone="light"]) ha-card {
+        background: var(--holm-fuel-background, linear-gradient(160deg, rgba(255,255,255,.96), rgba(241,245,249,.97)));
+        box-shadow: var(--holm-fuel-box-shadow, 0 8px 26px rgba(15,23,42,.12), inset 0 1px 0 rgba(255,255,255,.8)); }
+      /* verre : fond sombre translucide et flou de ce qu'il y a derrière, couleurs de la carte conservées */
+      :host([data-tone="glass"]) ha-card {
+        background: var(--holm-fuel-background, linear-gradient(160deg, rgba(20,28,38,.5), rgba(10,15,22,.62)));
+        -webkit-backdrop-filter: var(--holm-fuel-backdrop-filter, blur(16px) saturate(140%)); backdrop-filter: var(--holm-fuel-backdrop-filter, blur(16px) saturate(140%));
+        border: var(--holm-fuel-border, 1px solid rgba(255,255,255,.12));
+        box-shadow: var(--holm-fuel-box-shadow, 0 8px 26px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.08)); }
+
       .amb { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(80% 50% at 100% 0%, rgba(var(--c), .18), transparent 70%); transition: background .6s; }
       button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; padding: 0; }
       a { color: inherit; text-decoration: none; }
@@ -737,10 +765,8 @@
       .cj.ok { color: #4ade80; } .cj.mid { color: #fbbf24; } .cj.old { color: #94a3b8; }
       @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
       /* ---------- thèmes : clair / couleurs du thème Home Assistant ---------- */
-      :host([data-tone="light"]) ha-card { --ink: 15,23,42; --tx: #0f172a; --tx2: rgba(15,23,42,.62); --hi: #0f172a;
-        background: linear-gradient(160deg, rgba(255,255,255,.96), rgba(241,245,249,.97)); box-shadow: 0 8px 26px rgba(15,23,42,.12), inset 0 1px 0 rgba(255,255,255,.8); }
-      :host([data-tone="theme"]) ha-card { --tx: var(--primary-text-color); --tx2: var(--secondary-text-color); --hi: var(--primary-text-color);
-        background: var(--ha-card-background, var(--card-background-color)); }
+      :host([data-tone="light"]) ha-card { --ink: 15,23,42; --tx: #0f172a; --tx2: rgba(15,23,42,.62); --hi: #0f172a; }
+      :host([data-tone="theme"]) ha-card { --tx: var(--primary-text-color); --tx2: var(--secondary-text-color); --hi: var(--primary-text-color); }
       :host([data-tone="theme"][data-dark="0"]) ha-card { --ink: 15,23,42; }
       :host([data-tone="light"]) .price, :host([data-tone="theme"][data-dark="0"]) .price { text-shadow: none; }
       :host([data-tone="light"]) .go, :host([data-tone="light"]) .cp.on, :host([data-tone="theme"][data-dark="0"]) .go, :host([data-tone="theme"][data-dark="0"]) .cp.on { background: rgb(var(--c)); }
@@ -773,7 +799,7 @@
         { name: "entry_ids", selector: { select: { multiple: true, mode: "list", options: zones.map((z) => ({ value: z.entry_id, label: z.title + (z.mobile ? _(" (mobile)") : "") })) } } },
         { name: "layout", selector: { select: { mode: "list", options: [{ value: "full", label: _("Complète (meilleur prix, tendance, classement)") }, { value: "compact", label: _("Compacte (tableau des stations)") }] } } },
         { name: "title", selector: { text: {} } },
-        { name: "theme", selector: { select: { mode: "dropdown", options: [{ value: "auto", label: _("Automatique (suit le mode clair / sombre)") }, { value: "dark", label: _("Sombre") }, { value: "light", label: _("Clair") }, { value: "theme", label: _("Couleurs de mon thème Home Assistant") }] } } },
+        { name: "theme", selector: { select: { mode: "dropdown", options: [{ value: "auto", label: _("Automatique (suit le mode clair / sombre)") }, { value: "dark", label: _("Sombre") }, { value: "light", label: _("Clair") }, { value: "theme", label: _("Couleurs de mon thème Home Assistant") }, { value: "glass", label: _("Verre (fond transparent et flou)") }] } } },
         { type: "grid", name: "", schema: [
           { name: "fuel", selector: { select: { mode: "dropdown", options: fuels } } },
           { name: "rows", selector: { number: { min: 3, max: 20, mode: "box" } } },

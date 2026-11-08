@@ -39,7 +39,15 @@ Données officielles : flux instantané v2 du Ministère de l'Économie ([data.e
 |---|---|---|
 | ![Carte complète](docs/images/carte-complete.png) | ![Carte compacte](docs/images/carte-compacte.png) | ![Favorites](docs/images/carte-compacte-favorites.png) |
 
-### 🆕 Nouveautés de la 1.6.0
+### 🆕 Nouveautés de la 1.6.1
+
+- 🪟 **Nouvelle apparence « Verre »** (`theme: glass`) : un fond sombre translucide avec un flou de ce qu'il y a derrière (glassmorphism), en gardant les couleurs de la carte.
+- 🎨 **« Couleurs de mon thème » suit vraiment le thème** ([#12](https://github.com/kaaribou/carburant-holm/issues/12)) : la carte reprend maintenant le fond, le flou, la bordure et l'ombre des cartes de votre thème (`ha-card-background`, `ha-card-backdrop-filter`, `ha-card-border-color`, `ha-card-box-shadow`…). Avec un thème transparent, elle devient transparente comme les autres.
+- 🧩 **card_mod fonctionne enfin sur le fond**, sans `!important` ni modifier le fichier de la carte. Voir [Fond de la carte et card_mod](#fond-de-la-carte-et-card_mod).
+
+![Les apparences Sombre, Verre, Couleurs de mon thème et Clair](docs/images/apparences.png)
+
+### Nouveautés de la 1.6.0
 
 - 🌍 **8 langues** : l'intégration (configuration, options, entités, actions) est traduite en français, anglais, allemand, espagnol, italien, néerlandais, portugais et polonais, selon la langue de Home Assistant. La carte **HOLM Carburant** aussi, éditeur compris ; son option `language` permet d'imposer une langue.
 - 🇬🇧 README en anglais.
@@ -70,6 +78,7 @@ Données officielles : flux instantané v2 du Ministère de l'Économie ([data.e
 - [Modifier une zone (options)](#modifier-une-zone-options)
 - [Entités créées](#entités-créées)
 - [La carte `holm-fuel-card`](#la-carte-holm-fuel-card)
+  - [Fond de la carte et card_mod](#fond-de-la-carte-et-card_mod)
 - [Exemples d'automatisations](#exemples-dautomatisations)
 - [Exemples de templates](#exemples-de-templates)
 - [API WebSocket](#api-websocket)
@@ -219,7 +228,7 @@ Tableau façon « liste de stations » : logo · nom (ville, distance) · prix �
 | Tri des stations | `sort` | `default` | `default` (classement puis favorites), `price` (prix le plus bas d'abord, favorites et hors zone compris), `distance`, `updated` (mise à jour la plus récente) ou `name`. En vue compacte, un clic sur les en-têtes *Station* / *Prix* / *MàJ* trie aussi à la volée. |
 | Clic sur une station | `station_click` | `details` (complète) / `maps` (compacte) | `details` (fiche détaillée), `maps` (itinéraire Google Maps) ou `none` (lecture seule, aucun lien). |
 | Présentation | `layout` | `full` | `full` (complète) ou `compact`. |
-| Apparence | `theme` | `auto` | `auto` (suit le mode clair / sombre de Home Assistant), `dark`, `light` ou `theme` (reprend les couleurs de votre thème). |
+| Apparence | `theme` | `auto` | `auto` (suit le mode clair / sombre de Home Assistant), `dark` (sombre), `light` (clair), `theme` (reprend les couleurs, le fond, le flou, la bordure et l'ombre des cartes de votre thème) ou `glass` (verre : fond translucide et flou). |
 | Titre | `title` | « Carburant *zone* » / « Stations *zone* » | Titre personnalisé. |
 | Carburant par défaut | `fuel` | premier suivi | `gazole`, `e10`, `sp98`, `sp95`, `e85`, `gplc`. |
 | Onglets | `fuels` | tous | Liste des carburants proposés dans la carte. |
@@ -249,6 +258,48 @@ station_click: none
 ```
 
 ---
+
+### Fond de la carte et card_mod
+
+L'option **Apparence** (`theme`) règle le fond de la carte :
+
+| Apparence | Fond |
+|---|---|
+| **Automatique** (`auto`) | Sombre ou clair, selon le mode de Home Assistant. |
+| **Sombre** (`dark`) | Dégradé bleu nuit, bordure couleur du carburant. |
+| **Clair** (`light`) | Dégradé blanc, textes sombres. |
+| **Couleurs de mon thème** (`theme`) | Exactement comme les autres cartes de votre thème : `ha-card-background`, `ha-card-backdrop-filter` (flou), `ha-card-border-width` / `ha-card-border-color`, `ha-card-box-shadow`, `ha-card-border-radius`, textes `primary-text-color` / `secondary-text-color`. Un thème « verre » rend donc la carte translucide. |
+| **Verre** (`glass`) | Fond sombre translucide et flou de ce qu'il y a derrière, pour un effet *glassmorphism* sans thème particulier. |
+
+**card_mod** : en Automatique, Sombre et Couleurs de mon thème, un style `card_mod` (ou celui d'un thème card-mod) sur `ha-card` **passe devant celui de la carte**, sans `!important` :
+
+```yaml
+type: custom:holm-fuel-card
+theme: theme
+card_mod:
+  style: |
+    ha-card {
+      background: rgba(15, 25, 35, .35);
+      backdrop-filter: blur(14px);
+    }
+```
+
+Pour ne changer qu'un détail, quelle que soit l'apparence (Clair et Verre compris), utilisez les variables de la carte :
+
+| Variable | Rôle |
+|---|---|
+| `--holm-fuel-background` | Fond de la carte |
+| `--holm-fuel-backdrop-filter` | Flou de l'arrière-plan (ex. `blur(12px)`) |
+| `--holm-fuel-border` | Bordure (ex. `1px solid rgba(255,255,255,.2)`) |
+| `--holm-fuel-box-shadow` | Ombre |
+
+```yaml
+card_mod:
+  style: |
+    ha-card { --holm-fuel-background: rgba(0, 0, 0, .25); }
+```
+
+Ces variables peuvent aussi être définies dans votre thème. Les apparences Clair et Verre, choisies exprès, gardent leur fond même si votre thème card-mod change celui des autres cartes.
 
 ## Exemples d'automatisations
 
@@ -364,7 +415,8 @@ Réponse : `version` et `zones[]` avec pour chaque zone `entry_id`, `title`, `zo
 | Un prix semble ancien | Voir l'attribut `updated` / la colonne *MàJ* ; baissez l'âge max dans les options pour l'exclure du classement. |
 | La carte de choix de la zone affiche « API KEY REQUIRED » | Problème de Home Assistant lui-même (le fournisseur de fonds de carte CARTO exige désormais une clé), corrigé dans les versions de Home Assistant publiées **après la 2026.8.3** : mettez Home Assistant à jour. |
 | L'assistant tourne longtemps puis « Erreur inconnue » | Corrigé en 1.3.3 : mettez l'intégration à jour depuis HACS. |
-| Texte illisible (noir sur fond sombre) avec un thème clair | Corrigé en 1.3.4 : la carte s'adapte au mode clair / sombre. Vous pouvez aussi forcer l'option **Apparence** (`theme`) sur Clair, Sombre ou « Couleurs de mon thème ». |
+| Texte illisible (noir sur fond sombre) avec un thème clair | Corrigé en 1.3.4 : la carte s'adapte au mode clair / sombre. Vous pouvez aussi forcer l'option **Apparence** (`theme`) sur Clair, Sombre, « Couleurs de mon thème » ou Verre. |
+| La carte reste opaque avec mon thème transparent / card_mod n'a pas d'effet sur le fond | Corrigé en 1.6.1 : choisissez **Couleurs de mon thème** (ou Verre), et voir [Fond de la carte et card_mod](#fond-de-la-carte-et-card_mod). |
 | La carte ne se met pas à jour après une mise à jour | Rechargez la page sans cache (Ctrl + F5) ou videz le cache du frontend dans l'application mobile. |
 | Trop / pas assez de stations | Ajustez le rayon (options). Au-delà de 400 stations, seules les 400 premières sont chargées. |
 | Ajouter une station située hors de la zone | Options → favorites → tapez sa commune ou son code postal dans la recherche, validez, cochez-la (1.4.0). |

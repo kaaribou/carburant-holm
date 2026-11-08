@@ -44,7 +44,15 @@ Official data: instant feed v2 of the French Ministry of the Economy ([data.econ
 
 *Screenshots in French — the card follows the language of your Home Assistant profile.*
 
-### 🆕 What's new in 1.6.0
+### 🆕 What's new in 1.6.1
+
+- 🪟 **New "Glass" appearance** (`theme: glass`): a translucent dark background that blurs what's behind it (glassmorphism), keeping the card's colours.
+- 🎨 **"My theme colours" really follows the theme** ([#12](https://github.com/kaaribou/carburant-holm/issues/12)): the card now uses your theme's card background, blur, border and shadow (`ha-card-background`, `ha-card-backdrop-filter`, `ha-card-border-color`, `ha-card-box-shadow`…). With a transparent theme, it becomes transparent like the other cards.
+- 🧩 **card_mod finally works on the background**, without `!important` or editing the card file. See [Card background and card_mod](#card-background-and-card_mod).
+
+![Dark, Glass, My theme colours and Light appearances](docs/images/apparences.png)
+
+### What's new in 1.6.0
 
 - 🌍 **8 languages**: the integration (setup, options, entities, actions) is translated into English, French, German, Spanish, Italian, Dutch, Portuguese and Polish, following the language of Home Assistant. The **HOLM Fuel** card too, editor included; its `language` option lets you force a language.
 - 🇬🇧 English README.
@@ -75,6 +83,7 @@ Official data: instant feed v2 of the French Ministry of the Economy ([data.econ
 - [Editing a zone (options)](#editing-a-zone-options)
 - [Entities created](#entities-created)
 - [The `holm-fuel-card`](#the-holm-fuel-card)
+  - [Card background and card_mod](#card-background-and-card_mod)
 - [Automation examples](#automation-examples)
 - [Template examples](#template-examples)
 - [WebSocket API](#websocket-api)
@@ -224,7 +233,7 @@ A “station list” table: logo · name (town, distance) · price · **Upd. as 
 | Station sort | `sort` | `default` | `default` (ranking then favourites), `price` (lowest first, favourites and outside zone included), `distance`, `updated` (most recent update) or `name`. In the compact view, clicking the *Station* / *Price* / *Upd.* headers also sorts on the fly. |
 | Tap on a station | `station_click` | `details` (full) / `maps` (compact) | `details`, `maps` (Google Maps directions) or `none` (read-only, no link). |
 | Layout | `layout` | `full` | `full` or `compact`. |
-| Appearance | `theme` | `auto` | `auto` (follows Home Assistant's light / dark mode), `dark`, `light` or `theme` (your theme's colours). |
+| Appearance | `theme` | `auto` | `auto` (follows Home Assistant's light / dark mode), `dark`, `light`, `theme` (your theme's card colours, background, blur, border and shadow) or `glass` (translucent, blurred background). |
 | Title | `title` | “Fuel *zone*” / “Stations *zone*” | Custom title. |
 | Default fuel | `fuel` | first tracked | `gazole`, `e10`, `sp98`, `sp95`, `e85`, `gplc`. |
 | Tabs | `fuels` | all | List of fuels offered in the card. |
@@ -254,6 +263,48 @@ station_click: none
 ```
 
 ---
+
+### Card background and card_mod
+
+The **Appearance** option (`theme`) sets the card background:
+
+| Appearance | Background |
+|---|---|
+| **Automatic** (`auto`) | Dark or light, following Home Assistant's mode. |
+| **Dark** (`dark`) | Night-blue gradient, border in the fuel colour. |
+| **Light** (`light`) | White gradient, dark text. |
+| **My theme colours** (`theme`) | Exactly like your theme's other cards: `ha-card-background`, `ha-card-backdrop-filter` (blur), `ha-card-border-width` / `ha-card-border-color`, `ha-card-box-shadow`, `ha-card-border-radius`, `primary-text-color` / `secondary-text-color` text. A "glass" theme makes the card translucent. |
+| **Glass** (`glass`) | Translucent dark background blurring what's behind, for a *glassmorphism* look without a special theme. |
+
+**card_mod**: with Automatic, Dark and My theme colours, a `card_mod` style (or a card-mod theme's) on `ha-card` **wins over the card's own**, without `!important`:
+
+```yaml
+type: custom:holm-fuel-card
+theme: theme
+card_mod:
+  style: |
+    ha-card {
+      background: rgba(15, 25, 35, .35);
+      backdrop-filter: blur(14px);
+    }
+```
+
+To change just one detail, whatever the appearance (Light and Glass included), use the card's variables:
+
+| Variable | Purpose |
+|---|---|
+| `--holm-fuel-background` | Card background |
+| `--holm-fuel-backdrop-filter` | Background blur (e.g. `blur(12px)`) |
+| `--holm-fuel-border` | Border (e.g. `1px solid rgba(255,255,255,.2)`) |
+| `--holm-fuel-box-shadow` | Shadow |
+
+```yaml
+card_mod:
+  style: |
+    ha-card { --holm-fuel-background: rgba(0, 0, 0, .25); }
+```
+
+These variables can also be set in your theme. The Light and Glass appearances, chosen on purpose, keep their background even if your card-mod theme changes other cards'.
 
 ## Automation examples
 
@@ -369,7 +420,8 @@ Response: `version` and `zones[]` with, for each zone, `entry_id`, `title`, `zon
 | A price looks old | See the `updated` attribute / the *Upd.* column; lower the max age in the options to exclude it from the ranking. |
 | The zone map shows “API KEY REQUIRED” | A Home Assistant issue (the CARTO map tile provider now requires a key), fixed in Home Assistant versions released **after 2026.8.3**: update Home Assistant. |
 | The wizard spins for a long time then “Unknown error” | Fixed in 1.3.3: update the integration from HACS. |
-| Unreadable text (black on dark background) with a light theme | Fixed in 1.3.4: the card adapts to light / dark mode. You can also force the **Appearance** option (`theme`) to Light, Dark or “My theme colours”. |
+| Unreadable text (black on dark background) with a light theme | Fixed in 1.3.4: the card adapts to light / dark mode. You can also force the **Appearance** option (`theme`) to Light, Dark, “My theme colours” or Glass. |
+| The card stays opaque with my transparent theme / card_mod has no effect on the background | Fixed in 1.6.1: choose **My theme colours** (or Glass), and see [Card background and card_mod](#card-background-and-card_mod). |
 | The card doesn't refresh after an update | Reload the page without cache (Ctrl + F5) or clear the frontend cache in the mobile app. |
 | Too many / not enough stations | Adjust the radius (options). Beyond 400 stations, only the first 400 are loaded. |
 | Adding a station outside the zone | Options → favourites → type its town or postcode in the search box, submit, tick it (1.4.0). |
