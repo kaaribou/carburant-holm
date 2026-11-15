@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.7.0
+- **Carte des stations** ([#16](https://github.com/kaaribou/carburant-holm/issues/16)) : boutons Liste / Carte dans les vues complète et compacte, nouvelle présentation `layout: map`. Étiquettes avec logo et prix (moins chère en vert, plus chère cerclée de rouge, favorites ★, centre de la zone), bulle avec prix, coût du plein, fraîcheur, boutons Détails et Itinéraire. Fond OpenStreetMap et bibliothèque Leaflet chargés à la demande. Options `show_map`, `default_view`, `map_height`.
+- **Coût du plein** ([#14](https://github.com/kaaribou/carburant-holm/issues/14)) : option `tank_sizes` (contenance par carburant) ; prix du plein dans la meilleure station, le classement, le tableau compact et la fiche d'une station ; écarts en euros sur le plein. Options `tank_display` (`both`, `tank_only`, `per_liter`) et `tank_delta_ref` (`best`, `first`). Section « Plein et réservoirs » dans l'éditeur.
+- **Historique au toucher du prix** ([#15](https://github.com/kaaribou/carburant-holm/issues/15)) : toucher le prix d'une station déplie sa fiche avec la courbe de son prix, y compris quand le clic sur la ligne ouvre l'itinéraire (vue compacte par défaut).
+- **Légende des courbes** ([#13](https://github.com/kaaribou/carburant-holm/issues/13)) : sur sa propre ligne, sous les dates ; ne se coupe plus sur un écran étroit.
+- Vue compacte étroite : les boutons carburants passent sur une deuxième ligne.
+- Traductions des nouveaux textes dans les 8 langues.
+
 ## 1.6.1
 - **« Couleurs de mon thème » suit vraiment le thème** ([#12](https://github.com/kaaribou/carburant-holm/issues/12)) : fond, flou (`ha-card-backdrop-filter`), bordure et ombre des cartes du thème, et non plus seulement la couleur de fond. Un thème transparent / « verre » rend la carte translucide.
 - **card_mod sur le fond** : en Automatique, Sombre et Couleurs de mon thème, un style card_mod (ou un thème card-mod) sur `ha-card` passe devant celui de la carte, sans `!important` (règles de fond placées dans une couche CSS `@layer`).

@@ -5,7 +5,7 @@ from types import SimpleNamespace
 from homeassistant.core import HomeAssistant
 
 from custom_components.carburant_holm import _register_card
-from custom_components.carburant_holm.const import CARD_URL_PATH
+from custom_components.carburant_holm.const import CARD_URL_PATH, VERSION
 
 
 class FakeResources:
@@ -40,7 +40,7 @@ async def test_register_card_concurrent(hass: HomeAssistant) -> None:
     hass.http = SimpleNamespace(async_register_static_paths=fake_register)
     await asyncio.gather(_register_card(hass), _register_card(hass), _register_card(hass))
     assert calls == [[CARD_URL_PATH]]
-    assert len(res.items) == 1 and res.items[0]["url"].startswith(CARD_URL_PATH + "?v=1.5.2-")
+    assert len(res.items) == 1 and res.items[0]["url"].startswith(f"{CARD_URL_PATH}?v={VERSION}-")
 
 
 async def test_register_card_already_registered_is_ignored(hass: HomeAssistant) -> None:

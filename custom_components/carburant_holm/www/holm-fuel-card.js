@@ -112,7 +112,35 @@
     "Apparence": ["Appearance", "Darstellung", "Apariencia", "Aspetto", "Weergave", "Aparência", "Wygląd"],
     "Compacte : uniquement mes favorites": ["Compact: my favourites only", "Kompakt: nur meine Favoriten", "Compacta: solo mis favoritas", "Compatta: solo i miei preferiti", "Compact: alleen mijn favorieten", "Compacta: só os meus favoritos", "Kompaktowa: tylko moje ulubione"],
     "HOLM Carburant": ["HOLM Fuel", "HOLM Kraftstoff", "HOLM Carburante", "HOLM Carburante", "HOLM Brandstof", "HOLM Combustível", "HOLM Paliwo"],
-    "Prix des carburants autour de chez vous : meilleur prix, tendance, classement et favorites.": ["Fuel prices around you: best price, trend, ranking and favourites.", "Kraftstoffpreise in Ihrer Nähe: bester Preis, Trend, Rangliste und Favoriten.", "Precios de carburantes cerca de ti: mejor precio, tendencia, clasificación y favoritas.", "Prezzi dei carburanti vicino a te: miglior prezzo, tendenza, classifica e preferiti.", "Brandstofprijzen bij jou in de buurt: beste prijs, trend, ranglijst en favorieten.", "Preços dos combustíveis perto de si: melhor preço, tendência, classificação e favoritos.", "Ceny paliw w okolicy: najlepsza cena, trend, ranking i ulubione."]
+    "Prix des carburants autour de chez vous : meilleur prix, tendance, classement et favorites.": ["Fuel prices around you: best price, trend, ranking and favourites.", "Kraftstoffpreise in Ihrer Nähe: bester Preis, Trend, Rangliste und Favoriten.", "Precios de carburantes cerca de ti: mejor precio, tendencia, clasificación y favoritas.", "Prezzi dei carburanti vicino a te: miglior prezzo, tendenza, classifica e preferiti.", "Brandstofprijzen bij jou in de buurt: beste prijs, trend, ranglijst en favorieten.", "Preços dos combustíveis perto de si: melhor preço, tendência, classificação e favoritos.", "Ceny paliw w okolicy: najlepsza cena, trend, ranking i ulubione."],
+    "Plein": ["Full tank", "Volltanken", "Depósito lleno", "Pieno", "Volle tank", "Depósito cheio", "Pełny bak"],
+    "plein {v} L": ["full tank {v} L", "Tankfüllung {v} L", "depósito {v} L", "pieno {v} L", "volle tank {v} L", "depósito {v} L", "pełny bak {v} L"],
+    "Plein ({v} L)": ["Full tank ({v} L)", "Tankfüllung ({v} L)", "Lleno ({v} L)", "Pieno ({v} L)", "Volle tank ({v} L)", "Cheio ({v} L)", "Pełny bak ({v} L)"],
+    "Prix · plein": ["Price · tank", "Preis · Tank", "Precio · lleno", "Prezzo · pieno", "Prijs · tank", "Preço · cheio", "Cena · bak"],
+    "{p} €/L": ["{p} €/L", "{p} €/L", "{p} €/L", "{p} €/L", "{p} €/L", "{p} €/L", "{p} €/L"],
+    "Historique des prix": ["Price history", "Preisverlauf", "Historial de precios", "Storico dei prezzi", "Prijsgeschiedenis", "Histórico de preços", "Historia cen"],
+    "Liste": ["List", "Liste", "Lista", "Elenco", "Lijst", "Lista", "Lista"],
+    "Carte": ["Map", "Karte", "Mapa", "Mappa", "Kaart", "Mapa", "Mapa"],
+    "Carte des stations": ["Station map", "Tankstellenkarte", "Mapa de estaciones", "Mappa dei distributori", "Kaart van tankstations", "Mapa dos postos", "Mapa stacji"],
+    "Carte indisponible (pas d'accès à internet ?)": ["Map unavailable (no internet access?)", "Karte nicht verfügbar (kein Internetzugang?)", "Mapa no disponible (¿sin acceso a internet?)", "Mappa non disponibile (nessun accesso a internet?)", "Kaart niet beschikbaar (geen internettoegang?)", "Mapa indisponível (sem acesso à internet?)", "Mapa niedostępna (brak dostępu do internetu?)"],
+    "Chargement de la carte…": ["Loading the map…", "Karte wird geladen…", "Cargando el mapa…", "Caricamento della mappa…", "Kaart laden…", "A carregar o mapa…", "Ładowanie mapy…"],
+    "Aucune station localisée.": ["No station with a location.", "Keine Tankstelle mit Standort.", "Ninguna estación localizada.", "Nessun distributore localizzato.", "Geen tankstation met locatie.", "Nenhum posto localizado.", "Brak stacji z lokalizacją."],
+    "Centre de la zone": ["Zone centre", "Zonenmitte", "Centro de la zona", "Centro della zona", "Midden van de zone", "Centro da zona", "Środek strefy"],
+    "Détails": ["Details", "Details", "Detalles", "Dettagli", "Details", "Detalhes", "Szczegóły"],
+    "Carte (stations sur une carte)": ["Map (stations on a map)", "Karte (Tankstellen auf einer Karte)", "Mapa (estaciones en un mapa)", "Mappa (distributori su una mappa)", "Kaart (tankstations op een kaart)", "Mapa (postos num mapa)", "Mapa (stacje na mapie)"],
+    "Afficher le bouton Carte": ["Show the Map button", "Karten-Schaltfläche anzeigen", "Mostrar el botón Mapa", "Mostra il pulsante Mappa", "Kaartknop tonen", "Mostrar o botão Mapa", "Pokaż przycisk Mapa"],
+    "Hauteur de la carte (px)": ["Map height (px)", "Kartenhöhe (px)", "Altura del mapa (px)", "Altezza della mappa (px)", "Hoogte van de kaart (px)", "Altura do mapa (px)", "Wysokość mapy (px)"],
+    "Vue au départ": ["Initial view", "Ansicht beim Start", "Vista inicial", "Vista iniziale", "Beginweergave", "Vista inicial", "Widok początkowy"],
+    "Liste des stations": ["Station list", "Tankstellenliste", "Lista de estaciones", "Elenco dei distributori", "Lijst van tankstations", "Lista dos postos", "Lista stacji"],
+    "Plein et réservoirs": ["Full tank and tanks", "Tankfüllung und Tanks", "Lleno y depósitos", "Pieno e serbatoi", "Volle tank en tanks", "Depósito cheio e depósitos", "Pełny bak i zbiorniki"],
+    "Réservoir {f} (L)": ["{f} tank (L)", "Tank {f} (L)", "Depósito {f} (L)", "Serbatoio {f} (L)", "Tank {f} (L)", "Depósito {f} (L)", "Zbiornik {f} (L)"],
+    "Affichage des prix": ["Price display", "Preisanzeige", "Visualización de precios", "Visualizzazione dei prezzi", "Prijsweergave", "Apresentação dos preços", "Wyświetlanie cen"],
+    "Prix au litre et coût du plein": ["Price per litre and full-tank cost", "Literpreis und Tankkosten", "Precio por litro y coste del lleno", "Prezzo al litro e costo del pieno", "Literprijs en kosten volle tank", "Preço por litro e custo do depósito", "Cena za litr i koszt pełnego baku"],
+    "Coût du plein seulement": ["Full-tank cost only", "Nur Tankkosten", "Solo el coste del lleno", "Solo il costo del pieno", "Alleen kosten volle tank", "Só o custo do depósito", "Tylko koszt pełnego baku"],
+    "Prix au litre seulement": ["Price per litre only", "Nur Literpreis", "Solo precio por litro", "Solo prezzo al litro", "Alleen literprijs", "Só preço por litro", "Tylko cena za litr"],
+    "Écart en € calculé par rapport à": ["€ difference compared with", "€-Differenz im Vergleich zu", "Diferencia en € respecto a", "Differenza in € rispetto a", "Verschil in € ten opzichte van", "Diferença em € em relação a", "Różnica w € względem"],
+    "La station la moins chère": ["The cheapest station", "Der günstigsten Tankstelle", "La estación más barata", "Il distributore più economico", "Het goedkoopste tankstation", "O posto mais barato", "Najtańszej stacji"],
+    "La première station de la liste": ["The first station in the list", "Der ersten Tankstelle der Liste", "La primera estación de la lista", "Il primo distributore dell'elenco", "Het eerste tankstation in de lijst", "O primeiro posto da lista", "Pierwszej stacji na liście"],
   };
   let LANG = "fr", NUMLOC = "fr-FR";
   const langOf = (hass, c) => { const l = String((c && c.language) || (hass && ((hass.locale && hass.locale.language) || hass.language)) || navigator.language || "en").toLowerCase().split(/[-_]/)[0]; return l === "fr" || HOLM_LANGS.includes(l) ? l : "en"; };
@@ -125,7 +153,7 @@
     if (o.selector && o.selector.select && o.name !== "language") o.selector = { ...o.selector, select: { ...o.selector.select, options: (o.selector.select.options || []).map((op) => (typeof op === "string" ? op : { ...op, label: _(op.label) })) } };
     if (o.name === "language" && o.selector && o.selector.select) o.selector = { ...o.selector, select: { ...o.selector.select, options: o.selector.select.options.map((op) => (op.value ? op : { ...op, label: _("Automatique (profil)") })) } };
     return o; });
-  const VERSION = "1.6.1";
+  const VERSION = "1.7.0";
   const FUEL_COLOR = { gazole: "245,158,11", e10: "34,197,94", sp98: "59,130,246", sp95: "6,182,212", e85: "132,204,22", gplc: "168,85,247" };
   const SERVICE_ICON = [
     [/lavage/i, "mdi:car-wash"], [/boutique|alimentaire/i, "mdi:basket"], [/gonflage/i, "mdi:tire"], [/toilette/i, "mdi:toilet"],
@@ -139,6 +167,20 @@
     return `${s.slice(0, -1)}<small>${s.slice(-1)}</small><u>€</u>`;
   };
   const cts = (d) => (d == null ? null : `${d > 0 ? "+" : d < 0 ? "−" : "±"}${Math.abs(d * 100).toFixed(1).replace(".", ",")} c`);
+  const eur = (v) => `${Number(v).toLocaleString(NUMLOC, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
+  const p3 = (v) => Number(v).toFixed(3).replace(".", ",");
+  // Leaflet (carte des stations), chargé à la demande depuis jsDelivr ; sa feuille de style est injectée dans la carte (shadow DOM)
+  const LEAFLET = "https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/";
+  let leafletP = null;
+  const loadLeaflet = () => (leafletP ||= Promise.all([
+    window.L && window.L.map && window.L.divIcon ? Promise.resolve(window.L) : new Promise((res, rej) => {
+      const s = document.createElement("script");
+      s.src = LEAFLET + "leaflet.js"; s.async = true;
+      s.onload = () => (window.L ? res(window.L) : rej(new Error("Leaflet"))); s.onerror = rej;
+      document.head.appendChild(s);
+    }),
+    fetch(LEAFLET + "leaflet.css").then((r) => (r.ok ? r.text() : Promise.reject(new Error(r.status)))),
+  ]).then(([L, css]) => ({ L, css })).catch((e) => { leafletP = null; throw e; }));
   const km = (d) => (d == null ? "" : `${d < 10 ? d.toFixed(1).replace(".", ",") : Math.round(d)} km`);
   const age = (iso, short) => {
     if (!iso) return { txt: "", cls: "old" };
@@ -299,6 +341,34 @@
     _click() {
       return this._config.station_click || (this._config.layout === "compact" ? "maps" : "details");
     }
+    // ---- coût du plein (#14) ----
+    _tank(fuel) {
+      const t = this._config.tank_sizes, v = t ? Number(t[fuel]) : 0;
+      return v > 0 && (this._config.tank_display || "both") !== "per_liter" ? v : null;
+    }
+    _tankOnly(fuel) { return !!this._tank(fuel) && this._config.tank_display === "tank_only"; }
+    // écart affiché : en € sur le plein si un réservoir est renseigné, sinon en centimes par litre
+    _delta(d, fuel) {
+      const t = this._tank(fuel);
+      if (d == null) return null;
+      if (!t) return cts(d);
+      const v = Math.round(d * t * 100) / 100;
+      return `${v > 0 ? "+" : v < 0 ? "−" : "±"}${eur(Math.abs(v))}`;
+    }
+    // référence des écarts : la moins chère (par défaut) ou la première station affichée (tank_delta_ref: first)
+    _ref(fuel, list, st) {
+      if (this._tank(fuel) && this._config.tank_delta_ref === "first") {
+        const s = list.find((x) => x.fuels[fuel]?.price != null);
+        if (s) return { id: s.id, price: s.fuels[fuel].price };
+      }
+      return { id: st.best, price: st.best_price };
+    }
+    // vue liste / carte (#16)
+    _view() {
+      if (this._config.layout === "map") return "map";
+      if (this._config.show_map === false) return "list";
+      return this._viewSel || this._config.default_view || "list";
+    }
 
     _tone() {
       const t = (this._config && this._config.theme) || "auto";
@@ -335,6 +405,7 @@
       }
       this._charts = {};
       if (this._config.layout === "compact") return this._renderCompact();
+      if (this._config.layout === "map") return this._renderMapOnly();
       const z = this._zone, fuel = this._fuel, cfg = this._config;
       const col = FUEL_COLOR[fuel] || "38,198,218";
       const st = z.stats[fuel] || {};
@@ -362,11 +433,11 @@
             <div class="hn">${esc(best.name)}</div>
             <div class="hs">${esc(this._where(best))}${best.distance != null ? ` · ${km(best.distance)}` : ""}</div>
           </div>
-          <div class="price">${priceHTML(f.price)}</div>
+          ${this._heroPrice(f.price, fuel)}
           <div class="hb">
             <span class="chip"><i class="dot ${a.cls}"></i>${esc(a.txt)}</span>
             ${t7 != null ? `<span class="chip ${t7 < 0 ? "down" : t7 > 0 ? "up" : ""}"><ha-icon icon="${t7 < 0 ? "mdi:trending-down" : t7 > 0 ? "mdi:trending-up" : "mdi:trending-neutral"}"></ha-icon>${_("{c} / 7 j", { c: cts(t7) })}</span>` : ""}
-            ${dAvg != null && st.count > 1 ? `<span class="chip down">${_("{c} vs moy.", { c: cts(dAvg) })}</span>` : ""}
+            ${dAvg != null && st.count > 1 ? `<span class="chip down">${_("{c} vs moy.", { c: this._delta(dAvg, fuel) })}</span>` : ""}
             ${this._click() === "none" ? "" : `<a class="go" href="${this._maps(best)}" target="_blank" rel="noopener"><ha-icon icon="mdi:directions"></ha-icon>${_("Itinéraire")}</a>`}
           </div>
         </div>`;
@@ -375,8 +446,11 @@
       const chart = cfg.show_chart && !z.mobile ? this._chart(z.history[fuel] || [], col) : "";
       const sm = this._sortMode();
       const merged = sm !== "default";
+      const ordered = merged ? this._sorted(rows.concat(favs), fuel, sm) : rows.concat(favs);
+      this._refP = this._ref(fuel, ordered, st);
+      const view = this._view();
       const list = merged
-        ? this._sorted(rows.concat(favs), fuel, sm).map((s) => this._row(s, fuel, (s.fuels[fuel] || {}).rank, lo, hi)).join("")
+        ? ordered.map((s) => this._row(s, fuel, (s.fuels[fuel] || {}).rank, lo, hi)).join("")
         : rows.map((s, i) => this._row(s, fuel, i + 1, lo, hi)).join("");
       const favHTML = !merged && favs.length ? `<div class="sec"><ha-icon icon="mdi:star"></ha-icon>${_("Tes stations")}</div>${favs.map((s) => this._row(s, fuel, (s.fuels[fuel] || {}).rank, lo, hi)).join("")}` : "";
       const title = cfg.title || _("Carburant {z}", { z: z.zone });
@@ -394,9 +468,9 @@
           <div class="tabs">${tabs}</div>
           ${hero}
           ${chart}
-          <div class="sec"><ha-icon icon="mdi:format-list-numbered"></ha-icon>${merged ? _("Stations · {s}", { s: { price: _("par prix"), distance: _("par distance"), updated: _("par mise à jour"), name: _("par nom") }[sm] }) : _("Classement")}<span>${lo != null ? `${lo.toFixed(3).replace(".", ",")} → ${hi.toFixed(3).replace(".", ",")} €` : ""}</span></div>
-          <div class="list">${list || `<div class="none">${_("Aucune station.")}</div>`}</div>
-          ${favHTML}
+          <div class="sec"><ha-icon icon="${view === "map" ? "mdi:map-outline" : "mdi:format-list-numbered"}"></ha-icon>${view === "map" ? _("Carte des stations") : merged ? _("Stations · {s}", { s: { price: _("par prix"), distance: _("par distance"), updated: _("par mise à jour"), name: _("par nom") }[sm] }) : _("Classement")}<span>${lo != null ? this._range(lo, hi, fuel) : ""}</span>${this._viewBtns()}</div>
+          ${view === "map" ? this._mapBox() : `<div class="list">${list || `<div class="none">${_("Aucune station.")}</div>`}</div>
+          ${favHTML}`}
         </div>
       </ha-card>`;
       root.querySelectorAll(".tab").forEach((b) => b.addEventListener("click", () => { this._fuel = b.dataset.f; this._open = null; this._render(); }));
@@ -406,10 +480,13 @@
         if (e.target.closest("a")) return;
         const mode = this._click();
         if (mode === "none") return;
-        if (mode === "maps") { const s = this._byId[r.dataset.id]; if (s) window.open(this._maps(s), "_blank", "noopener"); return; }
+        // clic sur le prix : historique de la station, quel que soit le réglage du clic (#15)
+        if (mode === "maps" && !e.target.closest(".hist")) { const s = this._byId[r.dataset.id]; if (s) window.open(this._maps(s), "_blank", "noopener"); return; }
         this._open = this._open === r.dataset.id ? null : r.dataset.id;
         this._render();
       }));
+      this._bindViews(root);
+      if (view === "map") this._mountMap(root, this._mapStations(fuel), fuel, lo, hi, col);
       root.querySelectorAll("img[data-fb]").forEach((img) => img.addEventListener("error", () => { img.replaceWith(Object.assign(document.createElement("span"), { className: "ini", textContent: img.dataset.fb })); }));
     }
     _renderCompact() {
@@ -428,6 +505,8 @@
       const sm = this._sortMode();
       list = this._sorted(list, fuel, sm);
       const lo = st.best_price, hi = st.max;
+      const ref = this._ref(fuel, list, st), tk = this._tank(fuel), tko = this._tankOnly(fuel);
+      const view = this._view();
       const pills = this._fuels.length > 1 ? `<div class="cpills">${this._fuels.map((f) => `<button class="cp${f.key === fuel ? " on" : ""}" data-f="${f.key}" style="--c:${FUEL_COLOR[f.key] || "38,198,218"}">${esc(f.label)}</button>`).join("")}</div>` : "";
       const days = (iso) => (iso ? Math.max(0, Math.floor((Date.now() - new Date(iso)) / 86400000)) : null);
       const rows = list.map((x) => {
@@ -435,26 +514,34 @@
         const d = days(f.updated);
         const cheap = f.price != null && f.price === lo, dear = f.price != null && f.price === hi && hi !== lo;
         const fav = z.favorites.includes(x.id);
-        const mode = this._click(), open = mode === "details" && this._open === x.id;
-        const tag = mode === "maps" ? `a class="cr" href="${this._maps(x)}" target="_blank" rel="noopener"` : `div class="cr${mode === "details" ? " clk" : " ro"}${open ? " open" : ""}" data-id="${esc(x.id)}"`;
+        const mode = this._click(), open = mode !== "none" && this._open === x.id;
+        const tag = mode === "maps" ? `a class="cr${open ? " open" : ""}" data-id="${esc(x.id)}" href="${this._maps(x)}" target="_blank" rel="noopener"` : `div class="cr${mode === "details" ? " clk" : " ro"}${open ? " open" : ""}" data-id="${esc(x.id)}"`;
         return `<${tag}>
           <span class="clogo">${this._logo(x)}</span>
           <span class="cn"><b>${esc(x.name)}${fav ? `<ha-icon class="star" icon="mdi:star"></ha-icon>` : ""}</b><small>${esc(this._where(x))}${x.distance != null ? ` · ${km(x.distance)}` : ""}${x.in_zone === false ? _(" · hors zone") : ""}</small></span>
-          <span class="cpz">${f.price != null ? `<i class="cdot ${cheap ? "g" : dear ? "r" : ""}"></i>${f.price.toFixed(3).replace(".", ",")} €` : `<span class="rupt">${_("Rupture")}</span>`}</span>
+          <span class="cpz${f.price != null && mode !== "none" ? " hist" : ""}"${f.price != null && mode !== "none" ? ` title="${_("Historique des prix")}"` : ""}>${f.price != null ? `<span class="cpm"><i class="cdot ${cheap ? "g" : dear ? "r" : ""}"></i>${tko ? eur(f.price * tk) : `${p3(f.price)} €`}</span>${tk ? `<small class="${x.id === ref.id ? "" : "d"}">${x.id === ref.id ? (tko ? _("{p} €/L", { p: p3(f.price) }) : eur(f.price * tk)) : this._delta(f.price - ref.price, fuel)}</small>` : ""}` : `<span class="rupt">${_("Rupture")}</span>`}</span>
           <span class="cj ${d == null ? "" : d <= 1 ? "ok" : d <= 3 ? "mid" : "old"}">${d == null ? "–" : _("J+") + d}</span>
         </${mode === "maps" ? "a" : "div"}>${open ? `<div class="cdet">${this._detail(x)}</div>` : ""}`;
       }).join("");
       root.innerHTML = `<style>${HolmFuelCard.css()}</style>
       <ha-card class="compact" style="--c:${col}">
         <div class="wrap cw">
-          <div class="chead"><ha-icon icon="${z.mobile ? "mdi:crosshairs-gps" : "mdi:gas-station"}"></ha-icon><span class="ct">${esc(cfg.title || _("Stations {z}", { z: z.zone }))}</span>${pills}<button class="ref cref" title="${_("Actualiser")}"><ha-icon icon="mdi:refresh"></ha-icon></button></div>
-          <div class="ctab"><div class="cth">${[["", ""], ["distance", _("Station")], ["price", _("Prix")], ["updated", _("MàJ")]].map(([k, l]) => k ? `<button class="cs${sm === k ? " on" : ""}" data-s="${k}" title="${_("Trier")}">${_(l)}${sm === k ? " ▾" : ""}</button>` : "<span></span>").join("")}</div>${rows || `<div class="none">${_("Aucune station.")}</div>`}</div>
+          <div class="chead"><ha-icon icon="${z.mobile ? "mdi:crosshairs-gps" : "mdi:gas-station"}"></ha-icon><span class="ct">${esc(cfg.title || _("Stations {z}", { z: z.zone }))}</span>${pills}${this._viewBtns(true)}<button class="ref cref" title="${_("Actualiser")}"><ha-icon icon="mdi:refresh"></ha-icon></button></div>
+          ${view === "map" ? this._mapBox() : `<div class="ctab"><div class="cth">${[["", ""], ["distance", _("Station")], ["price", tko ? _("Plein ({v} L)", { v: tk }) : tk ? _("Prix · plein") : _("Prix")], ["updated", _("MàJ")]].map(([k, l]) => k ? `<button class="cs${sm === k ? " on" : ""}" data-s="${k}" title="${_("Trier")}">${_(l)}${sm === k ? " ▾" : ""}</button>` : "<span></span>").join("")}</div>${rows || `<div class="none">${_("Aucune station.")}</div>`}</div>`}
         </div>
       </ha-card>`;
       root.querySelectorAll(".cp").forEach((b) => b.addEventListener("click", () => { this._fuel = b.dataset.f; this._render(); }));
       root.querySelector(".cref").addEventListener("click", () => this._refresh());
       root.querySelectorAll(".cs").forEach((b) => b.addEventListener("click", () => { const k = b.dataset.s; this._sort = this._sortMode() === k ? "default" : k; this._render(); }));
       root.querySelectorAll(".cr.clk").forEach((r) => r.addEventListener("click", () => { this._open = this._open === r.dataset.id ? null : r.dataset.id; this._render(); }));
+      // clic sur le prix : historique de la station, même quand le clic sur la ligne ouvre l'itinéraire (#15)
+      root.querySelectorAll("a.cr .cpz.hist").forEach((p) => p.addEventListener("click", (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const id = p.closest("a.cr").dataset.id;
+        this._open = this._open === id ? null : id; this._render();
+      }));
+      this._bindViews(root);
+      if (view === "map") this._mountMap(root, this._mapStations(fuel), fuel, lo, hi, col);
       this._bindChart(root);
       root.querySelectorAll("img[data-fb]").forEach((img) => img.addEventListener("error", () => { img.replaceWith(Object.assign(document.createElement("span"), { className: "ini", textContent: img.dataset.fb })); }));
     }
@@ -479,7 +566,8 @@
         const others = this._zone.fuels.map((x) => {
           const g = s.fuels[x.key];
           if (!g) return "";
-          return `<span class="fc" style="--c:${FUEL_COLOR[x.key]}"><b>${esc(x.label)}</b>${g.price != null ? g.price.toFixed(3).replace(".", ",") + " €" : `<em>${_("rupture")}</em>`}</span>`;
+          const t = this._tank(x.key);
+          return `<span class="fc" style="--c:${FUEL_COLOR[x.key]}"><b>${esc(x.label)}</b>${g.price != null ? g.price.toFixed(3).replace(".", ",") + " €" + (t ? `<i>${_("plein {v} L", { v: t })} · ${eur(g.price * t)}</i>` : "") : `<em>${_("rupture")}</em>`}</span>`;
         }).join("");
         const serv = (s.services || []).slice(0, 10).map((x) => {
           const ic = (SERVICE_ICON.find(([re]) => re.test(x)) || [0, "mdi:check-circle-outline"])[1];
@@ -506,9 +594,118 @@
         <div class="ri"><div class="rn">${esc(s.name)}${fav ? `<ha-icon class="star" icon="mdi:star"></ha-icon>` : ""}</div>
           <div class="rs">${esc(this._where(s))}${s.distance != null ? ` · ${km(s.distance)}` : ""}${s.in_zone === false ? _(" · hors zone") : ""} · <i class="dot ${a.cls}"></i>${esc(a.txt)}</div>
           <div class="bar"><i style="width:${pct}%"></i></div></div>
-        <div class="rp">${f.price != null ? priceHTML(f.price) : `<span class="rupt">${_("Rupture")}</span>`}${f.price != null && lo != null && rank !== 1 ? `<em>${cts(f.price - lo)}</em>` : ""}</div>
+        ${this._rowPrice(s, fuel, f, rank, lo)}
         ${det}
       </div>`;
+    }
+    _heroPrice(price, fuel) {
+      const t = this._tank(fuel);
+      if (!t || price == null) return `<div class="price">${priceHTML(price)}</div>`;
+      if (this._tankOnly(fuel)) return `<div class="pc"><div class="price">${eur(price * t).replace(/\s€$/, "")}<u>€</u></div><div class="htk">${_("{p} €/L", { p: p3(price) })} · ${t} L</div></div>`;
+      return `<div class="pc"><div class="price">${priceHTML(price)}</div><div class="htk">${_("plein {v} L", { v: t })} · <b>${eur(price * t)}</b></div></div>`;
+    }
+    _rowPrice(s, fuel, f, rank, lo) {
+      const hist = f.price != null && this._click() !== "none";
+      const cls = `rp${hist ? " hist" : ""}`, ti = hist ? ` title="${_("Historique des prix")}"` : "";
+      if (f.price == null) return `<div class="${cls}"><span class="rupt">${_("Rupture")}</span></div>`;
+      const t = this._tank(fuel), ref = this._refP || { id: null, price: lo };
+      if (!t) return `<div class="${cls}"${ti}>${priceHTML(f.price)}${lo != null && rank !== 1 ? `<em>${cts(f.price - lo)}</em>` : ""}</div>`;
+      const isRef = s.id === ref.id, d = isRef || ref.price == null ? "" : `<em>${this._delta(f.price - ref.price, fuel)}</em>`;
+      if (this._tankOnly(fuel)) return `<div class="${cls}"${ti}><span class="tkb">${eur(f.price * t)}</span><span class="tk">${_("{p} €/L", { p: p3(f.price) })}</span>${d}</div>`;
+      return `<div class="${cls}"${ti}>${priceHTML(f.price)}<span class="tk">${eur(f.price * t)}</span>${d}</div>`;
+    }
+    _range(lo, hi, fuel) {
+      const t = this._tankOnly(fuel) ? this._tank(fuel) : null;
+      return t ? `${eur(lo * t)} → ${eur(hi * t)}` : `${p3(lo)} → ${p3(hi)} €`;
+    }
+    // ---- carte des stations (#16) ----
+    _viewBtns(small) {
+      if (this._config.layout === "map" || this._config.show_map === false) return "";
+      const v = this._view();
+      return `<span class="vsw${small ? " sm" : ""}"><button class="vb${v === "list" ? " on" : ""}" data-v="list" title="${_("Liste")}"><ha-icon icon="mdi:format-list-bulleted"></ha-icon></button><button class="vb${v === "map" ? " on" : ""}" data-v="map" title="${_("Carte")}"><ha-icon icon="mdi:map-outline"></ha-icon></button></span>`;
+    }
+    _bindViews(root) {
+      root.querySelectorAll(".vb").forEach((b) => b.addEventListener("click", (e) => { e.stopPropagation(); this._viewSel = b.dataset.v; this._render(); }));
+    }
+    _mapBox() {
+      const h = Math.max(160, Math.min(900, Number(this._config.map_height) || (this._config.layout === "map" ? 360 : 280)));
+      return `<div class="mapw" style="height:${h}px"><div class="map"></div><div class="mapmsg">${_("Chargement de la carte…")}</div></div>`;
+    }
+    _renderMapOnly() {
+      const root = this.shadowRoot, z = this._zone, fuel = this._fuel, cfg = this._config;
+      const col = FUEL_COLOR[fuel] || "38,198,218";
+      const st = z.stats[fuel] || {};
+      const list = this._mapStations(fuel);
+      const pills = this._fuels.length > 1 ? `<div class="cpills">${this._fuels.map((f) => `<button class="cp${f.key === fuel ? " on" : ""}" data-f="${f.key}" style="--c:${FUEL_COLOR[f.key] || "38,198,218"}">${esc(f.label)}</button>`).join("")}</div>` : "";
+      root.innerHTML = `<style>${HolmFuelCard.css()}</style>
+      <ha-card class="compact" style="--c:${col}">
+        <div class="wrap cw">
+          <div class="chead"><ha-icon icon="mdi:map-marker-radius"></ha-icon><span class="ct">${esc(cfg.title || _("Carte des stations"))}</span>${pills}<button class="ref cref" title="${_("Actualiser")}"><ha-icon icon="mdi:refresh"></ha-icon></button></div>
+          ${this._mapBox()}
+        </div>
+      </ha-card>`;
+      root.querySelectorAll(".cp").forEach((b) => b.addEventListener("click", () => { this._fuel = b.dataset.f; this._render(); }));
+      root.querySelector(".cref").addEventListener("click", () => this._refresh());
+      this._mountMap(root, list, fuel, st.best_price, st.max, col);
+    }
+    _mapStations(fuel) {
+      const z = this._zone, st = z.stats[fuel] || {};
+      const ids = this._config.favorites_only ? z.favorites : [...new Set([...(st.ranking || []), ...(this._config.show_favorites === false ? [] : z.favorites)])];
+      return ids.map((id) => this._byId[id]).filter((x) => x && x.fuels[fuel]);
+    }
+    _mountMap(root, list, fuel, lo, hi, col) {
+      if (this._lmap) { try { this._lmap.remove(); } catch (e) { /* */ } this._lmap = null; }
+      if (this._lro) { this._lro.disconnect(); this._lro = null; }
+      const box = root.querySelector(".map"), msg = root.querySelector(".mapmsg");
+      if (!box) return;
+      const pts = list.filter((s) => s.latitude != null && s.longitude != null);
+      if (!pts.length) { msg.textContent = _("Aucune station localisée."); return; }
+      const key = `${fuel}|${pts.map((s) => s.id).join(",")}`;
+      loadLeaflet().then(({ L, css }) => {
+        if (!box.isConnected) return;
+        if (!root.querySelector("style.lf")) root.prepend(Object.assign(document.createElement("style"), { className: "lf", textContent: css }));
+        msg.remove();
+        const tone = this.dataset.tone, dark = tone === "light" ? false : tone === "theme" ? this.dataset.dark === "1" : true;
+        const map = L.map(box, { zoomControl: true, scrollWheelZoom: false, attributionControl: true });
+        this._lmap = map;
+        // fond OpenStreetMap ; en sombre, les tuiles sont inversées par CSS (classe .dk)
+        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
+        }).addTo(map);
+        box.classList.toggle("dk", dark);
+        const z = this._zone, t = this._tank(fuel), tko = this._tankOnly(fuel), favs = z.favorites || [];
+        const bounds = [];
+        if (Array.isArray(z.center) && !z.mobile && !z.multi) {
+          L.marker(z.center, { icon: L.divIcon({ className: "fpw", html: `<div class="fhome"><ha-icon icon="mdi:home"></ha-icon></div>`, iconSize: null }), title: _("Centre de la zone"), keyboard: false, zIndexOffset: -1000 }).addTo(map);
+          bounds.push(z.center);
+        }
+        pts.forEach((s) => {
+          const f = s.fuels[fuel] || {}, p = f.price;
+          const cls = p == null ? "x" : p === lo ? "g" : p === hi && hi !== lo ? "r" : "";
+          const lbl = p == null ? _("Rupture") : tko ? eur(p * t) : p3(p);
+          const html = `<div class="fpin ${cls}" style="--c:${col}"><span class="fl">${this._logo(s)}</span><b>${esc(lbl)}</b>${favs.includes(s.id) ? `<ha-icon class="fst" icon="mdi:star"></ha-icon>` : ""}</div>`;
+          const m = L.marker([s.latitude, s.longitude], { icon: L.divIcon({ className: "fpw", html, iconSize: null }), title: s.name, riseOnHover: true, zIndexOffset: cls === "g" ? 1000 : 0 }).addTo(map);
+          const a = age(f.updated);
+          const pop = `<div class="fpop"><b>${esc(s.name)}</b><small>${esc(this._where(s))}${s.distance != null ? ` · ${km(s.distance)}` : ""}</small>
+            <div class="fpp">${p != null ? `<span>${p3(p)} €/L</span>${t ? `<span>${_("plein {v} L", { v: t })} · <b>${eur(p * t)}</b></span>` : ""}` : `<span class="rupt">${_("Rupture")}</span>`}</div>
+            ${a.txt ? `<small><i class="dot ${a.cls}"></i> ${esc(a.txt)}</small>` : ""}
+            <div class="fpa">${this._config.layout === "map" ? "" : `<button class="fdet" data-id="${esc(s.id)}">${_("Détails")}</button>`}${this._click() === "none" ? "" : `<a href="${this._maps(s)}" target="_blank" rel="noopener">${_("Itinéraire")}</a>`}</div></div>`;
+          m.bindPopup(pop, { closeButton: false, autoPanPadding: [16, 16], maxWidth: 260 });
+          bounds.push([s.latitude, s.longitude]);
+        });
+        const v = this._mapView && this._mapView.key === key ? this._mapView : null;
+        if (v) map.setView(v.c, v.z, { animate: false });
+        else if (bounds.length === 1) map.setView(bounds[0], 13, { animate: false });
+        else map.fitBounds(bounds, { padding: [28, 28], maxZoom: 14, animate: false });
+        map.on("moveend zoomend", () => { this._mapView = { key, c: map.getCenter(), z: map.getZoom() }; });
+        map.on("popupopen", (e) => {
+          const b = e.popup.getElement()?.querySelector(".fdet");
+          if (b) b.addEventListener("click", () => { this._open = b.dataset.id; this._viewSel = "list"; this._render(); });
+        });
+        box.querySelectorAll("img[data-fb]").forEach((img) => img.addEventListener("error", () => { img.replaceWith(Object.assign(document.createElement("span"), { className: "ini", textContent: img.dataset.fb })); }));
+        this._lro = new ResizeObserver(() => map.invalidateSize());
+        this._lro.observe(box);
+      }).catch(() => { if (msg.isConnected) msg.textContent = _("Carte indisponible (pas d'accès à internet ?)"); });
     }
     _chart(h, col, key = "zone", main = _("meilleur")) {
       if (!h || h.length < 2) return `<div class="chart nodata"><ha-icon icon="mdi:chart-line"></ha-icon>${key === "zone" ? _("L'historique se construit jour après jour (tendance dès demain).") : _("L'historique de cette station se construit jour après jour.")}</div>`;
@@ -529,7 +726,7 @@
         ${vals_on ? `<path d="M0,${Y(vmax).toFixed(1)} H${W} M0,${Y(vmin).toFixed(1)} H${W}" class="grid"/>` : ""}
         <path d="${area}" fill="url(#fg)"/><path d="${line("avg")}" class="avg"/><path d="${line("min")}" class="min"/>
         <circle cx="${X(h.length - 1)}" cy="${Y(h[h.length - 1].min)}" r="3" class="pt"/></svg>`;
-      const leg = `<div class="leg"><span>${f(d0)}</span><span><i class="lm"></i>${_(main)} <i class="la"></i>${_("moyenne")}</span><span>${f(d1)}</span></div>`;
+      const leg = `<div class="leg"><span>${f(d0)}</span><span>${f(d1)}</span><span class="lk"><span><i class="lm"></i>${_(main)}</span><span><i class="la"></i>${_("moyenne")}</span></span></div>`;
       if (!vals_on) return `<div class="chart">${svg}${leg}</div>`;
       // valeurs : prix extrêmes sur l'axe, valeurs du jour au bout des courbes, bulle au survol
       const pct = (v) => (Y(v) / H) * 100;
@@ -669,8 +866,10 @@
       .chart .avg { fill: none; stroke: rgba(var(--ink),.45); stroke-width: 1.2; stroke-dasharray: 4 3; vector-effect: non-scaling-stroke; }
       .chart .pt { fill: #fff; stroke: rgb(var(--c)); stroke-width: 2; vector-effect: non-scaling-stroke; }
       .chart.nodata { display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: var(--tx2); padding: 8px 10px; border-radius: 12px; background: rgba(var(--ink),.04); }
-      .leg { display: flex; justify-content: space-between; font-size: 10px; color: var(--tx2); }
-      .leg i { display: inline-block; width: 12px; height: 3px; border-radius: 2px; vertical-align: middle; margin: 0 3px 0 8px; }
+      .leg { display: flex; flex-wrap: wrap; justify-content: space-between; row-gap: 2px; font-size: 10px; color: var(--tx2); }
+      .leg .lk { flex: 1 0 100%; display: flex; flex-wrap: wrap; justify-content: center; gap: 2px 12px; }
+      .leg .lk > span { white-space: nowrap; }
+      .leg i { display: inline-block; width: 12px; height: 3px; border-radius: 2px; vertical-align: middle; margin: 0 4px 0 0; }
       .chart.cv .plot { position: relative; padding: 0 46px 0 40px; }
       .chart.cv .area { position: relative; touch-action: pan-y; cursor: crosshair; }
       .chart .grid { fill: none; stroke: rgba(var(--ink),.14); stroke-width: 1; stroke-dasharray: 2 3; vector-effect: non-scaling-stroke; }
@@ -728,7 +927,7 @@
       .acts a { display: inline-flex; align-items: center; gap: 4px; padding: 6px 12px; border-radius: 10px; font-size: 12px; font-weight: 800; background: rgba(var(--ink),.08); }
       .acts ha-icon { --mdc-icon-size: 16px; }
       .none { padding: 10px; font-size: 12px; color: var(--tx2); text-align: center; }
-      @container (max-width: 360px) { .price { font-size: 25px; } .logo.big { flex-basis: 44px; width: 44px; height: 44px; } .hero { gap: 9px; padding: 10px; } .rp { font-size: 15px; } }
+      @container (max-width: 360px) { .price { font-size: 25px; } .htk { font-size: 10.5px; } .logo.big { flex-basis: 44px; width: 44px; height: 44px; } .hero { gap: 9px; padding: 10px; } .rp { font-size: 15px; } }
       /* ---------- vue compacte ---------- */
       .cw { gap: 8px; padding: 10px 12px; }
       .chead { display: flex; align-items: center; gap: 8px; }
@@ -741,6 +940,8 @@
       .chead .ct + .cref { margin-left: auto; }
       .cp { padding: 3px 8px; border-radius: 8px; font-size: 10.5px; font-weight: 800; color: rgb(var(--c)); background: rgba(var(--c), .1); }
       .cp.on { color: #fff; background: rgba(var(--c), .55); box-shadow: 0 2px 8px -3px rgb(var(--c)); }
+      /* carte étroite : les carburants passent sur une deuxième ligne */
+      @container (max-width: 380px) { .chead { flex-wrap: wrap; row-gap: 6px; } .chead .ct { flex: 1; min-width: 0; } .chead .cpills { order: 5; flex: 1 0 100%; justify-content: flex-start; margin-left: 0; } .chead .vsw { margin-left: auto; } }
       .ctab { display: flex; flex-direction: column; border-radius: 12px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(var(--ink),.07); }
       .cth, .cr { display: grid; grid-template-columns: 30px 1fr auto 40px; align-items: center; gap: 8px; padding: 6px 8px; }
       .cth { font-size: 11px; font-weight: 800; color: var(--tx2); background: rgba(var(--ink),.05); }
@@ -763,6 +964,58 @@
       .cdot.g { background: #4ade80; box-shadow: 0 0 6px #4ade80; } .cdot.r { background: #f87171; box-shadow: 0 0 6px #f87171; }
       .cj { text-align: right; font-size: 11px; font-weight: 800; color: var(--tx2); }
       .cj.ok { color: #4ade80; } .cj.mid { color: #fbbf24; } .cj.old { color: #94a3b8; }
+      /* ---------- coût du plein ---------- */
+      .pc { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+      .htk { font-size: 11.5px; color: var(--tx2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+      .htk b { color: var(--hi); font-weight: 800; }
+      .rp .tk { display: block; font-size: 11px; font-weight: 700; color: var(--tx2); }
+      .rp .tkb { display: block; font-size: 16px; font-weight: 900; }
+      .rp.hist, .cpz.hist { cursor: pointer; }
+      .rp.hist:hover, .cpz.hist:hover .cpm { text-decoration: underline dotted rgba(var(--c), .8); text-underline-offset: 3px; }
+      .cpz { flex-direction: column; align-items: flex-end; gap: 0; }
+      .cpm { display: flex; align-items: center; gap: 5px; }
+      .cpz small { font-size: 10.5px; font-weight: 700; color: var(--tx2); }
+      .cpz small.d { color: rgb(248,113,113); }
+      .fc i { font-style: normal; font-size: 10.5px; color: var(--tx2); margin-left: 2px; }
+      /* ---------- bascule liste / carte ---------- */
+      .vsw { display: inline-flex; gap: 2px; padding: 2px; border-radius: 10px; background: rgba(var(--ink),.06); margin-left: 8px; }
+      .vsw.sm { margin-left: 4px; }
+      .vb { width: 28px; height: 24px; border-radius: 8px; display: grid; place-items: center; color: var(--tx2); }
+      .vb ha-icon { --mdc-icon-size: 16px; }
+      .vb.on { color: #fff; background: rgba(var(--c), .55); }
+      .sec .vsw + * { margin-left: 0; }
+      /* ---------- carte des stations ---------- */
+      .mapw { position: relative; border-radius: 14px; overflow: hidden; box-shadow: inset 0 0 0 1px rgba(var(--ink),.08); background: rgba(var(--ink),.04); }
+      .map { position: absolute; inset: 0; background: transparent; font: inherit; }
+      .mapmsg { position: absolute; inset: 0; display: grid; place-items: center; font-size: 12px; color: var(--tx2); padding: 12px; text-align: center; }
+      .map .leaflet-container, .map.leaflet-container { background: transparent; font: inherit; }
+      .map.dk .leaflet-tile-pane { filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.85) saturate(.6); }
+      .fpw { background: none; border: 0; }
+      .fpin { position: absolute; left: 0; top: 0; transform: translate(-50%, calc(-100% - 7px)); display: flex; align-items: center; gap: 4px; padding: 3px 7px 3px 3px; border-radius: 10px; white-space: nowrap;
+        background: rgba(15,23,32,.92); color: #fff; font-size: 12px; font-weight: 800; font-variant-numeric: tabular-nums; box-shadow: 0 3px 10px rgba(0,0,0,.4), inset 0 0 0 1.5px rgba(var(--c), .7); cursor: pointer; }
+      .fpin::after { content: ""; position: absolute; left: 50%; bottom: -6px; transform: translateX(-50%); border: 6px solid transparent; border-bottom: 0; border-top-color: rgba(15,23,32,.92); }
+      .fpin .fl { width: 20px; height: 20px; border-radius: 6px; background: #fff; display: grid; place-items: center; overflow: hidden; }
+      .fpin .fl img { width: 86%; height: 86%; object-fit: contain; } .fpin .fl .ini { font-size: 8px; }
+      .fpin.g { background: #15803d; box-shadow: 0 3px 12px rgba(21,128,61,.55), inset 0 0 0 1.5px #4ade80; } .fpin.g::after { border-top-color: #15803d; }
+      .fpin.r { box-shadow: 0 3px 10px rgba(0,0,0,.4), inset 0 0 0 1.5px #f87171; }
+      .fpin.x { opacity: .65; }
+      .fpin .fst { --mdc-icon-size: 13px; color: #facc15; }
+      .fhome { position: absolute; transform: translate(-50%, -50%); width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: rgba(var(--c), .85); box-shadow: 0 0 0 3px rgba(var(--c), .3), 0 2px 8px rgba(0,0,0,.4); }
+      .fhome ha-icon { --mdc-icon-size: 16px; }
+      .leaflet-popup-content-wrapper { border-radius: 12px; background: rgba(15,23,32,.95); color: #e6f2f5; box-shadow: 0 8px 24px rgba(0,0,0,.45); }
+      .leaflet-popup-tip { background: rgba(15,23,32,.95); }
+      .leaflet-popup-content { margin: 10px 12px; font: 12px/1.35 var(--paper-font-body1_-_font-family, inherit); }
+      .fpop { display: flex; flex-direction: column; gap: 3px; min-width: 170px; }
+      .fpop > b { font-size: 13px; } .fpop small { color: rgba(220,235,240,.65); font-size: 11px; }
+      .fpp { display: flex; flex-direction: column; gap: 1px; margin: 3px 0; font-variant-numeric: tabular-nums; } .fpp > span:first-child { font-size: 15px; font-weight: 900; }
+      .fpa { display: flex; gap: 6px; margin-top: 4px; }
+      .fpa a, .fpa button { flex: 1; text-align: center; padding: 5px 8px; border-radius: 8px; font-size: 11.5px; font-weight: 800; color: #fff !important; background: rgba(var(--c), .45); }
+      .fpa button { background: rgba(255,255,255,.12); }
+      .leaflet-control-attribution { font-size: 9px; background: rgba(15,23,32,.6) !important; color: rgba(255,255,255,.7); } .leaflet-control-attribution a { color: rgba(255,255,255,.85); }
+      .leaflet-bar a { background: rgba(15,23,32,.85); color: #fff; border-bottom-color: rgba(255,255,255,.1); }
+      :host([data-tone="light"]) .leaflet-control-attribution, :host([data-tone="theme"][data-dark="0"]) .leaflet-control-attribution { background: rgba(255,255,255,.7) !important; color: #334155; }
+      :host([data-tone="light"]) .leaflet-control-attribution a, :host([data-tone="theme"][data-dark="0"]) .leaflet-control-attribution a { color: #0f172a; }
+      :host([data-tone="light"]) .leaflet-bar a, :host([data-tone="theme"][data-dark="0"]) .leaflet-bar a { background: #fff; color: #0f172a; }
       @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
       /* ---------- thèmes : clair / couleurs du thème Home Assistant ---------- */
       :host([data-tone="light"]) ha-card { --ink: 15,23,42; --tx: #0f172a; --tx2: rgba(15,23,42,.62); --hi: #0f172a; }
@@ -797,7 +1050,7 @@
       f.schema = locSchema([
         langField(),
         { name: "entry_ids", selector: { select: { multiple: true, mode: "list", options: zones.map((z) => ({ value: z.entry_id, label: z.title + (z.mobile ? _(" (mobile)") : "") })) } } },
-        { name: "layout", selector: { select: { mode: "list", options: [{ value: "full", label: _("Complète (meilleur prix, tendance, classement)") }, { value: "compact", label: _("Compacte (tableau des stations)") }] } } },
+        { name: "layout", selector: { select: { mode: "list", options: [{ value: "full", label: _("Complète (meilleur prix, tendance, classement)") }, { value: "compact", label: _("Compacte (tableau des stations)") }, { value: "map", label: _("Carte (stations sur une carte)") }] } } },
         { name: "title", selector: { text: {} } },
         { name: "theme", selector: { select: { mode: "dropdown", options: [{ value: "auto", label: _("Automatique (suit le mode clair / sombre)") }, { value: "dark", label: _("Sombre") }, { value: "light", label: _("Clair") }, { value: "theme", label: _("Couleurs de mon thème Home Assistant") }, { value: "glass", label: _("Verre (fond transparent et flou)") }] } } },
         { type: "grid", name: "", schema: [
@@ -808,17 +1061,32 @@
         { name: "sort", selector: { select: { mode: "dropdown", options: [{ value: "default", label: _("Classement, puis mes favorites (par défaut)") }, { value: "price", label: _("Prix le plus bas d'abord (tout mélangé)") }, { value: "distance", label: _("Plus proche d'abord") }, { value: "updated", label: _("Mise à jour la plus récente d'abord") }, { value: "name", label: _("Nom (A → Z)") }] } } },
         { name: "station_click", selector: { select: { mode: "dropdown", options: [{ value: "details", label: _("Afficher le détail de la station") }, { value: "maps", label: _("Ouvrir l'itinéraire (Google Maps)") }, { value: "none", label: _("Rien (lecture seule, aucun lien)") }] } } },
         { type: "grid", name: "", schema: [{ name: "show_chart", selector: { boolean: {} } }, { name: "chart_values", selector: { boolean: {} } }, { name: "show_favorites", selector: { boolean: {} } }, { name: "favorites_only", selector: { boolean: {} } }] },
+        { type: "expandable", name: "", title: "Carte des stations", icon: "mdi:map-outline", schema: [
+          { type: "grid", name: "", schema: [{ name: "show_map", selector: { boolean: {} } }, { name: "map_height", selector: { number: { min: 160, max: 900, step: 10, mode: "box", unit_of_measurement: "px" } } }] },
+          { name: "default_view", selector: { select: { mode: "dropdown", options: [{ value: "list", label: "Liste des stations" }, { value: "map", label: "Carte des stations" }] } } },
+        ] },
+        { type: "expandable", name: "", title: "Plein et réservoirs", icon: "mdi:gas-station-outline", schema: [
+          { type: "grid", name: "tank_sizes", schema: fuels.map((x) => ({ name: x.value, selector: { number: { min: 1, max: 300, step: 1, mode: "box", unit_of_measurement: "L" } } })) },
+          { name: "tank_display", selector: { select: { mode: "dropdown", options: [{ value: "both", label: "Prix au litre et coût du plein" }, { value: "tank_only", label: "Coût du plein seulement" }, { value: "per_liter", label: "Prix au litre seulement" }] } } },
+          { name: "tank_delta_ref", selector: { select: { mode: "dropdown", options: [{ value: "best", label: "La station la moins chère" }, { value: "first", label: "La première station de la liste" }] } } },
+        ] },
       ]);
       const L = { language: _("Langue"), sort: _("Tri des stations"), entry_ids: _("Zones (une ou plusieurs, réunies dans la carte)"), station_click: _("Clic sur une station"), entry_id: _("Zone"), title: _("Titre (optionnel)"), fuel: _("Carburant affiché par défaut"), rows: _("Stations dans le classement"), fuels: _("Onglets carburants (vide = tous)"), show_chart: _("Courbe de tendance"), chart_values: _("Valeurs sur la courbe"), show_favorites: _("Afficher mes favorites"), layout: _("Présentation"), theme: _("Apparence"), favorites_only: _("Compacte : uniquement mes favorites") };
-      f.computeLabel = (s) => (L[s.name] ? _(L[s.name]) : s.name);
+      Object.assign(L, { show_map: _("Afficher le bouton Carte"), map_height: _("Hauteur de la carte (px)"), default_view: _("Vue au départ"), tank_display: _("Affichage des prix"), tank_delta_ref: _("Écart en € calculé par rapport à") });
+      const FL = Object.fromEntries(fuels.map((x) => [x.value, _("Réservoir {f} (L)", { f: x.label })]));
+      f.computeLabel = (s) => (L[s.name] ? _(L[s.name]) : FL[s.name] || s.name);
       const cfg0 = { ...this._config };
       if (!cfg0.entry_ids && cfg0.entry_id) cfg0.entry_ids = [cfg0.entry_id];
-      f.data = { layout: "full", theme: "auto", rows: 6, show_chart: true, chart_values: true, show_favorites: true, station_click: cfg0.layout === "compact" ? "maps" : "details", ...cfg0 };
+      f.data = { layout: "full", theme: "auto", rows: 6, show_chart: true, chart_values: true, show_favorites: true, station_click: cfg0.layout === "compact" ? "maps" : "details", show_map: true, default_view: "list", tank_display: "both", tank_delta_ref: "best", ...cfg0 };
       f.addEventListener("value-changed", (e) => {
         this._config = { ...e.detail.value };
         delete this._config.entry_id;
         if (!this._config.language) delete this._config.language;
         if (!this._config.entry_ids || !this._config.entry_ids.length) delete this._config.entry_ids;
+        if (this._config.tank_sizes) {
+          const t = Object.fromEntries(Object.entries(this._config.tank_sizes).filter(([, v]) => Number(v) > 0).map(([k, v]) => [k, Number(v)]));
+          if (Object.keys(t).length) this._config.tank_sizes = t; else delete this._config.tank_sizes;
+        }
         this.dispatchEvent(new CustomEvent("config-changed", { detail: { config: JSON.parse(JSON.stringify(this._config)) }, bubbles: true, composed: true }));
       });
       this._form = f;

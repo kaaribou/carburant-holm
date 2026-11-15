@@ -27,7 +27,10 @@ Carburant HOLM (*carburant* means fuel) is a **Home Assistant** integration that
 - 🧭 **One tap and off you go**:
   - **compact view**: tapping a station opens **Google Maps in directions mode**;
   - **full view**: tapping a station expands **its details** (address, prices of **all** its fuels, services, 24/7 pay at pump) with **Google Maps** and **Waze** buttons;
-  - configurable: directions, details, or **read-only** (no link).
+  - configurable: directions, details, or **read-only** (no link);
+  - tapping the **price** always opens the station's **price history**.
+- 🗺️ **Station map**: every station of the zone on a map, with its price; the cheapest in green, your favourites marked with a star.
+- 💶 **Full-tank cost**: enter your tank sizes and the card shows the cost of a full tank and the differences in euros (“+€3.85 on 55 L”) instead of cents per litre.
 - 🔤 **Stations with the same name told apart**: two “Super U Poitiers” show their address.
 - 🏷️ **Names, brands and logos found automatically**, nothing to enter (OpenStreetMap and Wikimedia).
 - 🚫 **No stale prices**: a price that is too old (adjustable threshold) no longer counts in the ranking, and each price shows its freshness.
@@ -44,7 +47,19 @@ Official data: instant feed v2 of the French Ministry of the Economy ([data.econ
 
 *Screenshots in French — the card follows the language of your Home Assistant profile.*
 
-### 🆕 What's new in 1.6.1
+### 🆕 What's new in 1.7.0
+
+- 🗺️ **Station map** ([#16](https://github.com/kaaribou/carburant-holm/issues/16)): a List / Map button in the full and compact views, and a new **Map** layout (`layout: map`). Each station is a label with its logo and price; the cheapest is green, the most expensive has a red edge, your favourites have a ★ and the zone centre a house. Tapping a station opens its bubble: price, full-tank cost, price freshness, **Details** and **Directions** buttons.
+- 💶 **Full-tank cost and differences in euros** ([#14](https://github.com/kaaribou/carburant-holm/issues/14)): enter your tank size per fuel (55 L of diesel, 45 L of E10…). The card shows the full-tank cost next to the price per litre (or instead of it) and the differences in euros on a full tank, compared with the cheapest station or the first one in the list.
+- 📈 **History when tapping the price** ([#15](https://github.com/kaaribou/carburant-holm/issues/15)): in the compact view (and whenever a tap opens directions), tapping a station's **price** expands its details with its price curve; tapping the rest of the row still opens directions.
+- 🏷️ **Curve legend** ([#13](https://github.com/kaaribou/carburant-holm/issues/13)): “this station” / “average” now sit on their own line below the dates and no longer wrap on a narrow screen.
+- 📱 Narrow compact view: the fuel buttons move to a second line to leave room for the title.
+
+| Station map | Full-tank cost | History (compact view) |
+|---|---|---|
+| ![Station map](docs/images/carte-stations.png) | ![Full-tank cost](docs/images/plein.png) | ![History in the compact view](docs/images/compacte-historique.png) |
+
+### What's new in 1.6.1
 
 - 🪟 **New "Glass" appearance** (`theme: glass`): a translucent dark background that blurs what's behind it (glassmorphism), keeping the card's colours.
 - 🎨 **"My theme colours" really follows the theme** ([#12](https://github.com/kaaribou/carburant-holm/issues/12)): the card now uses your theme's card background, blur, border and shadow (`ha-card-background`, `ha-card-backdrop-filter`, `ha-card-border-color`, `ha-card-box-shadow`…). With a transparent theme, it becomes transparent like the other cards.
@@ -83,6 +98,8 @@ Official data: instant feed v2 of the French Ministry of the Economy ([data.econ
 - [Editing a zone (options)](#editing-a-zone-options)
 - [Entities created](#entities-created)
 - [The `holm-fuel-card`](#the-holm-fuel-card)
+  - [Station map](#station-map)
+  - [Full-tank cost](#full-tank-cost)
   - [Card background and card_mod](#card-background-and-card_mod)
 - [Automation examples](#automation-examples)
 - [Template examples](#template-examples)
@@ -218,11 +235,45 @@ Add a card → search for **“HOLM Fuel”**. Everything is set in the visual e
 - **Sort of your choice** (*Station sort* option): ranking then favourites, or a single list sorted by price, distance, update or name;
 - **Several zones** combined if you choose several (ranking and best price over all); a **mobile zone** shows “around …” and hides the curve;
 - **Tap a station**: address, **all its fuels**, services (car wash, shop, air, ATM…), 24/7 pay at pump, **Google Maps** and **Waze** links (or direct directions, or nothing: *Tap on a station* option);
+- **Tap the price** of a station: its details with its price curve, even when tapping the row opens directions;
+- **List / Map** buttons (☰ / 🗺) to the right of the ranking title: switch between the ranking and the [station map](#station-map);
 - **↻** refresh button.
 
 ### Compact view
 
-A “station list” table: logo · name (town, distance) · price · **Upd. as D+n**, ● green dot on the cheapest and ● red on the most expensive, fuel buttons and **↻**. Tapping a row opens directions (or the details, or nothing: *Tap on a station* option). The *Station* (distance), *Price* and *Upd.* headers can be clicked to sort. *Favourites only* option.
+A “station list” table: logo · name (town, distance) · price · **Upd. as D+n**, ● green dot on the cheapest and ● red on the most expensive, fuel buttons, **List / Map** buttons and **↻**. Tapping a row opens directions (or the details, or nothing: *Tap on a station* option); tapping the **price** expands the station's details with its **price curve**. The *Station* (distance), *Price* and *Upd.* headers can be clicked to sort. *Favourites only* option. On a narrow card, the fuel buttons move to a second line.
+
+### Station map
+
+With the 🗺 button (full and compact views) or the **Map** layout (`layout: map`), stations are shown on an OpenStreetMap map:
+
+| Element | What it is for |
+|---|---|
+| **Station label** | Brand logo and price per litre of the chosen fuel (or full-tank cost with `tank_display: tank_only`). |
+| **Green label** | The cheapest station in the zone. |
+| **Red edge** | The most expensive station. |
+| **Faded label** | Station out of stock for this fuel. |
+| **★** | One of your favourite stations. |
+| **House** | The zone centre (not for a mobile zone or several zones). |
+| **Station bubble** (on tap) | Name, town, distance, price per litre, full-tank cost if a tank is set, price freshness, **Details** (back to the list with the station's details expanded) and **Directions** (Google Maps) buttons. |
+| **+ / −** | Zoom; the map fits the stations by itself and keeps your framing as long as the list doesn't change. The mouse wheel doesn't zoom, so page scrolling isn't hijacked. |
+
+The map shows every station of the ranking plus your favourites (or only your favourites with *favourites only*). In dark mode, the map is darkened to match the card. The map and the [Leaflet](https://leafletjs.com) library are loaded from the internet the first time the map is shown.
+
+### Full-tank cost
+
+In the editor, **Full tank and tanks** section, enter the size of your tanks (in litres) for the fuels you want. A fuel without a tank keeps the per-litre display.
+
+| Element | What it is for |
+|---|---|
+| **“full tank 55 L · €112.15”** under the cheapest station's price | What a full tank costs at that price. |
+| **Grey amount** under a station's price in the ranking or table | Full-tank cost at that station. |
+| **Red amount “+€3.85”** | What you pay extra for a full tank compared with the reference station (the cheapest, or the first in the list). |
+| **“−€3.79 vs avg” chip** | Difference between the cheapest full tank and the zone's average price. |
+| **“full tank 55 L · €112.48”** in a station's details | Full-tank cost for each of its fuels. |
+| **“Price · tank” header** (compact view) | Reminds you that the price's second line is the full tank. |
+
+With **Full-tank cost only** (`tank_display: tank_only`), the full-tank amount becomes the main price and the price per litre moves below it in small type. **Price per litre only** (`per_liter`) turns the calculation off without clearing your tanks.
 
 ### Options
 
@@ -232,7 +283,7 @@ A “station list” table: logo · name (town, distance) · price · **Upd. as 
 | Zones | `entry_ids` | first zone | One or more zones; several zones are combined in the same card (ranking and best price over all). The old `entry_id` is still accepted. |
 | Station sort | `sort` | `default` | `default` (ranking then favourites), `price` (lowest first, favourites and outside zone included), `distance`, `updated` (most recent update) or `name`. In the compact view, clicking the *Station* / *Price* / *Upd.* headers also sorts on the fly. |
 | Tap on a station | `station_click` | `details` (full) / `maps` (compact) | `details`, `maps` (Google Maps directions) or `none` (read-only, no link). |
-| Layout | `layout` | `full` | `full` or `compact`. |
+| Layout | `layout` | `full` | `full`, `compact` or `map` (station map only). |
 | Appearance | `theme` | `auto` | `auto` (follows Home Assistant's light / dark mode), `dark`, `light`, `theme` (your theme's card colours, background, blur, border and shadow) or `glass` (translucent, blurred background). |
 | Title | `title` | “Fuel *zone*” / “Stations *zone*” | Custom title. |
 | Default fuel | `fuel` | first tracked | `gazole`, `e10`, `sp98`, `sp95`, `e85`, `gplc`. |
@@ -241,7 +292,13 @@ A “station list” table: logo · name (town, distance) · price · **Upd. as 
 | Curve | `show_chart` | `true` | Shows the trend (full view). |
 | Values on the curve | `chart_values` | `true` | Extreme prices, the day's values and a day's details on hover. `false`: curve only. |
 | Favourites | `show_favorites` | `true` | Adds your favourites outside the top. |
-| Favourites only | `favorites_only` | `false` | Compact view limited to your favourites. |
+| Favourites only | `favorites_only` | `false` | Compact view (and map) limited to your favourites. |
+| Map button | `show_map` | `true` | Shows the List / Map buttons (full and compact views). |
+| Initial view | `default_view` | `list` | `list` (ranking / table) or `map` (station map). |
+| Map height | `map_height` | `280` (`360` with the Map layout) | Map height in pixels (160 to 900). |
+| Tanks | `tank_sizes` | — | Size per fuel, in litres: `{ gazole: 55, e10: 45 }`. Turns on the full-tank cost. |
+| Price display | `tank_display` | `both` | `both` (per litre and full tank), `tank_only` (full tank only) or `per_liter` (per litre only). |
+| € difference compared with | `tank_delta_ref` | `best` | `best` (cheapest station) or `first` (first station in the list, according to the sort). |
 
 ```yaml
 # Full view, diesel by default, 8 stations
@@ -260,6 +317,19 @@ title: My stations
 type: custom:holm-fuel-card
 entry_ids: [abc123, def456]
 station_click: none
+
+# Full-tank cost: 55 L of diesel, 45 L of E10, differences compared with the nearest station
+type: custom:holm-fuel-card
+tank_sizes:
+  gazole: 55
+  e10: 45
+sort: distance
+tank_delta_ref: first
+
+# Station map only
+type: custom:holm-fuel-card
+layout: map
+map_height: 400
 ```
 
 ---
@@ -428,6 +498,8 @@ Response: `version` and `zones[]` with, for each zone, `entry_id`, `title`, `zon
 | Two stations have the same name | Their address is shown since 1.4.0. |
 | The mobile zone doesn't move | Check that the person / device has a GPS position (`latitude` / `longitude` attributes): the companion app needs location enabled. At home without GPS, the home is used as the centre. |
 | Show Home and Work in the same card | Card editor → *Zones*: tick both (1.4.0). |
+| The station map stays on “Loading the map…” or shows “Map unavailable” | The map and Leaflet come from the internet (openstreetmap.org, cdn.jsdelivr.net): check internet access on the device showing the dashboard, or a content blocker. |
+| See a station's history in the compact view | Tap its **price** (1.7.0). |
 
 Detailed log:
 
@@ -445,6 +517,7 @@ logger:
 - Towns: **geo.api.gouv.fr**.
 - Station names and brands: © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors (ODbL).
 - Logos: [Wikidata](https://www.wikidata.org) / [Wikimedia Commons](https://commons.wikimedia.org) (logos remain the property of their brands).
+- Station map: [Leaflet](https://leafletjs.com) library (BSD-2), map tiles © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors.
 
 ---
 
@@ -462,4 +535,4 @@ Code: **MIT** license — © kaaribou. See the [CHANGELOG](CHANGELOG.md) (in Fre
 
 Part of **HOLM — Home Orchestration & Living Management**: smart management and orchestration of the home.
 
-Other projects: [Climat HOLM](https://github.com/kaaribou/climat-holm) · [Volets HOLM](https://github.com/kaaribou/volets-holm) · [HOLM HP/HC](https://github.com/kaaribou/holm-tarif) · [HOLM Lektrico](https://github.com/kaaribou/lektrico-holm) · [HOLM LaMetric](https://github.com/kaaribou/lametric-holm) · [HOLM My Menu](https://github.com/kaaribou/holm-mymenu) · [HOLM Cars](https://github.com/kaaribou/holm-cars) · [HOLM GitHub](https://github.com/kaaribou/github-holm) · [HOLM Navbar Card](https://github.com/kaaribou/holm-navbar-card) · [HOLM Climate Card](https://github.com/kaaribou/climate-card-holm) · [HOLM Music Card](https://github.com/kaaribou/holm-music-card) · [HOLM Energy Cards](https://github.com/kaaribou/holm-energy-cards) · [HOLM Power Flow Card](https://github.com/kaaribou/holm-power-flow-card) · [HOLM Ecojoko Card](https://github.com/kaaribou/holm-ecojoko-card) · [HOLM Runtime Card](https://github.com/kaaribou/holm-runtime-card) · [HOLM Covers Card](https://github.com/kaaribou/holm-covers-card) · [HOLM Floor Card](https://github.com/kaaribou/holm-floor-card) · [HOLM Radiator Card](https://github.com/kaaribou/holm-radiator-card) · [HOLM Security Card](https://github.com/kaaribou/holm-security-card) · [HOLM Sentinel Card](https://github.com/kaaribou/holm-sentinel-card) · [HOLM Recordings Card](https://github.com/kaaribou/holm-recordings-card) · [HOLM Smoke Card](https://github.com/kaaribou/holm-smoke-card) · [HOLM Family Card](https://github.com/kaaribou/holm-family-card) · [HOLM Govee Light Card](https://github.com/kaaribou/holm-govee-light-card) · [HOLM Leapmotor Card](https://github.com/kaaribou/holm-leapmotor-card).
+Other projects: [Volets HOLM](https://github.com/kaaribou/volets-holm) · [Climat HOLM](https://github.com/kaaribou/climat-holm) · [Commandes à la maison HOLM](https://github.com/kaaribou/commandes-holm) · [HOLM LaMetric](https://github.com/kaaribou/lametric-holm) · [HOLM My Menu](https://github.com/kaaribou/holm-mymenu) · [HOLM Lektrico](https://github.com/kaaribou/lektrico-holm) · [HOLM GitHub](https://github.com/kaaribou/github-holm) · [HOLM Cars](https://github.com/kaaribou/holm-cars) · [HOLM HP/HC](https://github.com/kaaribou/holm-tarif) · [HOLM Navbar Card](https://github.com/kaaribou/holm-navbar-card) · [HOLM Climate Card](https://github.com/kaaribou/climate-card-holm) · [HOLM Music Card](https://github.com/kaaribou/holm-music-card) · [HOLM Sentinel Card](https://github.com/kaaribou/holm-sentinel-card) · [HOLM Security Card](https://github.com/kaaribou/holm-security-card) · [HOLM Recordings Card](https://github.com/kaaribou/holm-recordings-card) · [HOLM Covers Card](https://github.com/kaaribou/holm-covers-card) · [HOLM Runtime Card](https://github.com/kaaribou/holm-runtime-card) · [HOLM Power Flow Card](https://github.com/kaaribou/holm-power-flow-card) · [HOLM Energy Cards](https://github.com/kaaribou/holm-energy-cards) · [HOLM Radiator Card](https://github.com/kaaribou/holm-radiator-card) · [HOLM Floor Card](https://github.com/kaaribou/holm-floor-card) · [HOLM Ecojoko Card](https://github.com/kaaribou/holm-ecojoko-card) · [HOLM Smoke Card](https://github.com/kaaribou/holm-smoke-card) · [HOLM Family Card](https://github.com/kaaribou/holm-family-card) · [HOLM Live Power Card](https://github.com/kaaribou/holm-live-power-card) · [HOLM Solar Optimizer Card](https://github.com/kaaribou/holm-solar-optimizer-card) · [HOLM Govee Light Card](https://github.com/kaaribou/holm-govee-light-card) · [HOLM Leapmotor Card](https://github.com/kaaribou/holm-leapmotor-card). · [HOLM Bins](https://github.com/kaaribou/holm-bins) · [HOLM FX](https://github.com/kaaribou/holm-fx-card) · [HOLM Theme Editor](https://github.com/kaaribou/holm-theme)
