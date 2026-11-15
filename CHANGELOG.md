@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1
+- Carte des stations : les fonds OpenStreetMap affichaient « Access blocked » (« App is not following the usage policy »). Home Assistant impose `referrer: same-origin` à ses pages, donc les tuiles partaient sans en-tête Referer, qu'OpenStreetMap exige désormais. Les tuiles sont maintenant demandées avec la politique `strict-origin-when-cross-origin` : seule l'origine de Home Assistant est envoyée.
+- Nouvelles options `map_tiles` (adresse de tuiles d'un autre fournisseur) et `map_attribution`.
+
 ## 1.7.0
 - **Carte des stations** ([#16](https://github.com/kaaribou/carburant-holm/issues/16)) : boutons Liste / Carte dans les vues complète et compacte, nouvelle présentation `layout: map`. Étiquettes avec logo et prix (moins chère en vert, plus chère cerclée de rouge, favorites ★, centre de la zone), bulle avec prix, coût du plein, fraîcheur, boutons Détails et Itinéraire. Fond OpenStreetMap et bibliothèque Leaflet chargés à la demande. Options `show_map`, `default_view`, `map_height`.
 - **Coût du plein** ([#14](https://github.com/kaaribou/carburant-holm/issues/14)) : option `tank_sizes` (contenance par carburant) ; prix du plein dans la meilleure station, le classement, le tableau compact et la fiche d'une station ; écarts en euros sur le plein. Options `tank_display` (`both`, `tank_only`, `per_liter`) et `tank_delta_ref` (`best`, `first`). Section « Plein et réservoirs » dans l'éditeur.

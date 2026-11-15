@@ -42,7 +42,12 @@ Données officielles : flux instantané v2 du Ministère de l'Économie ([data.e
 |---|---|---|
 | ![Carte complète](docs/images/carte-complete.png) | ![Carte compacte](docs/images/carte-compacte.png) | ![Favorites](docs/images/carte-compacte-favorites.png) |
 
-### 🆕 Nouveautés de la 1.7.0
+### 🆕 Nouveautés de la 1.7.1
+
+- 🗺️ **Carte des stations : fin du message « Access blocked »**. Home Assistant n'indique pas aux autres sites de quelle page vient une demande, et OpenStreetMap refuse désormais les fonds de carte demandés ainsi. La carte envoie maintenant l'adresse de votre Home Assistant (sans le chemin de la page), comme l'exige la politique d'usage d'OpenStreetMap.
+- 🧩 Nouvelles options `map_tiles` et `map_attribution` pour utiliser un autre fond de carte (par exemple un fournisseur avec votre propre clé).
+
+### Nouveautés de la 1.7.0
 
 - 🗺️ **Carte des stations** ([#16](https://github.com/kaaribou/carburant-holm/issues/16)) : un bouton Liste / Carte dans les vues complète et compacte, et une nouvelle présentation **Carte** (`layout: map`). Chaque station est une étiquette avec son logo et son prix ; la moins chère est en vert, la plus chère cerclée de rouge, vos favorites ont une ★ et le centre de la zone une maison. Un toucher sur une station ouvre sa bulle : prix, coût du plein, fraîcheur du prix, boutons **Détails** et **Itinéraire**.
 - 💶 **Coût du plein et écarts en euros** ([#14](https://github.com/kaaribou/carburant-holm/issues/14)) : indiquez la contenance de vos réservoirs par carburant (55 L de gazole, 45 L d'E10…). La carte affiche le prix du plein à côté du prix au litre (ou à sa place) et les écarts en euros sur le plein. Écart calculé par rapport à la station la moins chère ou à la première de la liste.
@@ -290,6 +295,8 @@ Avec **Coût du plein seulement** (`tank_display: tank_only`), le montant du ple
 | Uniquement favorites | `favorites_only` | `false` | Vue compacte (et carte) limitée à vos favorites. |
 | Bouton Carte | `show_map` | `true` | Affiche les boutons Liste / Carte (vues complète et compacte). |
 | Vue au départ | `default_view` | `list` | `list` (classement / tableau) ou `map` (carte des stations). |
+| Fond de carte | `map_tiles` | OpenStreetMap | Adresse de tuiles au format Leaflet (`https://…/{z}/{x}/{y}.png`) pour utiliser un autre fournisseur. Le fond n'est alors pas assombri en mode sombre. |
+| Mention du fond de carte | `map_attribution` | — | Texte (HTML accepté) affiché en bas de la carte avec `map_tiles`, par exemple le copyright du fournisseur. |
 | Hauteur de la carte | `map_height` | `280` (`360` en présentation Carte) | Hauteur du plan, en pixels (160 à 900). |
 | Réservoirs | `tank_sizes` | — | Contenance par carburant, en litres : `{ gazole: 55, e10: 45 }`. Active le coût du plein. |
 | Affichage des prix | `tank_display` | `both` | `both` (prix au litre et plein), `tank_only` (plein seulement) ou `per_liter` (au litre seulement). |
@@ -494,6 +501,7 @@ Réponse : `version` et `zones[]` avec pour chaque zone `entry_id`, `title`, `zo
 | La zone mobile ne bouge pas | Vérifiez que la personne / l'appareil a bien une position GPS (attributs `latitude` / `longitude`) : l'application compagnon doit avoir la localisation activée. À la maison sans GPS, c'est le domicile qui sert de centre. |
 | Afficher Maison et Travail dans la même carte | Éditeur de la carte → *Zones* : cochez les deux (1.4.0). |
 | La carte des stations reste sur « Chargement de la carte… » ou affiche « Carte indisponible » | Le plan et Leaflet viennent d'internet (openstreetmap.org, cdn.jsdelivr.net) : vérifiez l'accès à internet de l'appareil qui affiche le tableau de bord, ou un bloqueur de contenu. |
+| La carte des stations affiche « Access blocked » ou « App is not following the usage policy » | Corrigé en 1.7.1 : mettez à jour, redémarrez Home Assistant et rechargez la page (Ctrl + F5). Si votre navigateur bloque tout envoi d'adresse aux autres sites, choisissez un autre fond avec `map_tiles`. |
 | Voir l'historique d'une station en vue compacte | Touchez son **prix** (1.7.0). |
 
 Journal détaillé :

@@ -47,7 +47,12 @@ Official data: instant feed v2 of the French Ministry of the Economy ([data.econ
 
 *Screenshots in French — the card follows the language of your Home Assistant profile.*
 
-### 🆕 What's new in 1.7.0
+### 🆕 What's new in 1.7.1
+
+- 🗺️ **Station map: no more “Access blocked”**. Home Assistant doesn't tell other sites which page a request comes from, and OpenStreetMap now refuses map tiles requested that way. The map now sends your Home Assistant address (without the page path), as OpenStreetMap's usage policy requires.
+- 🧩 New `map_tiles` and `map_attribution` options to use another map background (for example a provider with your own key).
+
+### What's new in 1.7.0
 
 - 🗺️ **Station map** ([#16](https://github.com/kaaribou/carburant-holm/issues/16)): a List / Map button in the full and compact views, and a new **Map** layout (`layout: map`). Each station is a label with its logo and price; the cheapest is green, the most expensive has a red edge, your favourites have a ★ and the zone centre a house. Tapping a station opens its bubble: price, full-tank cost, price freshness, **Details** and **Directions** buttons.
 - 💶 **Full-tank cost and differences in euros** ([#14](https://github.com/kaaribou/carburant-holm/issues/14)): enter your tank size per fuel (55 L of diesel, 45 L of E10…). The card shows the full-tank cost next to the price per litre (or instead of it) and the differences in euros on a full tank, compared with the cheapest station or the first one in the list.
@@ -295,6 +300,8 @@ With **Full-tank cost only** (`tank_display: tank_only`), the full-tank amount b
 | Favourites only | `favorites_only` | `false` | Compact view (and map) limited to your favourites. |
 | Map button | `show_map` | `true` | Shows the List / Map buttons (full and compact views). |
 | Initial view | `default_view` | `list` | `list` (ranking / table) or `map` (station map). |
+| Map background | `map_tiles` | OpenStreetMap | Leaflet tile URL (`https://…/{z}/{x}/{y}.png`) to use another provider. The background is then not darkened in dark mode. |
+| Map background credit | `map_attribution` | — | Text (HTML allowed) shown at the bottom of the map with `map_tiles`, for example the provider's copyright. |
 | Map height | `map_height` | `280` (`360` with the Map layout) | Map height in pixels (160 to 900). |
 | Tanks | `tank_sizes` | — | Size per fuel, in litres: `{ gazole: 55, e10: 45 }`. Turns on the full-tank cost. |
 | Price display | `tank_display` | `both` | `both` (per litre and full tank), `tank_only` (full tank only) or `per_liter` (per litre only). |
@@ -499,6 +506,7 @@ Response: `version` and `zones[]` with, for each zone, `entry_id`, `title`, `zon
 | The mobile zone doesn't move | Check that the person / device has a GPS position (`latitude` / `longitude` attributes): the companion app needs location enabled. At home without GPS, the home is used as the centre. |
 | Show Home and Work in the same card | Card editor → *Zones*: tick both (1.4.0). |
 | The station map stays on “Loading the map…” or shows “Map unavailable” | The map and Leaflet come from the internet (openstreetmap.org, cdn.jsdelivr.net): check internet access on the device showing the dashboard, or a content blocker. |
+| The station map shows “Access blocked” or “App is not following the usage policy” | Fixed in 1.7.1: update, restart Home Assistant and reload the page (Ctrl + F5). If your browser blocks sending any address to other sites, choose another background with `map_tiles`. |
 | See a station's history in the compact view | Tap its **price** (1.7.0). |
 
 Detailed log:

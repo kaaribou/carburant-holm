@@ -153,7 +153,7 @@
     if (o.selector && o.selector.select && o.name !== "language") o.selector = { ...o.selector, select: { ...o.selector.select, options: (o.selector.select.options || []).map((op) => (typeof op === "string" ? op : { ...op, label: _(op.label) })) } };
     if (o.name === "language" && o.selector && o.selector.select) o.selector = { ...o.selector, select: { ...o.selector.select, options: o.selector.select.options.map((op) => (op.value ? op : { ...op, label: _("Automatique (profil)") })) } };
     return o; });
-  const VERSION = "1.7.0";
+  const VERSION = "1.7.1";
   const FUEL_COLOR = { gazole: "245,158,11", e10: "34,197,94", sp98: "59,130,246", sp95: "6,182,212", e85: "132,204,22", gplc: "168,85,247" };
   const SERVICE_ICON = [
     [/lavage/i, "mdi:car-wash"], [/boutique|alimentaire/i, "mdi:basket"], [/gonflage/i, "mdi:tire"], [/toilette/i, "mdi:toilet"],
@@ -668,11 +668,15 @@
         const tone = this.dataset.tone, dark = tone === "light" ? false : tone === "theme" ? this.dataset.dark === "1" : true;
         const map = L.map(box, { zoomControl: true, scrollWheelZoom: false, attributionControl: true });
         this._lmap = map;
-        // fond OpenStreetMap ; en sombre, les tuiles sont inversées par CSS (classe .dk)
-        L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          maxZoom: 19, attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
+        // fond OpenStreetMap (ou map_tiles) ; en sombre, les tuiles OSM sont inversées par CSS (classe .dk).
+        // Home Assistant n'envoie pas de Referer aux autres sites (meta referrer « same-origin ») et OpenStreetMap
+        // refuse les tuiles demandées sans Referer : on envoie l'origine du tableau de bord, comme l'exige sa politique d'usage.
+        const own = this._config.map_tiles;
+        L.tileLayer(own || "https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 19, referrerPolicy: "strict-origin-when-cross-origin",
+          attribution: own ? (this._config.map_attribution || "") : '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
         }).addTo(map);
-        box.classList.toggle("dk", dark);
+        box.classList.toggle("dk", dark && !own);
         const z = this._zone, t = this._tank(fuel), tko = this._tankOnly(fuel), favs = z.favorites || [];
         const bounds = [];
         if (Array.isArray(z.center) && !z.mobile && !z.multi) {
